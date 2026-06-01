@@ -32,7 +32,7 @@ export default function Home() {
       <section className="relative min-h-screen flex items-center px-4 pt-24 pb-12">
         {/* Background slant */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute right-0 top-0 w-1/2 h-full bg-[#e8132a] clip-slant opacity-90" />
+          <div className="absolute right-0 top-0 w-1/2 h-full bg-[#e8132a] opacity-90" style={{clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0% 100%)'}} />
           <div className="absolute inset-0 bg-gradient-to-r from-[#080808] via-[#080808]/80 to-transparent" />
         </div>
 
