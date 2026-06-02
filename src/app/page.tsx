@@ -86,23 +86,23 @@ export default function Home() {
                 <span className="text-[10px] text-gray-500 uppercase tracking-widest">Partners</span>
                 <span className="w-6 h-0.5 bg-white/10" />
               </div>
-              <div className="grid grid-cols-2 gap-4 w-full max-w-md">
-                <div className="relative h-24 md:h-32 bg-zinc-900/50 rounded flex items-center justify-center p-3">
+              <div className="grid grid-cols-2 gap-3 w-full">
+                <div className="relative h-40 md:h-32 bg-zinc-900/50 rounded">
                   <Image
                     src="/images/promo1.png"
                     alt="Partner"
                     fill
                     sizes="(max-width: 640px) 50vw, 200px"
-                    className="object-contain rounded opacity-90 hover:opacity-100 transition-opacity p-3"
+                    className="object-contain opacity-90 hover:opacity-100 transition-opacity p-4"
                   />
                 </div>
-                <div className="relative h-24 md:h-32 bg-zinc-900/50 rounded flex items-center justify-center p-3">
+                <div className="relative h-40 md:h-32 bg-zinc-900/50 rounded">
                   <Image
                     src="/images/promo2.jpeg"
                     alt="BAM Boxing & Martial Arts"
                     fill
                     sizes="(max-width: 640px) 50vw, 200px"
-                    className="object-contain rounded opacity-90 hover:opacity-100 transition-opacity p-3"
+                    className="object-contain opacity-90 hover:opacity-100 transition-opacity p-4"
                   />
                 </div>
               </div>
