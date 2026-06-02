@@ -33,8 +33,11 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-[#080808]/95 backdrop-blur-md border-b border-white/5">
-      <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-1.5" aria-label="Lil Moochi Boxing — Home">
+      <div className="max-w-6xl mx-auto px-4 py-3 grid grid-cols-3 md:flex md:items-center md:justify-between items-center">
+        {/* Left spacer on mobile (matches hamburger width) */}
+        <div className="md:hidden w-11" />
+
+        <Link href="/" className="flex items-center justify-center gap-1.5 md:justify-start" aria-label="Lil Moochi Boxing — Home">
           <span className="text-2xl leading-none">🇺🇸</span>
           <span className="text-2xl leading-none">🇵🇸</span>
           <span className="text-2xl leading-none">🇨🇺</span>
@@ -53,7 +56,7 @@ export default function Navbar() {
 
         <button
           ref={hamburgerRef}
-          className="md:hidden p-3 min-w-[44px] min-h-[44px] flex items-center justify-center"
+          className="md:hidden p-3 min-w-[44px] min-h-[44px] flex items-center justify-end ml-auto"
           onClick={() => setOpen(!open)}
           aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
           aria-expanded={open}
