@@ -77,7 +77,7 @@ export default function Home() {
             <div className="flex flex-col items-center gap-4 w-full">
               <span className="text-[10px] text-gray-500 uppercase tracking-widest">Partners</span>
               <div className="relative w-full max-w-md h-32 md:h-40">
-                <Image src="/images/promo2.jpeg" alt="BAM Boxing & Martial Arts" fill className="object-contain rounded opacity-90 hover:opacity-100 transition-opacity" />
+                <Image src="/images/promo2.jpeg" alt="BAM Boxing & Martial Arts" fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-contain rounded opacity-90 hover:opacity-100 transition-opacity" />
               </div>
             </div>
           </div>
@@ -96,6 +96,8 @@ export default function Home() {
                 alt="Lil Moochi training"
                 width={1600}
                 height={1236}
+                loading="lazy"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 className="w-full h-auto object-contain"
               />
             </div>
@@ -156,6 +158,8 @@ export default function Home() {
                     src={t.image}
                     alt={t.name}
                     fill
+                    loading="lazy"
+                    sizes="(max-width: 768px) 100vw, 320px"
                     className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-transparent to-transparent" />
@@ -188,15 +192,15 @@ export default function Home() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-zinc-800">
             {classes.map((c, i) => (
-              <div key={c.title} className={`p-8 flex flex-col gap-4 group cursor-pointer transition-colors ${i === 0 ? 'bg-[#1e3a8a]' : 'bg-zinc-950 hover:bg-zinc-900'}`}>
+              <button key={c.title} className={`p-8 flex flex-col gap-4 group text-left transition-colors w-full ${i === 0 ? 'bg-[#1e3a8a]' : 'bg-zinc-950 hover:bg-zinc-900'}`}>
                 <div className="text-4xl">{c.icon}</div>
                 <span className={`text-xs font-bold uppercase tracking-widest ${i === 0 ? 'text-blue-200' : 'text-[#e8132a]'}`}>{c.tag}</span>
                 <h3 className="text-xl font-black uppercase">{c.title}</h3>
                 <p className={`text-sm leading-relaxed flex-1 ${i === 0 ? 'text-blue-100' : 'text-gray-400'}`}>{c.desc}</p>
-                <button className={`text-xs font-bold uppercase tracking-widest mt-2 text-left ${i === 0 ? 'text-white' : 'text-[#e8132a]'} group-hover:underline`}>
+                <span className={`text-xs font-bold uppercase tracking-widest mt-2 ${i === 0 ? 'text-white' : 'text-[#e8132a]'} group-hover:underline`}>
                   Watch Now →
-                </button>
-              </div>
+                </span>
+              </button>
             ))}
           </div>
         </div>

@@ -12,19 +12,23 @@ export default function Footer() {
           </div>
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-gray-500 mb-4">Navigate</p>
-            <div className="flex flex-col gap-2 text-sm font-semibold">
+            <div className="flex flex-col gap-1 text-sm font-semibold">
               {['About', 'Training', 'Highlights', 'Store'].map((l) => (
                 <a key={l} href={l === 'Store' ? '/store' : `/#${l.toLowerCase()}`}
-                  className="hover:text-[#e8132a] transition-colors">{l}</a>
+                  className="hover:text-[#e8132a] transition-colors py-2 min-h-[44px] flex items-center">{l}</a>
               ))}
             </div>
           </div>
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-gray-500 mb-4">Follow</p>
-            <div className="flex flex-col gap-2 text-sm font-semibold">
-              {['Instagram', 'TikTok', 'YouTube'].map((s) => (
-                <a key={s} href={`https://${s.toLowerCase()}.com`} target="_blank" rel="noopener noreferrer"
-                  className="hover:text-[#e8132a] transition-colors">{s}</a>
+            <div className="flex flex-col gap-1 text-sm font-semibold">
+              {[
+                { label: 'Instagram', href: 'https://www.instagram.com/lilmoochi2020' },
+                { label: 'TikTok', href: 'https://tiktok.com' },
+                { label: 'YouTube', href: 'https://youtube.com' },
+              ].map((s) => (
+                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
+                  className="hover:text-[#e8132a] transition-colors py-2 min-h-[44px] flex items-center">{s.label}</a>
               ))}
             </div>
           </div>
