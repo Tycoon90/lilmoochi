@@ -1,6 +1,18 @@
+import type { Metadata } from 'next';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import MerchCard from '@/components/MerchCard';
+
+export const metadata: Metadata = {
+  title: 'Merch Store',
+  description: 'Official Lil Moochi boxing merch — tees, hoodies, gloves, caps and more. Rep the future world champion.',
+  alternates: { canonical: 'https://lilmoochi.com/store' },
+  openGraph: {
+    title: 'Lil Moochi Store — Official Merch',
+    description: 'Rep the future world champion. Shop official Lil Moochi gear.',
+    url: 'https://lilmoochi.com/store',
+  },
+};
 
 const products = [
   { name: 'Lil Moochi Classic Tee', price: '$29.99', tag: 'Bestseller', emoji: '👕' },

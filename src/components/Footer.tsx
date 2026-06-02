@@ -1,3 +1,19 @@
+'use client';
+import { analytics } from '@/lib/analytics';
+
+const socialLinks = [
+  { label: 'Instagram', href: 'https://www.instagram.com/lilmoochi2020' },
+  { label: 'TikTok', href: 'https://tiktok.com' },
+  { label: 'YouTube', href: 'https://youtube.com' },
+];
+
+const navLinks = [
+  { label: 'About', href: '/#about' },
+  { label: 'Training', href: '/#classes' },
+  { label: 'Highlights', href: '/#highlights' },
+  { label: 'Store', href: '/store' },
+];
+
 export default function Footer() {
   return (
     <footer className="bg-[#050505] border-t border-white/5 py-12 px-4">
@@ -13,22 +29,31 @@ export default function Footer() {
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-gray-500 mb-4">Navigate</p>
             <div className="flex flex-col gap-1 text-sm font-semibold">
-              {['About', 'Training', 'Highlights', 'Store'].map((l) => (
-                <a key={l} href={l === 'Store' ? '/store' : `/#${l.toLowerCase()}`}
-                  className="hover:text-[#e8132a] transition-colors py-2 min-h-[44px] flex items-center">{l}</a>
+              {navLinks.map((l) => (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  className="hover:text-[#e8132a] transition-colors py-2 min-h-[44px] flex items-center"
+                >
+                  {l.label}
+                </a>
               ))}
             </div>
           </div>
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-gray-500 mb-4">Follow</p>
             <div className="flex flex-col gap-1 text-sm font-semibold">
-              {[
-                { label: 'Instagram', href: 'https://www.instagram.com/lilmoochi2020' },
-                { label: 'TikTok', href: 'https://tiktok.com' },
-                { label: 'YouTube', href: 'https://youtube.com' },
-              ].map((s) => (
-                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
-                  className="hover:text-[#e8132a] transition-colors py-2 min-h-[44px] flex items-center">{s.label}</a>
+              {socialLinks.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#e8132a] transition-colors py-2 min-h-[44px] flex items-center"
+                  onClick={() => analytics.outboundLink(s.href, s.label)}
+                >
+                  {s.label}
+                </a>
               ))}
             </div>
           </div>
