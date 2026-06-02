@@ -93,7 +93,7 @@ export default function Home() {
                     alt="Partner"
                     fill
                     sizes="(max-width: 640px) 50vw, 200px"
-                    className="object-contain hover:opacity-90 transition-opacity p-4"
+                    className="object-cover hover:opacity-90 transition-opacity p-2"
                   />
                 </div>
                 <div className="relative h-40 md:h-32 bg-white rounded overflow-hidden">
