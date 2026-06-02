@@ -96,13 +96,13 @@ export default function Home() {
                     className="object-contain opacity-90 hover:opacity-100 transition-opacity p-4"
                   />
                 </div>
-                <div className="relative h-40 md:h-32 bg-zinc-900/50 rounded">
+                <div className="relative h-40 md:h-32 bg-zinc-900/50 rounded overflow-hidden">
                   <Image
                     src="/images/promo2.jpeg"
                     alt="BAM Boxing & Martial Arts"
                     fill
                     sizes="(max-width: 640px) 50vw, 200px"
-                    className="object-contain opacity-90 hover:opacity-100 transition-opacity p-4"
+                    className="object-contain opacity-90 hover:opacity-100 transition-opacity p-4 mix-blend-luminosity"
                   />
                 </div>
               </div>
