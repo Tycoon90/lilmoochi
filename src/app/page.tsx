@@ -71,7 +71,7 @@ export default function Home() {
           <div className="relative flex items-center justify-center flex-col gap-6">
             <div className="relative w-full max-w-md" style={{aspectRatio: '3/4'}}>
               <video
-                src="/images/moochie-video.mp4"
+                src="https://i7waoonl8n9ptnk1.public.blob.vercel-storage.com/moochie-video.mp4"
                 autoPlay
                 loop
                 muted
