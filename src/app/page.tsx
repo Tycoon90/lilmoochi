@@ -87,22 +87,22 @@ export default function Home() {
                 <span className="w-6 h-0.5 bg-white/10" />
               </div>
               <div className="grid grid-cols-2 gap-3 w-full">
-                <div className="relative h-40 md:h-32 bg-white rounded overflow-hidden">
+                <div className="relative h-40 md:h-32 rounded overflow-hidden">
                   <Image
                     src="/images/promo1.png"
                     alt="Partner"
                     fill
                     sizes="(max-width: 640px) 50vw, 200px"
-                    className="object-cover hover:opacity-90 transition-opacity p-2"
+                    className="object-contain hover:opacity-90 transition-opacity"
                   />
                 </div>
-                <div className="relative h-40 md:h-32 bg-white rounded overflow-hidden">
+                <div className="relative h-40 md:h-32 rounded overflow-hidden">
                   <Image
                     src="/images/promo2.jpeg"
                     alt="BAM Boxing & Martial Arts"
                     fill
                     sizes="(max-width: 640px) 50vw, 200px"
-                    className="object-contain hover:opacity-90 transition-opacity p-4"
+                    className="object-contain hover:opacity-90 transition-opacity mix-blend-luminosity"
                   />
                 </div>
               </div>

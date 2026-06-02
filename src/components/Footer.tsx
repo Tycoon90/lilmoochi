@@ -3,7 +3,6 @@ import { analytics } from '@/lib/analytics';
 
 const socialLinks = [
   { label: 'Instagram', href: 'https://www.instagram.com/lilmoochi2020' },
-  { label: 'TikTok', href: 'https://tiktok.com' },
   { label: 'YouTube', href: 'https://youtube.com' },
 ];
 

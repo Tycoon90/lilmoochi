@@ -42,6 +42,9 @@ export default function Navbar() {
           <span className="text-2xl leading-none">🇵🇸</span>
           <span className="text-2xl leading-none">🇨🇺</span>
           <span className="text-2xl leading-none">🇲🇽</span>
+          <span className="text-2xl leading-none">🇧🇷</span>
+          <span className="text-2xl leading-none">🇷🇺</span>
+          <span className="text-2xl leading-none">🇵🇷</span>
         </Link>
 
         <div className="hidden md:flex items-center gap-8 text-xs font-bold uppercase tracking-widest">
