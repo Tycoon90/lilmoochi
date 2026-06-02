@@ -70,6 +70,7 @@ export default function Home() {
                 loop
                 muted
                 playsInline
+                poster="/images/promo1.png"
                 className="w-full h-full object-cover"
               />
             </div>
