@@ -34,9 +34,10 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-[#080808]/95 backdrop-blur-md border-b border-white/5">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        <Link href="/">
-          <p className="text-base font-black uppercase leading-none tracking-wider text-white">Moochi</p>
-          <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#5b9bd5]">Boxing</p>
+        <Link href="/" className="flex items-center gap-1.5" aria-label="Lil Moochi Boxing — Home">
+          <span className="text-2xl leading-none">🇺🇸</span>
+          <span className="text-2xl leading-none">🇵🇸</span>
+          <span className="text-2xl leading-none">🇨🇺</span>
         </Link>
 
         <div className="hidden md:flex items-center gap-8 text-xs font-bold uppercase tracking-widest">
