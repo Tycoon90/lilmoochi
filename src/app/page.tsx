@@ -18,21 +18,20 @@ const classes = [
 ];
 
 const trainers = [
-  { name: 'Coach Rico', role: 'Head Trainer', exp: '15 yrs', emoji: '👨‍🏫' },
-  { name: 'Coach Maya', role: 'Conditioning', exp: '10 yrs', emoji: '👩‍🏫' },
-  { name: 'Coach D', role: 'Sparring Coach', exp: '12 yrs', emoji: '🧑‍🏫' },
+  { name: 'Sean Hotusing', role: 'Coach Bam Bam', exp: 'Head Trainer', image: '/images/bam-bam.jpg' },
+  { name: 'Sister Jurri', role: 'Assistant Trainer', exp: '', image: '/images/jurri.JPEG' },
 ];
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#080808] text-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#080808] text-white">
       <Navbar />
 
       {/* HERO */}
-      <section className="relative min-h-screen flex items-center px-4 pt-24 pb-12">
+      <section className="relative min-h-[100dvh] flex items-center px-4 pt-24 pb-12">
         {/* Background slant */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute right-0 top-0 w-1/2 h-full bg-[#e8132a] opacity-90" style={{clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0% 100%)'}} />
+          <div className="absolute right-0 top-0 w-1/2 h-full bg-[#080808] opacity-90" style={{clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0% 100%)'}} />
           <div className="absolute inset-0 bg-gradient-to-r from-[#080808] via-[#080808]/80 to-transparent" />
         </div>
 
@@ -44,7 +43,7 @@ export default function Home() {
             </div>
             <h1 className="text-6xl md:text-8xl font-black uppercase leading-[0.9] mb-6">
               LIL<br />
-              <span className="text-[#e8132a]">MOOCHI</span><br />
+              <span className="text-[#5b9bd5]">MOOCHI</span><br />
               BOXING
             </h1>
             <p className="text-gray-400 text-lg max-w-md mb-8 leading-relaxed">
@@ -52,7 +51,7 @@ export default function Home() {
             </p>
             <div className="flex flex-wrap gap-4">
               <Link href="/#classes"
-                className="bg-[#e8132a] text-white font-black px-8 py-4 uppercase tracking-wide hover:bg-red-500 transition-colors">
+                className="bg-[#1e3a8a] text-white font-black px-8 py-4 uppercase tracking-wide hover:bg-blue-700 transition-colors">
                 See Training
               </Link>
               <Link href="/store"
@@ -62,44 +61,43 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Logo/photo panel */}
-          <div className="relative flex items-center justify-center">
-            <div className="relative w-72 h-72 md:w-96 md:h-96">
-              <div className="absolute inset-0 bg-[#e8132a]/20 rounded-full blur-3xl" />
-              <Image
-                src="/images/logo-transparent.png"
-                alt="Lil Moochi"
-                fill
-                className="object-contain drop-shadow-2xl relative z-10"
+          {/* Hero video */}
+          <div className="relative flex items-center justify-center flex-col gap-6">
+            <div className="relative w-full max-w-md" style={{aspectRatio: '3/4'}}>
+              <video
+                src="/images/moochie-video.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
               />
+            </div>
+            {/* Partners */}
+            <div className="flex flex-col items-center gap-4 w-full">
+              <span className="text-[10px] text-gray-500 uppercase tracking-widest">Partners</span>
+              <div className="relative w-full max-w-md h-32 md:h-40">
+                <Image src="/images/promo2.jpeg" alt="BAM Boxing & Martial Arts" fill className="object-contain rounded opacity-90 hover:opacity-100 transition-opacity" />
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Stats bar */}
-        <div className="absolute bottom-0 left-0 right-0 bg-[#e8132a]">
-          <div className="max-w-6xl mx-auto px-4 py-4 grid grid-cols-4">
-            {stats.map((s) => (
-              <div key={s.label} className="text-center border-r border-red-400/30 last:border-0 py-2">
-                <p className="text-2xl md:text-3xl font-black">{s.value}</p>
-                <p className="text-xs uppercase tracking-widest text-red-100">{s.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
       </section>
 
       {/* ABOUT */}
       <section id="about" className="py-28 px-4">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
           <div className="relative">
-            <div className="bg-zinc-900 rounded-none w-full h-80 md:h-[480px] flex items-center justify-center text-[10rem] relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-2 h-full bg-[#e8132a]" />
-              <span>🥊</span>
-            </div>
-            <div className="absolute -bottom-6 -right-6 bg-[#e8132a] p-6 text-center">
-              <p className="text-4xl font-black">2</p>
-              <p className="text-xs uppercase tracking-widest">Started at<br/>age 2</p>
+            <div className="bg-zinc-900 rounded-none w-full relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-2 h-full bg-[#e8132a] z-10" />
+              <Image
+                src="/images/IMG_1114.jpeg"
+                alt="Lil Moochi training"
+                width={1600}
+                height={1236}
+                className="w-full h-auto object-contain"
+              />
             </div>
           </div>
 
@@ -112,7 +110,7 @@ export default function Home() {
               Born To<br /><span className="text-[#e8132a]">Fight</span>
             </h2>
             <p className="text-gray-400 leading-relaxed mb-4">
-              From the moment Moochi could walk, the ring was calling. At just 2 years old, tiny gloves were laced up for the first time — and nothing has been the same since.
+              From the moment Moochi could walk, the ring was calling. At just 4 years old, tiny gloves were laced up for the first time — and nothing has been the same since.
             </p>
             <p className="text-gray-400 leading-relaxed mb-8">
               With blazing hand speed, natural footwork, and a champion&apos;s mindset, Lil Moochi isn&apos;t just a kid who boxes. This is the future of the sport.
@@ -126,7 +124,7 @@ export default function Home() {
               ))}
             </div>
             <div className="flex gap-4">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.instagram.com/lilmoochi2020" target="_blank" rel="noopener noreferrer"
                 className="bg-zinc-800 hover:bg-zinc-700 px-5 py-3 text-sm font-bold transition-colors uppercase tracking-wide">
                 Instagram
               </a>
@@ -140,6 +138,40 @@ export default function Home() {
       </section>
 
       {/* CLASSES */}
+
+      {/* TRAINERS */}
+      <section className="py-24 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="w-10 h-0.5 bg-[#e8132a]" />
+            <span className="text-[#e8132a] text-xs font-bold uppercase tracking-[0.3em]">The Team</span>
+          </div>
+          <h2 className="text-5xl font-black uppercase mb-14">Meet The<br /><span className="text-[#e8132a]">Coaches</span></h2>
+
+          <div className="flex flex-col md:flex-row justify-center gap-12">
+            {trainers.map((t) => (
+              <div key={t.name} className="bg-[#080808] group hover:bg-zinc-900 transition-colors w-full md:w-80">
+                <div className="relative w-full h-96 overflow-hidden">
+                  <Image
+                    src={t.image}
+                    alt={t.name}
+                    fill
+                    className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-transparent to-transparent" />
+                </div>
+                <div className="p-8">
+                  <h3 className="text-2xl font-black uppercase mb-1">{t.name}</h3>
+                  <p className="text-[#e8132a] text-xs font-bold uppercase tracking-widest mb-1">{t.role}</p>
+                  {t.exp && <p className="text-gray-500 text-sm">{t.exp}</p>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WATCH & LEARN */}
       <section id="classes" className="py-24 px-4 bg-zinc-950">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
@@ -152,65 +184,18 @@ export default function Home() {
                 Watch &<br /><span className="text-[#e8132a]">Learn</span>
               </h2>
             </div>
-            <Link href="/#highlights" className="text-sm font-bold uppercase tracking-widest border-b border-white/30 pb-1 hover:border-white transition-colors self-start md:self-auto">
-              All Highlights →
-            </Link>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-zinc-800">
             {classes.map((c, i) => (
-              <div key={c.title} className={`p-8 flex flex-col gap-4 group cursor-pointer transition-colors ${i === 0 ? 'bg-[#e8132a]' : 'bg-zinc-950 hover:bg-zinc-900'}`}>
+              <div key={c.title} className={`p-8 flex flex-col gap-4 group cursor-pointer transition-colors ${i === 0 ? 'bg-[#1e3a8a]' : 'bg-zinc-950 hover:bg-zinc-900'}`}>
                 <div className="text-4xl">{c.icon}</div>
-                <span className={`text-xs font-bold uppercase tracking-widest ${i === 0 ? 'text-red-200' : 'text-[#e8132a]'}`}>{c.tag}</span>
+                <span className={`text-xs font-bold uppercase tracking-widest ${i === 0 ? 'text-blue-200' : 'text-[#e8132a]'}`}>{c.tag}</span>
                 <h3 className="text-xl font-black uppercase">{c.title}</h3>
-                <p className={`text-sm leading-relaxed flex-1 ${i === 0 ? 'text-red-100' : 'text-gray-400'}`}>{c.desc}</p>
+                <p className={`text-sm leading-relaxed flex-1 ${i === 0 ? 'text-blue-100' : 'text-gray-400'}`}>{c.desc}</p>
                 <button className={`text-xs font-bold uppercase tracking-widest mt-2 text-left ${i === 0 ? 'text-white' : 'text-[#e8132a]'} group-hover:underline`}>
                   Watch Now →
                 </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* HIGHLIGHTS BANNER */}
-      <section id="highlights" className="py-28 px-4 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[#e8132a] skew-y-1" />
-        <div className="relative z-10 max-w-6xl mx-auto text-center">
-          <p className="text-red-200 text-xs font-bold uppercase tracking-[0.3em] mb-4">Viral Moments</p>
-          <h2 className="text-5xl md:text-7xl font-black uppercase mb-6">Top Highlights</h2>
-          <p className="text-red-100 max-w-xl mx-auto mb-10">
-            Millions of views. One 5-year-old with gloves and a dream. Watch the clips taking the internet by storm.
-          </p>
-          <div className="grid sm:grid-cols-3 gap-4 max-w-4xl mx-auto mb-10">
-            {['First Knockout 🎯', 'Speed Bag Drills ⚡', 'Ring Debut 🏆'].map((clip) => (
-              <div key={clip} className="bg-black/30 border border-white/20 p-8 text-center hover:bg-black/50 transition-colors cursor-pointer">
-                <div className="text-4xl mb-3">▶</div>
-                <p className="font-bold uppercase tracking-wide text-sm">{clip}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* TRAINERS */}
-      <section className="py-24 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="w-10 h-0.5 bg-[#e8132a]" />
-            <span className="text-[#e8132a] text-xs font-bold uppercase tracking-[0.3em]">The Team</span>
-          </div>
-          <h2 className="text-5xl font-black uppercase mb-14">Meet The<br /><span className="text-[#e8132a]">Coaches</span></h2>
-
-          <div className="grid md:grid-cols-3 gap-px bg-zinc-800">
-            {trainers.map((t) => (
-              <div key={t.name} className="bg-[#080808] p-10 group hover:bg-zinc-900 transition-colors">
-                <div className="w-20 h-20 bg-zinc-800 flex items-center justify-center text-4xl mb-6 group-hover:bg-[#e8132a] transition-colors">
-                  {t.emoji}
-                </div>
-                <h3 className="text-2xl font-black uppercase mb-1">{t.name}</h3>
-                <p className="text-[#e8132a] text-xs font-bold uppercase tracking-widest mb-1">{t.role}</p>
-                <p className="text-gray-500 text-sm">{t.exp} experience</p>
               </div>
             ))}
           </div>
@@ -232,19 +217,20 @@ export default function Home() {
               Exclusive Lil Moochi merch — tees, hoodies, gloves, and more. Every purchase fuels a champion&apos;s journey.
             </p>
             <Link href="/store"
-              className="bg-[#e8132a] text-white font-black px-10 py-4 uppercase tracking-wide hover:bg-red-500 transition-colors inline-block">
+              className="bg-[#1e3a8a] text-white font-black px-10 py-4 uppercase tracking-wide hover:bg-blue-700 transition-colors inline-block">
               Shop Now
             </Link>
           </div>
           <div className="grid grid-cols-2 gap-px bg-zinc-800">
             {['👕 Tees', '🧥 Hoodies', '🥊 Gloves', '🧢 Caps'].map((item) => (
-              <div key={item} className="bg-zinc-950 p-10 text-center text-2xl font-black uppercase hover:bg-zinc-900 transition-colors cursor-pointer">
+              <div key={item} className="bg-zinc-950 aspect-square flex items-center justify-center text-xl md:text-2xl font-black uppercase hover:bg-zinc-900 transition-colors cursor-pointer">
                 {item}
               </div>
             ))}
           </div>
         </div>
       </section>
+
 
       <Footer />
     </div>
