@@ -253,6 +253,36 @@ export default function Home() {
         </div>
       </section>
 
+      {/* CONTACT / SPONSORSHIPS */}
+      <section id="contact" className="py-24 px-4 bg-[#080808]">
+        <div className="max-w-6xl mx-auto text-center">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <span className="w-10 h-0.5 bg-[#e8132a]" />
+            <span className="text-[#e8132a] text-xs font-bold uppercase tracking-[0.3em]">Get In Touch</span>
+            <span className="w-10 h-0.5 bg-[#e8132a]" />
+          </div>
+          <h2 className="font-black uppercase mb-6" style={{fontSize: 'clamp(1.5rem, 6vw, 3rem)'}}>
+            Sponsorships &<br /><span className="text-[#5b9bd5]">Partnerships</span>
+          </h2>
+          <p className="text-gray-400 leading-relaxed max-w-xl mx-auto mb-8">
+            Interested in sponsoring Lil Moochi, running a promotion, or partnering with the next world champion? We&apos;d love to hear from you.
+          </p>
+          <TrackedOutboundLink
+            href="mailto:management@lilmoochi.com"
+            label="Contact Email"
+            target="_self"
+            rel=""
+            className="inline-flex items-center gap-3 bg-[#1e3a8a] hover:bg-blue-700 transition-colors px-10 py-4 font-black uppercase tracking-wide text-white"
+          >
+            <span>✉</span>
+            management@lilmoochi.com
+          </TrackedOutboundLink>
+          <p className="text-gray-600 text-xs uppercase tracking-widest mt-6">
+            For sponsor deals, brand partnerships &amp; promotional inquiries
+          </p>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );

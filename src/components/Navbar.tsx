@@ -43,6 +43,7 @@ export default function Navbar() {
           <a href="https://www.instagram.com/lilmoochi2020" target="_blank" rel="noopener noreferrer" className="hover:text-[#5b9bd5] transition-colors">Instagram</a>
           <Link href="/#classes" className="hover:text-[#5b9bd5] transition-colors">Training</Link>
           <Link href="/#highlights" className="hover:text-[#5b9bd5] transition-colors">Highlights</Link>
+          <Link href="/#contact" className="hover:text-[#5b9bd5] transition-colors">Contact</Link>
           <Link href="/store" className="bg-[#1e3a8a] text-white px-5 py-2.5 hover:bg-blue-700 transition-colors">
             Shop Merch
           </Link>
@@ -94,6 +95,13 @@ export default function Navbar() {
             className="hover:text-[#5b9bd5] w-full py-3 min-h-[48px] flex items-center justify-center"
           >
             Highlights
+          </Link>
+          <Link
+            href="/#contact"
+            onClick={() => setOpen(false)}
+            className="hover:text-[#5b9bd5] w-full py-3 min-h-[48px] flex items-center justify-center"
+          >
+            Contact
           </Link>
           <Link
             href="/store"
