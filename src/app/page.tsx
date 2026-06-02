@@ -81,15 +81,30 @@ export default function Home() {
               />
             </div>
             <div className="flex flex-col items-center gap-4 w-full">
-              <span className="text-[10px] text-gray-500 uppercase tracking-widest">Partners</span>
-              <div className="relative w-full max-w-md h-32 md:h-40">
-                <Image
-                  src="/images/promo2.jpeg"
-                  alt="BAM Boxing & Martial Arts"
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-contain rounded opacity-90 hover:opacity-100 transition-opacity"
-                />
+              <div className="flex items-center gap-3">
+                <span className="w-6 h-0.5 bg-white/10" />
+                <span className="text-[10px] text-gray-500 uppercase tracking-widest">Partners</span>
+                <span className="w-6 h-0.5 bg-white/10" />
+              </div>
+              <div className="grid grid-cols-2 gap-4 w-full max-w-md">
+                <div className="relative h-24 md:h-32 bg-zinc-900/50 rounded flex items-center justify-center p-3">
+                  <Image
+                    src="/images/promo1.png"
+                    alt="Partner"
+                    fill
+                    sizes="(max-width: 640px) 50vw, 200px"
+                    className="object-contain rounded opacity-90 hover:opacity-100 transition-opacity p-3"
+                  />
+                </div>
+                <div className="relative h-24 md:h-32 bg-zinc-900/50 rounded flex items-center justify-center p-3">
+                  <Image
+                    src="/images/promo2.jpeg"
+                    alt="BAM Boxing & Martial Arts"
+                    fill
+                    sizes="(max-width: 640px) 50vw, 200px"
+                    className="object-contain rounded opacity-90 hover:opacity-100 transition-opacity p-3"
+                  />
+                </div>
               </div>
             </div>
           </div>
