@@ -26,7 +26,7 @@ export default function StorePage() {
             <span className="w-10 h-0.5 bg-[#1e3a8a]" />
             <span className="text-[#5b9bd5] text-xs font-bold uppercase tracking-[0.3em]">Official Merch</span>
           </div>
-          <h1 className="text-6xl md:text-8xl font-black uppercase leading-none mb-4">
+          <h1 className="font-black uppercase leading-none mb-4" style={{fontSize: 'clamp(2rem, 10vw, 5rem)'}}>
             Moochi<br /><span className="text-[#5b9bd5]">Store</span>
           </h1>
           <p className="text-gray-400 max-w-md">
@@ -66,8 +66,10 @@ export default function StorePage() {
 
       {/* Banner */}
       <section className="bg-[#1e3a8a] py-8 px-4 text-center">
-        <p className="font-black text-lg uppercase tracking-widest">
-          Free Shipping Over $75 &nbsp;·&nbsp; Code <span className="underline">MOOCHI10</span> for 10% Off
+        <p className="font-black text-base md:text-lg uppercase tracking-widest flex flex-wrap justify-center gap-x-3 gap-y-1">
+          <span>Free Shipping Over $75</span>
+          <span className="hidden sm:inline">·</span>
+          <span>Code <span className="underline">MOOCHI10</span> for 10% Off</span>
         </p>
       </section>
 

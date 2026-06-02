@@ -41,7 +41,7 @@ export default function Home() {
               <span className="w-10 h-0.5 bg-[#e8132a]" />
               <span className="text-[#e8132a] text-xs font-bold uppercase tracking-[0.3em]">Future World Champion</span>
             </div>
-            <h1 className="text-6xl md:text-8xl font-black uppercase leading-[0.9] mb-6">
+            <h1 className="font-black uppercase leading-[0.9] mb-6" style={{fontSize: 'clamp(2rem, 10vw, 5rem)'}}>
               LIL<br />
               <span className="text-[#5b9bd5]">MOOCHI</span><br />
               BOXING
@@ -106,7 +106,7 @@ export default function Home() {
               <span className="w-10 h-0.5 bg-[#e8132a]" />
               <span className="text-[#e8132a] text-xs font-bold uppercase tracking-[0.3em]">The Story</span>
             </div>
-            <h2 className="text-5xl md:text-6xl font-black uppercase leading-tight mb-6">
+            <h2 className="font-black uppercase leading-tight mb-6" style={{fontSize: 'clamp(1.5rem, 6vw, 3rem)'}}>
               Born To<br /><span className="text-[#e8132a]">Fight</span>
             </h2>
             <p className="text-gray-400 leading-relaxed mb-4">
@@ -146,7 +146,7 @@ export default function Home() {
             <span className="w-10 h-0.5 bg-[#e8132a]" />
             <span className="text-[#e8132a] text-xs font-bold uppercase tracking-[0.3em]">The Team</span>
           </div>
-          <h2 className="text-5xl font-black uppercase mb-14">Meet The<br /><span className="text-[#e8132a]">Coaches</span></h2>
+          <h2 className="font-black uppercase mb-14" style={{fontSize: 'clamp(1.5rem, 6vw, 3rem)'}}>Meet The<br /><span className="text-[#e8132a]">Coaches</span></h2>
 
           <div className="flex flex-col md:flex-row justify-center gap-12">
             {trainers.map((t) => (
@@ -180,7 +180,7 @@ export default function Home() {
                 <span className="w-10 h-0.5 bg-[#e8132a]" />
                 <span className="text-[#e8132a] text-xs font-bold uppercase tracking-[0.3em]">Training</span>
               </div>
-              <h2 className="text-5xl md:text-6xl font-black uppercase leading-tight">
+              <h2 className="font-black uppercase leading-tight" style={{fontSize: 'clamp(1.5rem, 6vw, 3rem)'}}>
                 Watch &<br /><span className="text-[#e8132a]">Learn</span>
               </h2>
             </div>
@@ -210,7 +210,7 @@ export default function Home() {
               <span className="w-10 h-0.5 bg-[#e8132a]" />
               <span className="text-[#e8132a] text-xs font-bold uppercase tracking-[0.3em]">Official Gear</span>
             </div>
-            <h2 className="text-5xl md:text-6xl font-black uppercase leading-tight mb-6">
+            <h2 className="font-black uppercase leading-tight mb-6" style={{fontSize: 'clamp(1.5rem, 6vw, 3rem)'}}>
               Rep The<br /><span className="text-[#e8132a]">Champ</span>
             </h2>
             <p className="text-gray-400 leading-relaxed mb-8 max-w-md">
