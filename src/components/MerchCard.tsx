@@ -16,7 +16,7 @@ interface MerchCardProps {
 export default function MerchCard({ name, price, tag, emoji, sizes = [], mockupImage }: MerchCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [selectedSize, setSelectedSize] = useState<string>(sizes[0] || '');
-  const [added, setAdded] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -34,10 +34,34 @@ export default function MerchCard({ name, price, tag, emoji, sizes = [], mockupI
     return () => observer.disconnect();
   }, [name, price]);
 
-  const handleAddToCart = () => {
+  const handleBuyNow = async () => {
+    setLoading(true);
     analytics.addToCart({ name, price });
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
+
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          price,
+          quantity: 1,
+          size: selectedSize,
+          image: mockupImage || null,
+        }),
+      });
+
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert('Checkout failed. Please try again.');
+        setLoading(false);
+      }
+    } catch {
+      alert('Something went wrong. Please try again.');
+      setLoading(false);
+    }
   };
 
   return (
@@ -60,7 +84,6 @@ export default function MerchCard({ name, price, tag, emoji, sizes = [], mockupI
             className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
-          /* Fallback logo mockup for products without photos */
           <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-zinc-700 to-zinc-900">
             <div className="relative w-24 h-24 mb-2">
               <Image
@@ -79,7 +102,7 @@ export default function MerchCard({ name, price, tag, emoji, sizes = [], mockupI
 
       {/* Card Info */}
       <div className="p-5 flex flex-col flex-1">
-        <h3 className="font-black text-sm uppercase leading-tight mb-3 flex-1">{name}</h3>
+        <h3 className="font-black text-sm uppercase leading-tight mb-3">{name}</h3>
 
         {sizes.length > 1 && (
           <div className="mb-4">
@@ -102,15 +125,20 @@ export default function MerchCard({ name, price, tag, emoji, sizes = [], mockupI
           </div>
         )}
 
-        <div className="flex items-center justify-between mt-auto">
-          <span className="text-xl font-black">{price}</span>
+        <div className="mt-auto">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-xl font-black">{price}</span>
+          </div>
           <button
-            className={`text-xs font-bold px-4 py-2.5 uppercase tracking-widest transition-all ${
-              added ? 'bg-green-600 text-white' : 'bg-[#1e3a8a] text-white hover:bg-blue-700'
+            onClick={handleBuyNow}
+            disabled={loading}
+            className={`w-full py-3 font-black text-xs uppercase tracking-widest transition-all ${
+              loading
+                ? 'bg-zinc-700 text-gray-400 cursor-not-allowed'
+                : 'bg-[#e8132a] text-white hover:bg-red-700'
             }`}
-            onClick={handleAddToCart}
           >
-            {added ? '✓ Added' : 'Add to Cart'}
+            {loading ? 'Redirecting...' : 'Buy Now'}
           </button>
         </div>
       </div>
