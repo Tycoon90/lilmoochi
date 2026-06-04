@@ -1,8 +1,8 @@
 'use client';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
+import { useCart } from '@/lib/cart';
 
 const navLinks = [
   { label: 'Training', href: '/#classes' },
@@ -18,6 +18,7 @@ export default function Navbar() {
   const menuRef = useRef<HTMLDivElement>(null);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
+  const { totalItems, setIsOpen: openCart } = useCart();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -82,6 +83,14 @@ export default function Navbar() {
           <Link href="/store" className="bg-[#1e3a8a] text-white px-5 py-2.5 hover:bg-blue-700 transition-colors">
             Shop Merch
           </Link>
+          <button onClick={() => openCart(true)} className="relative p-2 hover:text-[#5b9bd5] transition-colors">
+            <span className="text-lg">🛒</span>
+            {totalItems > 0 && (
+              <span className="absolute -top-1 -right-1 bg-[#e8132a] text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center">
+                {totalItems}
+              </span>
+            )}
+          </button>
         </div>
 
         <button

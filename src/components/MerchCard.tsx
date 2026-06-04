@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 import { analytics } from '@/lib/analytics';
+import { useCart } from '@/lib/cart';
 
 interface MerchCardProps {
   name: string;
@@ -16,7 +16,8 @@ interface MerchCardProps {
 export default function MerchCard({ name, price, tag, emoji, sizes = [], mockupImage }: MerchCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [selectedSize, setSelectedSize] = useState<string>(sizes[0] || '');
-  const [loading, setLoading] = useState(false);
+  const [added, setAdded] = useState(false);
+  const { addItem } = useCart();
 
   useEffect(() => {
     const el = ref.current;
@@ -34,34 +35,11 @@ export default function MerchCard({ name, price, tag, emoji, sizes = [], mockupI
     return () => observer.disconnect();
   }, [name, price]);
 
-  const handleBuyNow = async () => {
-    setLoading(true);
+  const handleAddToCart = () => {
     analytics.addToCart({ name, price });
-
-    try {
-      const res = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name,
-          price,
-          quantity: 1,
-          size: selectedSize,
-          image: mockupImage || null,
-        }),
-      });
-
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        alert('Checkout failed. Please try again.');
-        setLoading(false);
-      }
-    } catch {
-      alert('Something went wrong. Please try again.');
-      setLoading(false);
-    }
+    addItem({ name, price, size: selectedSize, emoji, mockupImage });
+    setAdded(true);
+    setTimeout(() => setAdded(false), 2000);
   };
 
   return (
@@ -76,24 +54,16 @@ export default function MerchCard({ name, price, tag, emoji, sizes = [], mockupI
         )}
 
         {mockupImage ? (
-          <Image
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
             src={mockupImage}
             alt={name}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-zinc-700 to-zinc-900">
-            <div className="relative w-24 h-24 mb-2">
-              <Image
-                src="/images/logo-transparent.png"
-                alt="Moochi Logo"
-                fill
-                sizes="96px"
-                className="object-contain drop-shadow-lg"
-              />
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/logo-transparent.png" alt="Moochi Logo" className="w-24 h-24 object-contain drop-shadow-lg mb-2" />
             <span className="text-4xl mt-2">{emoji}</span>
             <p className="text-white/30 text-[10px] uppercase tracking-[0.3em] mt-2 font-bold">LIL MOOCHI</p>
           </div>
@@ -130,15 +100,14 @@ export default function MerchCard({ name, price, tag, emoji, sizes = [], mockupI
             <span className="text-xl font-black">{price}</span>
           </div>
           <button
-            onClick={handleBuyNow}
-            disabled={loading}
+            onClick={handleAddToCart}
             className={`w-full py-3 font-black text-xs uppercase tracking-widest transition-all ${
-              loading
-                ? 'bg-zinc-700 text-gray-400 cursor-not-allowed'
+              added
+                ? 'bg-green-600 text-white'
                 : 'bg-[#e8132a] text-white hover:bg-red-700'
             }`}
           >
-            {loading ? 'Redirecting...' : 'Buy Now'}
+            {added ? '✓ Added to Cart' : 'Add to Cart'}
           </button>
         </div>
       </div>
