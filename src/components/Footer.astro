@@ -10,7 +10,7 @@
  * over. Instagram is, because the account is active and is better proof of
  * craftsmanship than any badge.
  */
-import { business, formattedAddress } from '~/data/business';
+import { business } from '~/data/business';
 import { services } from '~/data/services';
 
 const year = new Date().getFullYear();
@@ -61,8 +61,7 @@ const year = new Date().getFullYear();
         <h2 class="footer-heading">Visit</h2>
         <address>
           {business.street}<br />
-          {business.city}, {business.state}
-          {business.zip}
+          {business.city}, {business.state} {business.zip}
         </address>
         <p class="footer-hours">{business.hours}</p>
         <ul class="footer-social">

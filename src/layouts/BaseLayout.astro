@@ -114,12 +114,13 @@ if (description.length > 155) {
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
 
-    <script type="application/ld+json" set:html={jsonLd} />
+    <script is:inline type="application/ld+json" set:html={jsonLd} />
 
     {
       GA4_ID && (
         <>
           <script
+            is:inline
             async
             src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}
           />

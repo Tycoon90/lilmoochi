@@ -125,6 +125,11 @@ for (const file of pages) {
       fail(url, `possible missing space: "${tok}"`);
     // digit glued to a word of 4+ letters ("15years")
     if (/\d[a-z]{4,}/.test(word)) fail(url, `possible missing space: "${tok}"`);
+    // letters glued to a 5-digit number — a state abbreviation run into a ZIP
+    // ("FL33406"), which is what an interpolated address looks like when the
+    // whitespace between the two expressions has been trimmed away.
+    if (/[A-Za-z]{2}\d{5}\b/.test(word))
+      fail(url, `possible missing space between state and ZIP: "${tok}"`);
   }
 
   // --- stray characters --------------------------------------------------
