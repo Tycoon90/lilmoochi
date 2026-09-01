@@ -43,28 +43,37 @@
 /* ---------------------------------------------------------------------------
    Tokens.
 
-   The palette comes from the material: ordinary float glass is green at the
-   polished edge, which is exactly why low-iron glass is sold at a premium.
-   That green is the accent; the base is the cool white of light through a
-   pane, not a warm cream.
+   Taken from the company logo, not invented: the mark is gold and silver on a
+   near-black ground, and the values below were sampled out of the artwork
+   (gold #95763b-#ffe29c, silver #aba9a8, ground #0a0909).
 
-   Contrast, measured against --color-glass (WCAG 2.1):
-     ink       15.91  body text
-     slate      6.82  muted text            AA
-     edge-deep  6.70  accent text, buttons  AA  (white on it: 7.23)
-     edge       3.92  LARGE TEXT AND RULES ONLY — never body-size text
-     nickel     2.35  borders only — never text
+   The one thing that needed solving: the logo's gold cannot carry text on a
+   light background — #c9a44c on paper is 2.17:1. So the same metal appears at
+   two depths. Gold on dark surfaces, bronze (the gold darkened) on light. They
+   read as one material and both clear AA.
+
+   Contrast, measured (WCAG 2.1):
+     ON PAPER #f7f5f2
+       ink      17.72  body text
+       slate     7.03  muted text                    AA
+       bronze    5.71  links, accents, focus rings   AA   (white on it: 6.22)
+       gold      2.17  DECORATIVE HAIRLINES ONLY — never text, never an icon
+     ON INK #0f0e0d
+       white    19.28  headings
+       gold      8.17  accents, phone numbers        AA
+       silver    8.24  muted text                    AA
+       paper-deep 16.06 body text
 --------------------------------------------------------------------------- */
 @theme {
-  --color-glass: #f4f7f6;
-  --color-glass-deep: #e7edeb;
-  --color-ink: #101e1c;
-  --color-ink-soft: #1b2e2b;
-  --color-slate: #4a5957;
-  --color-nickel: #9aa5a3;
-  --color-edge: #1f8a7a;
-  --color-edge-deep: #136255;
-  --color-brass: #b08d57;
+  --color-paper: #f7f5f2;
+  --color-paper-deep: #edeae4;
+  --color-ink: #0f0e0d;
+  --color-ink-soft: #1c1a18;
+  --color-slate: #57534b;
+  --color-silver: #aba9a8;
+  --color-gold: #c9a44c;
+  --color-gold-bright: #e3c77e;
+  --color-bronze: #7a5c1e;
 
   --font-display: 'Archivo', ui-sans-serif, system-ui, sans-serif;
   --font-sans: 'Plex', ui-sans-serif, system-ui, sans-serif;
@@ -81,7 +90,7 @@
     -webkit-text-size-adjust: 100%;
   }
   body {
-    background: var(--color-glass);
+    background: var(--color-paper);
     color: var(--color-ink);
     font-family: var(--font-sans);
     font-size: 1.0625rem;
@@ -108,14 +117,23 @@
 
   /* Focus is visible everywhere, and offset so it reads against photography. */
   :focus-visible {
-    outline: 3px solid var(--color-edge-deep);
+    outline: 3px solid var(--color-bronze);
     outline-offset: 3px;
     border-radius: 2px;
   }
+  /* On the dark surfaces the same ring is drawn in gold, which is far more
+     visible against near-black than bronze is. */
+  .site-header :focus-visible,
+  .site-footer :focus-visible,
+  .cta-band :focus-visible,
+  .callbar :focus-visible,
+  dialog :focus-visible {
+    outline-color: var(--color-gold);
+  }
 
   ::selection {
-    background: var(--color-edge);
-    color: #fff;
+    background: var(--color-gold);
+    color: var(--color-ink);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -159,9 +177,9 @@
     transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
   }
   .btn-primary {
-    background: var(--color-edge-deep);
+    background: var(--color-bronze);
     color: #fff;
-    border: 1px solid var(--color-edge-deep);
+    border: 1px solid var(--color-bronze);
   }
   .btn-primary:hover { background: #0e4d43; border-color: #0e4d43; }
 
@@ -175,6 +193,16 @@
     background: color-mix(in srgb, var(--color-ink) 4%, transparent);
   }
 
+  .btn-gold {
+    background: var(--color-gold);
+    color: var(--color-ink);
+    border: 1px solid var(--color-gold);
+  }
+  .btn-gold:hover {
+    background: var(--color-gold-bright);
+    border-color: var(--color-gold-bright);
+  }
+
   .btn-on-dark {
     background: transparent;
     color: #fff;
@@ -184,7 +212,7 @@
 
   /* Inline text link: underline is the affordance, colour is secondary. */
   .link {
-    color: var(--color-edge-deep);
+    color: var(--color-bronze);
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.22em;
@@ -194,7 +222,7 @@
   /* The hairline. Used vertically, as a reveal line between panes — the place
      two pieces of glass meet — not as decorative framing around content. */
   .reveal-line {
-    border-left: 1px solid color-mix(in srgb, var(--color-edge) 42%, transparent);
+    border-left: 1px solid color-mix(in srgb, var(--color-gold) 42%, transparent);
     padding-left: clamp(1rem, 2.5vw, 1.75rem);
   }
 }
@@ -211,6 +239,6 @@
   top: 0.72em;
   width: 0.5rem;
   height: 1px;
-  background: var(--color-edge);
+  background: var(--color-bronze);
 }
-.prose-glass a { color: var(--color-edge-deep); text-decoration: underline; text-underline-offset: 0.2em; }
+.prose-glass a { color: var(--color-bronze); text-decoration: underline; text-underline-offset: 0.2em; }

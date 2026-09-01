@@ -20,22 +20,26 @@ const { label } = Astro.props;
 </p>
 
 <style>
+  /* Deliberately off-brand. Gold is now the company's own colour, so a warning
+     drawn in gold reads as decoration; this has to read as unfinished work.
+     Dashed border, alert red, and it stays that way until the client supplies
+     the figure and the block is deleted. */
   .todo {
     max-width: 60ch;
-    margin: 1.5rem 0;
-    padding: 0.95rem 1.15rem;
-    background: color-mix(in srgb, var(--color-brass) 13%, #fff);
-    border-left: 3px solid var(--color-brass);
+    margin: 1.75rem 0;
+    padding: 1rem 1.2rem;
+    background: #fff;
+    border: 2px dashed #8c1d18;
     color: var(--color-ink);
     font-size: 0.93rem;
     line-height: 1.55;
   }
   .todo strong {
     display: block;
-    font-size: 0.78rem;
-    letter-spacing: 0.04em;
+    font-size: 0.76rem;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #6b5220;
-    margin-bottom: 0.25rem;
+    color: #8c1d18;
+    margin-bottom: 0.35rem;
   }
 </style>

@@ -1,6 +1,11 @@
 ---
 /**
- * Header. Chrome is kept deliberately quiet so photography carries the page.
+ * Header.
+ *
+ * Dark, because the logo requires it: the mark sets "NEW SHOWER DOORS" in
+ * silver, which would be invisible on a light ground. A near-black bar also
+ * matches the artwork's own background, so the lockup sits in it rather than
+ * on it. The page body stays light and photography-led.
  *
  * The desktop services menu opens on hover and on :focus-within, so it needs
  * no JavaScript and works for keyboard users. The only script on the page is
@@ -16,10 +21,18 @@ const isCurrent = (href: string) =>
 
 <header class="site-header">
   <div class="shell site-header__inner">
-    <a href="/" class="wordmark" aria-label={`${business.name} — home`}>
-      <span class="wordmark__name">New Shower Doors</span>
-      <span class="wordmark__rule" aria-hidden="true"></span>
-      <span class="wordmark__sub">Unlimited</span>
+    <a href="/" class="brand" aria-label={`${business.name} — home`}>
+      <picture>
+        <source srcset="/images/brand/logo-lockup.avif" type="image/avif" />
+        <source srcset="/images/brand/logo-lockup.webp" type="image/webp" />
+        <img
+          src="/images/brand/logo-lockup.png"
+          alt={business.name}
+          width="1530"
+          height="415"
+          fetchpriority="high"
+        />
+      </picture>
     </a>
 
     <nav class="nav-desktop" aria-label="Primary">
@@ -63,7 +76,7 @@ const isCurrent = (href: string) =>
       >
         {business.phone}
       </a>
-      <a class="btn btn-primary header-cta" href="/contact/">Get an estimate</a>
+      <a class="btn btn-gold header-cta" href="/contact/">Get an estimate</a>
 
       <button
         type="button"
@@ -114,7 +127,7 @@ const isCurrent = (href: string) =>
         )
       }
     </ul>
-    <a class="btn btn-primary nav-mobile__cta" href="/contact/">Get an estimate</a>
+    <a class="btn btn-gold nav-mobile__cta" href="/contact/">Get an estimate</a>
   </nav>
 </header>
 
@@ -161,67 +174,45 @@ const isCurrent = (href: string) =>
     position: sticky;
     top: 0;
     z-index: 50;
-    background: color-mix(in srgb, var(--color-glass) 88%, transparent);
-    backdrop-filter: blur(10px);
+    background: color-mix(in srgb, var(--color-ink) 94%, transparent);
+    backdrop-filter: blur(12px);
     border-bottom: 1px solid
-      color-mix(in srgb, var(--color-nickel) 40%, transparent);
+      color-mix(in srgb, var(--color-gold) 26%, transparent);
   }
   .site-header__inner {
     display: flex;
     align-items: center;
     gap: 1rem;
-    min-height: 4.5rem;
+    min-height: 4.75rem;
   }
   @media (min-width: 480px) {
     .site-header__inner {
       gap: 2rem;
     }
   }
+  @media (min-width: 700px) {
+    .site-header__inner {
+      min-height: 5.5rem;
+    }
+  }
 
-  /* Wordmark sets the name in the expanded display face — the same treatment
-     as the headings, so the brand and the page read as one voice. */
-  .wordmark {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    text-decoration: none;
-    color: var(--color-ink);
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 1.02rem;
-    letter-spacing: -0.012em;
-    line-height: 1;
+  /* The lockup is the wordmark. It scales with the bar rather than sitting at
+     a fixed pixel size, and drops to the mark alone on narrow screens. */
+  .brand {
+    display: block;
     margin-right: auto;
+    line-height: 0;
+    flex: 0 1 auto;
     min-width: 0;
   }
-  /* Under 480px the name will not sit on one line beside the menu button
-     without pushing it off-canvas, so it stacks. The name stays complete
-     either way — it is never abbreviated. */
-  @media (max-width: 479px) {
-    .wordmark {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0;
-      line-height: 1.18;
-    }
-    .wordmark__rule {
-      display: none;
-    }
-  }
-  @media (min-width: 480px) {
-    .wordmark {
-      white-space: nowrap;
-    }
-  }
-  .wordmark__rule {
-    width: 1.4rem;
-    height: 1px;
-    background: var(--color-edge);
-    flex: none;
-  }
-  .wordmark__sub {
-    font-weight: 400;
-    color: var(--color-edge-deep);
+  /* The lockup is 1530x415. Sizing by width with an explicit aspect-ratio
+     reserves the box before the image arrives, so there is no shift, and the
+     floor keeps the wordmark legible on a 320px screen while still leaving
+     room for the menu button. */
+  .brand img {
+    width: clamp(11.5rem, 46vw, 14.75rem);
+    aspect-ratio: 1530 / 415;
+    height: auto;
   }
 
   .nav-desktop {
@@ -236,7 +227,7 @@ const isCurrent = (href: string) =>
     padding: 0;
   }
   .nav-desktop a {
-    color: var(--color-ink);
+    color: color-mix(in srgb, #fff 88%, transparent);
     text-decoration: none;
     font-size: 0.945rem;
     font-weight: 500;
@@ -245,10 +236,10 @@ const isCurrent = (href: string) =>
     border-bottom: 2px solid transparent;
   }
   .nav-desktop a:hover {
-    color: var(--color-edge-deep);
+    color: var(--color-gold);
   }
   .nav-desktop a[aria-current='page'] {
-    border-bottom-color: var(--color-edge);
+    border-bottom-color: var(--color-gold);
   }
 
   .has-menu {
@@ -259,9 +250,9 @@ const isCurrent = (href: string) =>
     top: 100%;
     left: -1rem;
     min-width: 17.5rem;
-    background: #fff;
-    border: 1px solid color-mix(in srgb, var(--color-nickel) 45%, transparent);
-    border-top: 2px solid var(--color-edge);
+    background: var(--color-ink-soft);
+    border: 1px solid color-mix(in srgb, var(--color-gold) 22%, transparent);
+    border-top: 2px solid var(--color-gold);
     padding: 0.5rem 0;
     margin: 0;
     list-style: none;
@@ -282,7 +273,8 @@ const isCurrent = (href: string) =>
     border-bottom: none;
   }
   .submenu a:hover {
-    background: var(--color-glass);
+    background: color-mix(in srgb, var(--color-gold) 12%, transparent);
+    color: var(--color-gold);
   }
 
   .header-actions {
@@ -292,13 +284,13 @@ const isCurrent = (href: string) =>
   }
   .header-phone {
     display: none;
-    color: var(--color-ink);
+    color: var(--color-gold);
     text-decoration: none;
     font-weight: 600;
     font-size: 0.98rem;
   }
   .header-phone:hover {
-    color: var(--color-edge-deep);
+    color: var(--color-gold-bright);
   }
   .header-cta {
     display: none;
@@ -312,7 +304,7 @@ const isCurrent = (href: string) =>
     height: 2.9rem;
     margin-right: -0.6rem;
     background: transparent;
-    border: 1px solid color-mix(in srgb, var(--color-ink) 22%, transparent);
+    border: 1px solid color-mix(in srgb, #fff 30%, transparent);
     border-radius: 2px;
     cursor: pointer;
   }
@@ -322,7 +314,7 @@ const isCurrent = (href: string) =>
     display: block;
     width: 1.15rem;
     height: 1.5px;
-    background: var(--color-ink);
+    background: #fff;
     transition: transform 0.2s ease, opacity 0.2s ease;
   }
   .hamburger__bars::before,
@@ -348,37 +340,39 @@ const isCurrent = (href: string) =>
 
   .nav-mobile {
     border-top: 1px solid
-      color-mix(in srgb, var(--color-nickel) 40%, transparent);
+      color-mix(in srgb, var(--color-gold) 22%, transparent);
     padding: 0.75rem clamp(1.25rem, 5vw, 3.5rem) 1.5rem;
-    background: var(--color-glass);
+    background: var(--color-ink);
   }
   .nav-mobile ul {
     list-style: none;
     margin: 0 0 1rem;
     padding: 0;
   }
-  .nav-mobile a {
+  /* Scoped to the list: this rule used to catch the CTA button too and
+     repaint its ink label white, leaving white-on-gold at 2.36:1. */
+  .nav-mobile ul a {
     display: block;
     padding: 0.72rem 0;
-    color: var(--color-ink);
+    color: color-mix(in srgb, #fff 90%, transparent);
     text-decoration: none;
     font-weight: 500;
     border-bottom: 1px solid
-      color-mix(in srgb, var(--color-nickel) 26%, transparent);
+      color-mix(in srgb, #fff 14%, transparent);
   }
   .nav-mobile__label {
     padding: 0.9rem 0 0.35rem;
     font-size: 0.78rem;
-    color: var(--color-slate);
-    border-bottom: 1px solid
-      color-mix(in srgb, var(--color-nickel) 26%, transparent);
+    color: var(--color-silver);
+    border-bottom: 1px solid color-mix(in srgb, #fff 14%, transparent);
   }
   .nav-mobile__child a {
     padding-left: 1rem;
     font-weight: 400;
+    color: color-mix(in srgb, #fff 76%, transparent);
   }
-  .nav-mobile a[aria-current='page'] {
-    color: var(--color-edge-deep);
+  .nav-mobile ul a[aria-current='page'] {
+    color: var(--color-gold);
   }
   .nav-mobile__cta {
     width: 100%;

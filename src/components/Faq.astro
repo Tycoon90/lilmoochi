@@ -49,12 +49,12 @@ const { faqs, heading = 'Common questions' } = Astro.props;
     margin: 0 0 1.75rem;
   }
   .faq-list {
-    border-top: 1px solid color-mix(in srgb, var(--color-nickel) 55%, transparent);
+    border-top: 1px solid color-mix(in srgb, var(--color-silver) 55%, transparent);
     max-width: 60rem;
   }
   details {
     border-bottom: 1px solid
-      color-mix(in srgb, var(--color-nickel) 55%, transparent);
+      color-mix(in srgb, var(--color-silver) 55%, transparent);
   }
   summary {
     display: flex;
@@ -71,11 +71,11 @@ const { faqs, heading = 'Common questions' } = Astro.props;
     display: none;
   }
   summary:hover {
-    color: var(--color-edge-deep);
+    color: var(--color-bronze);
   }
   .faq-chevron {
     flex: none;
-    color: var(--color-edge-deep);
+    color: var(--color-bronze);
     transition: transform 0.2s ease;
   }
   details[open] .faq-chevron {

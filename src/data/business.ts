@@ -31,7 +31,14 @@ export const business = {
 /** Canonical origin. Domain spelling deliberately differs from the name. */
 export const SITE = 'https://showersdoorunlimited.com';
 
-/** Tagline carried over from the previous site — the client's own words. */
+/**
+ * The brand tagline, set beneath the wordmark in the company logo.
+ * Rendered as real text wherever it appears — text inside the logo image is
+ * not readable by search engines or screen readers.
+ */
+export const brandTagline = 'Premium glass. Elevated living.';
+
+/** Operational tagline carried over from the previous site — client's words. */
 export const tagline = 'Installed by Highly Trained and Skilled Technicians';
 
 /**

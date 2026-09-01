@@ -10,7 +10,7 @@
  * over. Instagram is, because the account is active and is better proof of
  * craftsmanship than any badge.
  */
-import { business } from '~/data/business';
+import { business, brandTagline } from '~/data/business';
 import { services } from '~/data/services';
 
 const year = new Date().getFullYear();
@@ -20,7 +20,19 @@ const year = new Date().getFullYear();
   <div class="shell">
     <div class="footer-grid">
       <div class="footer-brand">
-        <p class="footer-name">{business.name}</p>
+        <picture>
+          <source srcset="/images/brand/logo-lockup.avif" type="image/avif" />
+          <source srcset="/images/brand/logo-lockup.webp" type="image/webp" />
+          <img
+            class="footer-logo"
+            src="/images/brand/logo-lockup.png"
+            alt={business.name}
+            width="720"
+            height="279"
+            loading="lazy"
+          />
+        </picture>
+        <p class="footer-tagline">{brandTagline}</p>
         <p class="footer-note">
           Custom glass shower doors and enclosures, installed across Palm Beach,
           Broward and Miami-Dade counties by a family-owned shop with{' '}
@@ -85,6 +97,7 @@ const year = new Date().getFullYear();
 <style>
   .site-footer {
     background: var(--color-ink);
+    border-top: 1px solid color-mix(in srgb, var(--color-gold) 22%, transparent);
     color: color-mix(in srgb, #fff 82%, transparent);
     padding-block: clamp(3rem, 6vw, 4.75rem) 2rem;
     font-size: 0.95rem;
@@ -94,13 +107,18 @@ const year = new Date().getFullYear();
     gap: clamp(2rem, 4vw, 3rem);
     grid-template-columns: 1fr;
   }
-  .footer-name {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 1.15rem;
-    color: #fff;
-    margin: 0 0 0.65rem;
-    letter-spacing: -0.012em;
+  .footer-logo {
+    display: block;
+    width: 100%;
+    max-width: 17rem;
+    height: auto;
+  }
+  .footer-tagline {
+    margin: 0.85rem 0 1.1rem;
+    color: var(--color-gold);
+    font-size: 0.9rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
   .footer-note {
     margin: 0 0 1rem;
@@ -108,7 +126,7 @@ const year = new Date().getFullYear();
     line-height: 1.6;
   }
   .footer-phone {
-    color: var(--color-brass);
+    color: var(--color-gold);
     text-decoration: none;
     font-weight: 600;
     font-size: 1.06rem;

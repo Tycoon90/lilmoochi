@@ -44,7 +44,7 @@ import { business } from '~/data/business';
     z-index: 60;
     display: grid;
     grid-template-columns: 1.35fr 1fr;
-    border-top: 1px solid color-mix(in srgb, #fff 18%, transparent);
+    border-top: 1px solid color-mix(in srgb, var(--color-gold) 30%, transparent);
   }
   .callbar a {
     display: flex;
@@ -57,8 +57,8 @@ import { business } from '~/data/business';
     text-decoration: none;
   }
   .callbar__call {
-    background: var(--color-edge-deep);
-    color: #fff;
+    background: var(--color-gold);
+    color: var(--color-ink);
   }
   .callbar__quote {
     background: var(--color-ink);

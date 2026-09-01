@@ -11,7 +11,9 @@
     "check": "astro check",
     "check:output": "node scripts/check-output.mjs",
     "migrate:images": "node scripts/fetch-legacy-images.mjs",
-    "fonts:build": "node scripts/build-fonts.mjs"
+    "fonts:build": "node scripts/build-fonts.mjs",
+    "logo:build": "node scripts/build-logo.mjs",
+    "og:build": "node scripts/build-og.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

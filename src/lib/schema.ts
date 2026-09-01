@@ -24,7 +24,7 @@ export function localBusiness() {
     email: business.email,
     founder: { '@type': 'Person', name: business.owner },
     image: abs('/images/og-default.jpg'),
-    logo: abs('/images/logo.png'),
+    logo: abs('/images/brand/logo-full.png'),
     address: {
       '@type': 'PostalAddress',
       streetAddress: business.street,

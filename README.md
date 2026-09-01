@@ -27,6 +27,8 @@ npm run dev          # http://localhost:4321
 | `npm run check:output` | Run the output checks against an existing `dist/` |
 | `npm run migrate:images` | Download the photographs from the old site (see below) |
 | `npm run fonts:build` | Regenerate the subset webfonts (needs `pip install "fonttools[woff]"`) |
+| `npm run logo:build` | Regenerate the logo variants from the master artwork |
+| `npm run og:build` | Regenerate the Open Graph card |
 
 ### The output checks are the point
 
@@ -121,6 +123,64 @@ adding it up front is a maintenance burden for a problem this site may never
 have.
 
 ---
+
+## Brand
+
+### Colour
+
+The palette is taken from the logo, not invented. The values were sampled out
+of the artwork: gold `#95763b`–`#ffe29c`, silver `#aba9a8`, ground `#0a0909`.
+
+One thing needed solving. The logo's gold cannot carry text on a light
+background — `#c9a44c` on paper measures 2.17:1, which fails AA badly. So the
+same metal is used at two depths:
+
+| Token | Value | Where | Contrast |
+|---|---|---|---|
+| `--color-gold` | `#c9a44c` | Dark surfaces: header, footer, CTA bands, call bar | 8.17:1 on ink |
+| `--color-bronze` | `#7a5c1e` | Light surfaces: links, buttons, focus rings, icons | 5.71:1 on paper; white on it 6.22:1 |
+| `--color-ink` | `#0f0e0d` | Dark grounds and body text | 17.72:1 on paper |
+| `--color-paper` | `#f7f5f2` | Page background | — |
+| `--color-slate` | `#57534b` | Muted body text | 7.03:1 on paper |
+| `--color-silver` | `#aba9a8` | Muted text on dark, hairlines | 8.24:1 on ink |
+
+**Gold is never used for text or icons on a light background.** At 2.17:1 it is
+legal only for decorative hairlines. If you need a gold-looking accent on
+paper, use bronze — it reads as the same metal and clears AA.
+
+The header and footer are dark because the logo requires it: the mark sets
+"NEW SHOWER DOORS" in silver, which is invisible on a light ground. The page
+body between them stays light and photography-led.
+
+### The logo files
+
+The master artwork lives at `src/assets/brand/logo-master.png`.
+`npm run logo:build` derives three variants into `public/images/brand/`, each
+as AVIF, WebP and PNG:
+
+| Variant | Contents | Used by |
+|---|---|---|
+| `logo-lockup` | Mark + wordmark, **tagline dropped** | Header, footer |
+| `logo-full` | The complete lockup including the tagline | Open Graph card, `logo` in schema |
+| `logo-mark` | The NSD monogram alone | Favicons, touch icon |
+
+Two things were done to the artwork, and both should be reviewed:
+
+1. **A compact lockup was composited.** At any width a site header can give it,
+   the full lockup renders the tagline about four pixels tall — noise rather
+   than words. The compact variant pairs the mark with the two main text lines.
+   This is ordinary primary/secondary lockup practice, but it is a derived
+   asset, not something the client supplied.
+2. **The near-black ground was keyed to transparency**, so the mark sits on any
+   dark surface without showing a box. The artwork has no alpha channel.
+
+Because the tagline is dropped from the header and footer lockup, **"Premium
+glass. Elevated living." is rendered as real text** in the footer, from
+`brandTagline` in `business.ts`. Text inside an image is not readable by search
+engines or screen readers.
+
+If official artwork arrives as separate lockups, use those files directly and
+retire `scripts/build-logo.mjs`.
 
 ## How the site is put together
 
@@ -235,10 +295,10 @@ Measured with Lighthouse (mobile preset — simulated 4G, 4× CPU throttle) agai
 | Accessibility | **100** |
 | Best practices | **100** |
 | SEO | **100** |
-| LCP | **1.4s** (budget: under 2.0s) |
+| LCP | **1.5s** (budget: under 2.0s) |
 | CLS | **0** |
 | Total blocking time | **0ms** |
-| Page weight | ~113KB over 6 requests |
+| Page weight | ~124KB over 7 requests |
 
 **No JavaScript files are emitted at all.** The mobile nav, the gallery
 lightbox and the form timestamp are the only scripts, and they inline into the
@@ -249,9 +309,21 @@ blocks render. Archivo ships with a 62%–125% width axis, but this design uses
 exactly one width; instancing that axis away and subsetting takes it from 88KB
 to 26KB with byte-identical rendering. `npm run fonts:build` regenerates them.
 
+Regenerating the Open Graph card needs that same font visible to fontconfig,
+because the card's text is rendered by librsvg rather than a browser:
+
+```bash
+npm run fonts:build
+cp node_modules/.font-build/archivo-inst.ttf ~/.fonts/ && fc-cache -f
+npm run og:build
+```
+
+Without that step the card silently falls back to a system sans, so look at
+`public/images/og-default.jpg` before shipping it.
+
 **Re-measure after the images land.** LCP is currently a text element. Once the
 hero photographs are in, the hero image becomes the LCP element. There is about
-0.6s of headroom against the 2.0s budget; if it is exceeded, add a
+0.5s of headroom against the 2.0s budget; if it is exceeded, add a
 `<link rel="preload" as="image">` for the hero image on the home and frameless
 pages, which is the standard fix and was left out only because there is no
 image to preload yet.
@@ -326,7 +398,7 @@ customer's words.
 
 | Item | Detail |
 |---|---|
-| **Logo** | The schema and touch icon reference `/images/logo.png`, which arrives with `npm run migrate:images`. If it does not, supply the real logo. The current favicon and OG image use a typographic mark designed for this site, not the client's logo. |
+| **Official logo artwork** | The real logo is in use across the site. What is missing is a proper master: the supplied file is a single opaque 1717x916 PNG. Ask for an **SVG or transparent PNG**, plus a **stacked lockup** and a **mark-only** file. See *Brand* below — the variants currently in use are derived from that one PNG. |
 | **Licence and insurance** | The site states the business is "fully licensed and insured" — the client's own wording from the old site. **No licence number is published**, because none was supplied. If the client wants one shown, get the number and verify it first. |
 | **Old URL list** | The full old-site URL inventory could not be captured. See [MIGRATION.md](MIGRATION.md) — ten minutes in Search Console closes this. |
 
