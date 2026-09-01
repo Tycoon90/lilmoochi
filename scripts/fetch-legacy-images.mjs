@@ -27,6 +27,8 @@ const { photoSlots, legacyLogo } = await import('../src/data/photos.ts')
     // photos.ts is TypeScript; parse the two exports we need without a compiler.
     const { readFile } = await import('node:fs/promises');
     const src = await readFile(join(root, 'src/data/photos.ts'), 'utf8');
+    // Only slots that still name a legacy path; a null legacy means the
+    // slot is already filled by a photograph the client supplied.
     const slots = [...src.matchAll(
       /file:\s*'([^']+)',\s*\n\s*alt:[\s\S]*?legacy:\s*\n?\s*'([^']+)'/g,
     )].map(([, file, legacy]) => ({ file, legacy }));

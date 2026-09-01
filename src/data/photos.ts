@@ -2,50 +2,55 @@
  * Photo slots.
  *
  * Each entry is a *slot* on the site: a place a photograph appears, the
- * subject that belongs there, and the alt text that describes it. The legacy
- * file that should fill each slot is recorded in `legacy`.
+ * subject that belongs there, and the alt text that describes it.
  *
- * IMPORTANT — alt text and verification
- * The legacy photographs could not be retrieved in the build environment (the
- * old host is blocked by egress policy), so nobody has yet compared each
- * legacy file against the slot it is assigned to. The alt text below describes
- * the subject each slot is *meant* to show. Once `npm run migrate:images` has
- * run, someone must open each photograph and confirm two things:
- *   1. the file actually shows the subject named in `alt`; and
- *   2. any detail in the alt text (hardware finish, room, glass type) is true.
- * Where a photo does not match, either move the file to a different slot or
- * correct the alt text. Do not leave alt text that describes something the
- * photograph does not show — that is worse than no alt text at all.
+ * `altVerified: true` means someone has actually looked at the photograph and
+ * confirmed the alt text describes what is in it. Four slots are filled and
+ * verified — the client supplied those photographs directly, and the alt text
+ * below was written from the images themselves, naming the hardware finish,
+ * the configuration and the tile that are genuinely visible in each.
  *
- * `altVerified` is false for every entry until that pass happens.
+ * The remaining slots are still empty. Their alt text describes the subject
+ * the slot is *meant* to hold and stays `altVerified: false` until a real
+ * photograph is in place and has been checked. Alt text describing something a
+ * photograph does not show is worse than no alt text.
+ *
+ * NOTE ON SUBJECT MATCHING: every supplied photograph shows a *frameless*
+ * enclosure. None of them are placed on the sliding, framed or custom mirror
+ * pages, because using a frameless photo to sell a framed door misrepresents
+ * the product a customer is reading about.
+ *
+ * `legacy` is the path on the old WordPress site that should fill a slot;
+ * `npm run migrate:images` reads it. It is null where the slot is already
+ * filled.
  */
 export type PhotoSlot = {
   /** Filename written into src/assets/photos/. */
   file: string;
   alt: string;
-  /** Path on the old WordPress site this should be sourced from. */
-  legacy: string;
+  /** Path on the old WordPress site, or null if the slot is already filled. */
+  legacy: string | null;
   altVerified: boolean;
 };
 
 export const photoSlots: PhotoSlot[] = [
   {
     file: 'home-hero.jpg',
-    alt: 'Frameless glass shower enclosure installed in a West Palm Beach bathroom',
-    legacy: '/wp-content/uploads/2022/12/IMG_5147.jpg',
-    altVerified: false,
+    alt: 'Frameless glass shower enclosure with polished chrome hardware, a built-in corner bench and a herringbone marble mosaic floor',
+    legacy: null,
+    altVerified: true,
   },
   {
     file: 'frameless-hero.jpg',
-    alt: 'Clear frameless glass shower enclosure with a single hinged door in a Palm Beach County home',
-    legacy: '/wp-content/uploads/2022/12/IMG_5147-1.jpg',
-    altVerified: false,
+    alt: 'Neo-angle frameless glass shower enclosure with matte black clamps and support bar, white subway tile and a grey hexagon mosaic floor',
+    legacy: null,
+    altVerified: true,
   },
   {
     file: 'frameless-corner.jpg',
-    alt: 'Corner frameless shower enclosure with two fixed glass panels meeting at a polished edge',
-    legacy: '/wp-content/uploads/2022/12/IMG_4158-1.jpg',
-    altVerified: false,
+    alt: 'Frameless glass shower enclosure with a glass ceiling panel and matte black clamps, fitted under a sloped ceiling',
+    legacy: null,
+    altVerified: true,
   },
   {
     file: 'frameless-hardware.jpg',
@@ -96,9 +101,9 @@ export const photoSlots: PhotoSlot[] = [
   },
   {
     file: 'about-work.jpg',
-    alt: 'Shower door and enclosure work by New Shower Doors Unlimited',
-    legacy: '/wp-content/uploads/2022/12/IMG_4713.jpg',
-    altVerified: false,
+    alt: 'Hinged glass shower enclosure with chrome hardware, beside a wood-grain floating vanity and a wall-width mirror',
+    legacy: null,
+    altVerified: true,
   },
 ];
 

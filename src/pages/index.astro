@@ -241,10 +241,12 @@ const steps = [
     font-size: 0.95rem;
     max-width: 34ch;
   }
+  /* Height is left to the image. Forcing height:100% made the row height
+     decide the crop, which letterboxed a square photograph into a strip and
+     cut the work out of the shot. */
   .hero__media :global(img) {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
     display: block;
   }
   .hero__media :global(.photo-missing) {
