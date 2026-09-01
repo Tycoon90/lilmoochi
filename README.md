@@ -238,7 +238,46 @@ there. Not before.
 
 ## Images
 
-### ⚠️ The photographs have not been migrated
+### Status: four photographs in, seven slots still empty
+
+The client supplied four photographs of real installations. They are in place
+and their alt text is **verified** — written from the images themselves, naming
+the hardware finish, configuration and tile visible in each, with
+`altVerified: true` in `src/data/photos.ts`.
+
+| Slot | Shows |
+|---|---|
+| `home-hero` | Chrome hardware, built-in corner bench, herringbone marble floor |
+| `frameless-hero` | Neo-angle enclosure, matte black clamps and support bar |
+| `frameless-corner` | Glass ceiling panel, matte black clamps, sloped ceiling |
+| `about-work` | Chrome hardware beside a wood-grain vanity and wall mirror |
+
+**All four show frameless enclosures.** None are used on the sliding, framed or
+custom mirror pages — a frameless photo next to copy selling a framed door
+misrepresents the product the reader came for. Those pages still show
+placeholders, and that is the correct state until photographs of that work
+exist.
+
+The gallery lists only slots with a photograph on disk, so it shows four real
+installs rather than four photos and seven empty tiles.
+
+**Two things to ask the client for:**
+
+1. **Full-resolution originals.** The supplied files are 720–1024px wide. They
+   are fine at the sizes used now, but they are near their limit on a hero and
+   will look soft on a high-density screen at larger sizes. The originals off
+   the phone will be several times larger.
+2. **Photographs of the other work** — sliding and bypass doors, framed doors
+   and tub enclosures, custom mirrors, and a hardware close-up. Those four
+   pages are selling work the site cannot currently show.
+
+Privacy note: the build strips EXIF. Two of the four supplied files carried
+metadata, and job-site photographs routinely carry GPS coordinates of
+customers' homes. Astro re-encodes every image through sharp and no EXIF
+survives into `dist/`. Do not bypass the pipeline by dropping files straight
+into `public/`.
+
+### ⚠️ The legacy photographs have not been migrated
 
 `npm run migrate:images` downloads the eleven photographs and the logo from the
 old site into `src/assets/photos/`, named for the slot each fills. **It could
@@ -258,11 +297,12 @@ If the old site is gone by the time you read this, source the photographs from
 the client's phone or the Instagram account and drop them into
 `src/assets/photos/` using the filenames listed in `src/data/photos.ts`.
 
-### ⚠️ Alt text needs one verification pass
+### ⚠️ Alt text on the remaining slots needs verification
 
-The alt text in `src/data/photos.ts` describes the subject each slot is *meant*
-to hold. **Nobody has compared it against the actual photographs**, because they
-could not be downloaded. Every entry is marked `altVerified: false`.
+The four supplied photographs have verified alt text. For every other slot, the
+alt text describes the subject the slot is *meant* to hold, and nobody has
+compared it against a real photograph — those entries are marked
+`altVerified: false`.
 
 Once the images are in, open each one and confirm:
 
