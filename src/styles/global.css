@@ -1,0 +1,213 @@
+@import 'tailwindcss';
+
+/* ---------------------------------------------------------------------------
+   Typefaces — self-hosted, latin subset only, swap so nothing blocks render.
+   Archivo is loaded on its width axis so display type can be set expanded;
+   the wide setting is the signature of the page and is deliberately not the
+   condensed treatment that reads as default.
+--------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url('/fonts/archivo-latin-wdth.woff2') format('woff2-variations');
+}
+@font-face {
+  font-family: 'Plex';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/plex-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Plex';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/plex-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Plex';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/plex-600.woff2') format('woff2');
+}
+
+/* ---------------------------------------------------------------------------
+   Tokens.
+
+   The palette comes from the material: ordinary float glass is green at the
+   polished edge, which is exactly why low-iron glass is sold at a premium.
+   That green is the accent; the base is the cool white of light through a
+   pane, not a warm cream.
+
+   Contrast, measured against --color-glass (WCAG 2.1):
+     ink       15.91  body text
+     slate      6.82  muted text            AA
+     edge-deep  6.70  accent text, buttons  AA  (white on it: 7.23)
+     edge       3.92  LARGE TEXT AND RULES ONLY — never body-size text
+     nickel     2.35  borders only — never text
+--------------------------------------------------------------------------- */
+@theme {
+  --color-glass: #f4f7f6;
+  --color-glass-deep: #e7edeb;
+  --color-ink: #101e1c;
+  --color-ink-soft: #1b2e2b;
+  --color-slate: #4a5957;
+  --color-nickel: #9aa5a3;
+  --color-edge: #1f8a7a;
+  --color-edge-deep: #136255;
+  --color-brass: #b08d57;
+
+  --font-display: 'Archivo', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Plex', ui-sans-serif, system-ui, sans-serif;
+
+  --text-hero: clamp(2.5rem, 5.6vw, 4.4rem);
+  --text-h2: clamp(1.9rem, 3.6vw, 3rem);
+  --text-h3: clamp(1.25rem, 1.9vw, 1.6rem);
+  --text-lead: clamp(1.075rem, 1.5vw, 1.3rem);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-glass);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, .display {
+    font-family: var(--font-display);
+    font-stretch: 118%;      /* expanded — the page's signature setting */
+    font-weight: 600;
+    line-height: 1.04;
+    letter-spacing: -0.017em;
+    text-wrap: balance;
+  }
+  h1 { font-size: var(--text-hero); }
+  h2 { font-size: var(--text-h2); }
+  h3 {
+    font-size: var(--text-h3);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.008em;
+  }
+  p { text-wrap: pretty; }
+
+  /* Focus is visible everywhere, and offset so it reads against photography. */
+  :focus-visible {
+    outline: 3px solid var(--color-edge-deep);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--color-edge);
+    color: #fff;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Page gutter. One rule, so section padding never fights itself. */
+  .shell {
+    width: 100%;
+    max-width: 78rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 5vw, 3.5rem);
+  }
+  /* Reading measure: under 80 characters, per the type scale. */
+  .measure { max-width: 63ch; }
+  .measure-tight { max-width: 52ch; }
+
+  .section { padding-block: clamp(3.75rem, 8vw, 7.5rem); }
+  .section-tight { padding-block: clamp(2.75rem, 5vw, 4.5rem); }
+
+  /* Buttons. Filled uses edge-deep so white text clears AA at 7.23:1. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0.8rem 1.6rem;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.005em;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+  }
+  .btn-primary {
+    background: var(--color-edge-deep);
+    color: #fff;
+    border: 1px solid var(--color-edge-deep);
+  }
+  .btn-primary:hover { background: #0e4d43; border-color: #0e4d43; }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--color-ink);
+    border: 1px solid color-mix(in srgb, var(--color-ink) 28%, transparent);
+  }
+  .btn-outline:hover {
+    border-color: var(--color-ink);
+    background: color-mix(in srgb, var(--color-ink) 4%, transparent);
+  }
+
+  .btn-on-dark {
+    background: transparent;
+    color: #fff;
+    border: 1px solid color-mix(in srgb, #fff 45%, transparent);
+  }
+  .btn-on-dark:hover { background: rgba(255, 255, 255, 0.1); border-color: #fff; }
+
+  /* Inline text link: underline is the affordance, colour is secondary. */
+  .link {
+    color: var(--color-edge-deep);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
+  }
+  .link:hover { color: var(--color-ink); }
+
+  /* The hairline. Used vertically, as a reveal line between panes — the place
+     two pieces of glass meet — not as decorative framing around content. */
+  .reveal-line {
+    border-left: 1px solid color-mix(in srgb, var(--color-edge) 42%, transparent);
+    padding-left: clamp(1rem, 2.5vw, 1.75rem);
+  }
+}
+
+/* Body copy inside long-form service sections. */
+.prose-glass p { margin-block: 1.05em; }
+.prose-glass h3 { margin-block: 2.2em 0.6em; }
+.prose-glass ul { margin-block: 1.05em; padding-left: 1.15rem; }
+.prose-glass li { margin-block: 0.42em; list-style: none; position: relative; }
+.prose-glass ul li::before {
+  content: '';
+  position: absolute;
+  left: -1.15rem;
+  top: 0.72em;
+  width: 0.5rem;
+  height: 1px;
+  background: var(--color-edge);
+}
+.prose-glass a { color: var(--color-edge-deep); text-decoration: underline; text-underline-offset: 0.2em; }

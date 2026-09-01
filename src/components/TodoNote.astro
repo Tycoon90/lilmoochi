@@ -1,0 +1,41 @@
+---
+/**
+ * A visible, deliberately un-missable placeholder for a value only the client
+ * can supply — prices, above all.
+ *
+ * Nothing here is invented. Every instance is listed in the README, and every
+ * one must be resolved or removed before launch. Search the codebase for
+ * "TodoNote" to find them all.
+ */
+interface Props {
+  /** What the client needs to confirm. */
+  label: string;
+}
+const { label } = Astro.props;
+---
+
+<p class="todo" role="note">
+  <strong>TODO: confirm with client</strong>
+  <span>{label}</span>
+</p>
+
+<style>
+  .todo {
+    max-width: 60ch;
+    margin: 1.5rem 0;
+    padding: 0.95rem 1.15rem;
+    background: color-mix(in srgb, var(--color-brass) 13%, #fff);
+    border-left: 3px solid var(--color-brass);
+    color: var(--color-ink);
+    font-size: 0.93rem;
+    line-height: 1.55;
+  }
+  .todo strong {
+    display: block;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #6b5220;
+    margin-bottom: 0.25rem;
+  }
+</style>

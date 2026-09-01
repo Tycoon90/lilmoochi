@@ -1,0 +1,60 @@
+---
+/**
+ * Reviews section — BUILT, DELIBERATELY UNWIRED.
+ *
+ * Renders nothing while `reviews` is empty, so the live site never shows an
+ * empty testimonial rail. The previous site displayed "+289 Happy Clients" and
+ * "5 Star Reviews" with nothing behind either number; none of that is carried
+ * over, and no placeholder text stands in for a customer's words.
+ *
+ * TODO: confirm with client — supply real reviews with the reviewer's
+ * permission (name, date, rating, text), populate `reviews` in
+ * src/lib/reviews.ts, then drop <Reviews /> onto the home page and add
+ * reviewSchema() to its JSON-LD graph. Until then this renders null and no
+ * Review or AggregateRating markup is emitted anywhere on the site.
+ */
+import { reviews } from '~/lib/reviews';
+---
+
+{
+  reviews.length > 0 && (
+    <section class="section shell">
+      <h2>What customers say</h2>
+      <ul class="reviews">
+        {reviews.map((r) => (
+          <li class="review reveal-line">
+            <blockquote>{r.body}</blockquote>
+            <p class="review__by">
+              {r.author} · {new Date(r.datePublished).getFullYear()}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+<style>
+  .reviews {
+    display: grid;
+    gap: 2rem;
+    list-style: none;
+    margin: 2.5rem 0 0;
+    padding: 0;
+  }
+  .review blockquote {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+  .review__by {
+    margin: 0.85rem 0 0;
+    color: var(--color-slate);
+    font-size: 0.9rem;
+  }
+  @media (min-width: 800px) {
+    .reviews {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

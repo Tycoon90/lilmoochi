@@ -1,0 +1,203 @@
+---
+/**
+ * ServiceLayout — the shared shape of every service page.
+ *
+ * Owns the page hero, breadcrumbs, JSON-LD (LocalBusiness + Service +
+ * BreadcrumbList, plus FAQPage when the page carries questions) and the
+ * closing conversion band, so an individual service page contains nothing but
+ * its own content.
+ *
+ * Built to take city pages later — /shower-doors-wellington/ and the like pass
+ * `city` and reuse this file unchanged. Those pages are deliberately NOT built
+ * yet: thin location pages hurt more than they help.
+ */
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Photo from '~/components/Photo.astro';
+import Faq from '~/components/Faq.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import { business } from '~/data/business';
+import { service, faqPage, type Faq as FaqItem, type Crumb } from '~/lib/schema';
+
+interface Props {
+  /** <title> — under 60 characters. */
+  title: string;
+  /** Meta description — under 155 characters. */
+  description: string;
+  /** Keyword-bearing H1. Every service page has exactly one. */
+  h1: string;
+  /** Standfirst under the H1. */
+  intro: string;
+  /** Name used in Service schema. */
+  serviceName: string;
+  /** Photo slot filename and its alt text. */
+  photo: string;
+  photoAlt: string;
+  faqs?: FaqItem[];
+  /** Extra JSON-LD nodes (e.g. ImageObject for gallery items). */
+  schema?: object[];
+  /** Optional city, for future location pages. */
+  city?: string;
+  ctaHeading?: string;
+  ctaBody?: string;
+}
+
+const {
+  title,
+  description,
+  h1,
+  intro,
+  serviceName,
+  photo,
+  photoAlt,
+  faqs = [],
+  schema = [],
+  ctaHeading,
+  ctaBody,
+} = Astro.props;
+
+const path = Astro.url.pathname;
+const crumbs: Crumb[] = [{ name: serviceName, url: path }];
+
+const nodes = [
+  service({ name: serviceName, description, url: path }),
+  ...(faqs.length ? [faqPage(faqs)] : []),
+  ...schema,
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  schema={nodes}
+  crumbs={crumbs}
+>
+  <nav class="shell crumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="/">Home</a></li>
+      <li aria-current="page">{serviceName}</li>
+    </ol>
+  </nav>
+
+  <header class="svc-hero shell">
+    <div class="svc-hero__text">
+      <h1>{h1}</h1>
+      <p class="svc-hero__intro">{intro}</p>
+      <div class="svc-hero__actions">
+        <a
+          class="btn btn-primary"
+          href={`tel:${business.phoneRaw}`}
+          data-track="phone_click_service_hero"
+        >
+          Call {business.phone}
+        </a>
+        <a
+          class="btn btn-outline"
+          href="/contact/"
+          data-track="form_open_service_hero"
+        >
+          Request an estimate
+        </a>
+      </div>
+    </div>
+    <div class="svc-hero__media">
+      <Photo
+        src={photo}
+        alt={photoAlt}
+        priority
+        sizes="(min-width: 1000px) 46vw, 100vw"
+        ratio="4 / 3"
+      />
+    </div>
+  </header>
+
+  <div class="shell svc-body prose-glass">
+    <slot />
+  </div>
+
+  {faqs.length > 0 && <Faq faqs={faqs} />}
+
+  <CtaBand heading={ctaHeading} body={ctaBody} track="service" />
+</BaseLayout>
+
+<style>
+  .crumbs {
+    padding-top: 1.25rem;
+    font-size: 0.85rem;
+  }
+  .crumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color: var(--color-slate);
+  }
+  .crumbs li + li::before {
+    content: '/';
+    margin-right: 0.5rem;
+    color: var(--color-nickel);
+  }
+  .crumbs a {
+    color: var(--color-slate);
+    text-decoration: none;
+  }
+  .crumbs a:hover {
+    color: var(--color-edge-deep);
+    text-decoration: underline;
+  }
+
+  .svc-hero {
+    display: grid;
+    gap: clamp(1.75rem, 4vw, 3.25rem);
+    align-items: center;
+    padding-block: clamp(1.75rem, 4vw, 3.25rem) clamp(2.5rem, 5vw, 4rem);
+  }
+  .svc-hero h1 {
+    margin: 0 0 1.05rem;
+  }
+  .svc-hero__intro {
+    font-size: var(--text-lead);
+    line-height: 1.55;
+    color: var(--color-slate);
+    max-width: 48ch;
+    margin: 0 0 1.75rem;
+  }
+  .svc-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .svc-hero__media :global(img) {
+    width: 100%;
+    display: block;
+  }
+
+  @media (min-width: 1000px) {
+    .svc-hero {
+      grid-template-columns: 1.05fr 0.95fr;
+    }
+  }
+
+  /* Long-form body. Headings break the measure; text stays under it. */
+  .svc-body {
+    padding-bottom: clamp(1rem, 3vw, 2rem);
+  }
+  .svc-body :global(p),
+  .svc-body :global(ul),
+  .svc-body :global(ol) {
+    max-width: 66ch;
+    color: var(--color-slate);
+  }
+  .svc-body :global(h2) {
+    margin: 2.75rem 0 1rem;
+    max-width: 22ch;
+  }
+  .svc-body :global(h2:first-child) {
+    margin-top: 0;
+  }
+  .svc-body :global(strong) {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+</style>

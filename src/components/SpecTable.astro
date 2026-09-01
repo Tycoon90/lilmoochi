@@ -1,0 +1,74 @@
+---
+/**
+ * A table, because specifications are tabular data. Scrolls inside its own
+ * container on narrow screens so the page body never scrolls sideways.
+ */
+interface Props {
+  caption: string;
+  head: string[];
+  rows: string[][];
+}
+const { caption, head, rows } = Astro.props;
+---
+
+<div class="spec-wrap">
+  <table class="spec">
+    <caption>{caption}</caption>
+    <thead>
+      <tr>{head.map((h) => <th scope="col">{h}</th>)}</tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((row) => (
+          <tr>
+            {row.map((cell, i) =>
+              i === 0 ? <th scope="row">{cell}</th> : <td>{cell}</td>,
+            )}
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .spec-wrap {
+    overflow-x: auto;
+    margin: 1.75rem 0 2.25rem;
+    max-width: 66rem;
+  }
+  .spec {
+    width: 100%;
+    min-width: 34rem;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+  caption {
+    text-align: left;
+    color: var(--color-slate);
+    font-size: 0.86rem;
+    padding-bottom: 0.7rem;
+  }
+  th,
+  td {
+    text-align: left;
+    padding: 0.8rem 1.1rem 0.8rem 0;
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--color-nickel) 50%, transparent);
+    vertical-align: top;
+  }
+  thead th {
+    border-bottom: 1px solid var(--color-edge);
+    font-weight: 600;
+    color: var(--color-ink);
+    white-space: nowrap;
+  }
+  tbody th {
+    font-weight: 600;
+    color: var(--color-ink);
+    padding-right: 1.75rem;
+  }
+  td {
+    color: var(--color-slate);
+  }
+</style>

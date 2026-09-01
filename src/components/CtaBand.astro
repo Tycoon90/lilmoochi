@@ -1,0 +1,80 @@
+---
+/**
+ * Closing conversion block. Appears at the foot of every content page so no
+ * page is a dead end. Phone first — that is how most of these leads arrive.
+ */
+import { business } from '~/data/business';
+
+interface Props {
+  heading?: string;
+  body?: string;
+  /** Where this band sits, for analytics. */
+  track?: string;
+}
+
+const {
+  heading = 'Tell us about your bathroom',
+  body = 'Send a photo of the opening and we will tell you what will fit, what it involves and what it costs. No charge for the visit.',
+  track = 'cta_band',
+} = Astro.props;
+---
+
+<section class="cta-band">
+  <div class="shell cta-band__inner">
+    <div>
+      <h2>{heading}</h2>
+      <p class="measure">{body}</p>
+    </div>
+    <div class="cta-band__actions">
+      <a
+        class="btn btn-primary"
+        href={`tel:${business.phoneRaw}`}
+        data-track={`phone_click_${track}`}
+      >
+        Call {business.phone}
+      </a>
+      <a class="btn btn-on-dark" href="/contact/" data-track={`form_open_${track}`}>
+        Request an estimate
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-band {
+    background: var(--color-ink);
+    color: color-mix(in srgb, #fff 86%, transparent);
+    padding-block: clamp(3rem, 6vw, 5rem);
+  }
+  .cta-band__inner {
+    display: grid;
+    gap: 2rem;
+    align-items: end;
+  }
+  .cta-band h2 {
+    color: #fff;
+    margin: 0 0 0.7rem;
+    font-size: clamp(1.7rem, 3vw, 2.5rem);
+  }
+  .cta-band p {
+    margin: 0;
+    line-height: 1.6;
+  }
+  .cta-band__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .cta-band__actions .btn {
+    flex: 1 1 15rem;
+  }
+  @media (min-width: 900px) {
+    .cta-band__inner {
+      grid-template-columns: 1.4fr 1fr;
+      gap: 3.5rem;
+    }
+    .cta-band__actions .btn {
+      flex: 0 0 auto;
+    }
+  }
+</style>

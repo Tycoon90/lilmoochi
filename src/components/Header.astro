@@ -1,0 +1,378 @@
+---
+/**
+ * Header. Chrome is kept deliberately quiet so photography carries the page.
+ *
+ * The desktop services menu opens on hover and on :focus-within, so it needs
+ * no JavaScript and works for keyboard users. The only script on the page is
+ * the mobile disclosure, which genuinely requires it.
+ */
+import { business } from '~/data/business';
+import { primaryNav } from '~/data/nav';
+
+const path = Astro.url.pathname;
+const isCurrent = (href: string) =>
+  href === '/' ? path === '/' : path.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="shell site-header__inner">
+    <a href="/" class="wordmark" aria-label={`${business.name} — home`}>
+      <span class="wordmark__name">New Shower Doors</span>
+      <span class="wordmark__rule" aria-hidden="true"></span>
+      <span class="wordmark__sub">Unlimited</span>
+    </a>
+
+    <nav class="nav-desktop" aria-label="Primary">
+      <ul class="nav-desktop__list">
+        {
+          primaryNav.map((item) => (
+            <li class={item.children.length ? 'has-menu' : ''}>
+              <a
+                href={item.href}
+                aria-current={isCurrent(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+              {item.children.length > 0 && (
+                <ul class="submenu">
+                  {item.children.map((child) => (
+                    <li>
+                      <a
+                        href={child.href}
+                        aria-current={
+                          path === child.href ? 'page' : undefined
+                        }
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a
+        class="header-phone"
+        href={`tel:${business.phoneRaw}`}
+        data-track="phone_click_header"
+      >
+        {business.phone}
+      </a>
+      <a class="btn btn-primary header-cta" href="/contact/">Get an estimate</a>
+
+      <button
+        type="button"
+        class="hamburger"
+        id="nav-toggle"
+        aria-expanded="false"
+        aria-controls="nav-mobile"
+      >
+        <span class="hamburger__bars" aria-hidden="true"></span>
+        <span class="sr-only">Menu</span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="nav-mobile" id="nav-mobile" aria-label="Primary, mobile" hidden>
+    <ul>
+      {
+        primaryNav.flatMap((item) => [
+          <li>
+            <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+              {item.label}
+            </a>
+          </li>,
+          ...item.children.map((child) => (
+            <li class="nav-mobile__child">
+              <a href={child.href} aria-current={path === child.href ? 'page' : undefined}>
+                {child.label}
+              </a>
+            </li>
+          )),
+        ])
+      }
+    </ul>
+    <a class="btn btn-primary nav-mobile__cta" href="/contact/">Get an estimate</a>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const panel = document.getElementById('nav-mobile');
+
+  if (toggle && panel) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      panel.hidden = !open;
+      document.documentElement.classList.toggle('nav-open', open);
+    };
+
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    // Reset when resizing up to the desktop breakpoint.
+    matchMedia('(min-width: 1024px)').addEventListener('change', (e) => {
+      if (e.matches) setOpen(false);
+    });
+  }
+</script>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--color-glass) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--color-nickel) 40%, transparent);
+  }
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-height: 4.5rem;
+  }
+  @media (min-width: 480px) {
+    .site-header__inner {
+      gap: 2rem;
+    }
+  }
+
+  /* Wordmark sets the name in the expanded display face — the same treatment
+     as the headings, so the brand and the page read as one voice. */
+  .wordmark {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-stretch: 118%;
+    font-weight: 600;
+    font-size: 1.02rem;
+    letter-spacing: -0.012em;
+    line-height: 1;
+    margin-right: auto;
+    min-width: 0;
+  }
+  /* Under 480px the name will not sit on one line beside the menu button
+     without pushing it off-canvas, so it stacks. The name stays complete
+     either way — it is never abbreviated. */
+  @media (max-width: 479px) {
+    .wordmark {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      line-height: 1.18;
+    }
+    .wordmark__rule {
+      display: none;
+    }
+  }
+  @media (min-width: 480px) {
+    .wordmark {
+      white-space: nowrap;
+    }
+  }
+  .wordmark__rule {
+    width: 1.4rem;
+    height: 1px;
+    background: var(--color-edge);
+    flex: none;
+  }
+  .wordmark__sub {
+    font-weight: 400;
+    color: var(--color-edge-deep);
+  }
+
+  .nav-desktop {
+    display: none;
+  }
+  .nav-desktop__list {
+    display: flex;
+    align-items: center;
+    gap: 1.9rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-desktop a {
+    color: var(--color-ink);
+    text-decoration: none;
+    font-size: 0.945rem;
+    font-weight: 500;
+    padding-block: 1.55rem;
+    display: inline-block;
+    border-bottom: 2px solid transparent;
+  }
+  .nav-desktop a:hover {
+    color: var(--color-edge-deep);
+  }
+  .nav-desktop a[aria-current='page'] {
+    border-bottom-color: var(--color-edge);
+  }
+
+  .has-menu {
+    position: relative;
+  }
+  .submenu {
+    position: absolute;
+    top: 100%;
+    left: -1rem;
+    min-width: 17.5rem;
+    background: #fff;
+    border: 1px solid color-mix(in srgb, var(--color-nickel) 45%, transparent);
+    border-top: 2px solid var(--color-edge);
+    padding: 0.5rem 0;
+    margin: 0;
+    list-style: none;
+    box-shadow: 0 14px 34px -18px rgba(16, 30, 28, 0.45);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.14s ease;
+  }
+  .has-menu:hover .submenu,
+  .has-menu:focus-within .submenu {
+    opacity: 1;
+    visibility: visible;
+  }
+  .submenu a {
+    display: block;
+    padding: 0.6rem 1.15rem;
+    font-weight: 400;
+    border-bottom: none;
+  }
+  .submenu a:hover {
+    background: var(--color-glass);
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .header-phone {
+    display: none;
+    color: var(--color-ink);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.98rem;
+  }
+  .header-phone:hover {
+    color: var(--color-edge-deep);
+  }
+  .header-cta {
+    display: none;
+  }
+
+  .hamburger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.9rem;
+    height: 2.9rem;
+    margin-right: -0.6rem;
+    background: transparent;
+    border: 1px solid color-mix(in srgb, var(--color-ink) 22%, transparent);
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  .hamburger__bars,
+  .hamburger__bars::before,
+  .hamburger__bars::after {
+    display: block;
+    width: 1.15rem;
+    height: 1.5px;
+    background: var(--color-ink);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .hamburger__bars::before,
+  .hamburger__bars::after {
+    content: '';
+    position: absolute;
+  }
+  .hamburger__bars::before {
+    transform: translateY(-0.36rem);
+  }
+  .hamburger__bars::after {
+    transform: translateY(0.36rem);
+  }
+  .hamburger[aria-expanded='true'] .hamburger__bars {
+    background: transparent;
+  }
+  .hamburger[aria-expanded='true'] .hamburger__bars::before {
+    transform: rotate(45deg);
+  }
+  .hamburger[aria-expanded='true'] .hamburger__bars::after {
+    transform: rotate(-45deg);
+  }
+
+  .nav-mobile {
+    border-top: 1px solid
+      color-mix(in srgb, var(--color-nickel) 40%, transparent);
+    padding: 0.75rem clamp(1.25rem, 5vw, 3.5rem) 1.5rem;
+    background: var(--color-glass);
+  }
+  .nav-mobile ul {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+  }
+  .nav-mobile a {
+    display: block;
+    padding: 0.72rem 0;
+    color: var(--color-ink);
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--color-nickel) 26%, transparent);
+  }
+  .nav-mobile__child a {
+    padding-left: 1rem;
+    font-weight: 400;
+    color: var(--color-slate);
+  }
+  .nav-mobile a[aria-current='page'] {
+    color: var(--color-edge-deep);
+  }
+  .nav-mobile__cta {
+    width: 100%;
+  }
+
+  @media (min-width: 1024px) {
+    .nav-desktop {
+      display: block;
+    }
+    .header-phone,
+    .header-cta {
+      display: inline-flex;
+    }
+    .hamburger,
+    .nav-mobile {
+      display: none;
+    }
+  }
+</style>

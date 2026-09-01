@@ -1,32 +1,25 @@
 {
-  "name": "lilmoochi",
-  "version": "0.1.0",
+  "name": "new-shower-doors-unlimited",
+  "type": "module",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "dev": "astro dev",
+    "build": "astro build && node scripts/check-output.mjs",
+    "build:only": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "check:output": "node scripts/check-output.mjs",
+    "migrate:images": "node scripts/fetch-legacy-images.mjs"
   },
   "dependencies": {
-    "@stripe/stripe-js": "^9.7.0",
-    "@vercel/analytics": "^2.0.1",
-    "@vercel/blob": "^2.4.0",
-    "framer-motion": "^12.40.0",
-    "next": "15.3.9",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "sharp": "^0.34.5",
-    "stripe": "^22.2.0"
+    "@astrojs/sitemap": "^3.7.4",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.2.10",
+    "sharp": "^0.35.4",
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "15.3.9",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "playwright": "^1.62.1"
   }
 }

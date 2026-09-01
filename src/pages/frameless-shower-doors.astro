@@ -1,0 +1,268 @@
+---
+import ServiceLayout from '~/layouts/ServiceLayout.astro';
+import SpecTable from '~/components/SpecTable.astro';
+import TodoNote from '~/components/TodoNote.astro';
+import Photo from '~/components/Photo.astro';
+import { business } from '~/data/business';
+import { altFor } from '~/data/photos';
+import type { Faq } from '~/lib/schema';
+
+const faqs: Faq[] = [
+  {
+    q: 'How long does a frameless shower door take to install?',
+    a: 'Two visits. The first is the measure, which takes under an hour. The glass is then fabricated to those measurements, and the installation itself is usually a single day for a standard residential enclosure. Allow about 24 hours after installation before using the shower, so the silicone can cure.',
+  },
+  {
+    q: 'Can I have frameless glass if my walls are not straight?',
+    a: 'Usually yes, and it is the main reason the measure matters. Tile walls are rarely perfectly plumb, and frameless glass has no channel to hide a gap. We measure the out-of-plumb at several heights and either scribe the glass, use adjustable hardware, or add a slim wall channel on the fixed panel only. If a wall is far enough out that neither works, we will tell you before you order glass rather than after.',
+  },
+  {
+    q: 'Is frameless glass safe?',
+    a: 'Frameless enclosures use tempered safety glass, which is required by code for this application. Tempered glass is heat-treated so that if it does break it falls into small blunt pieces rather than shards. It cannot be cut, drilled or trimmed after tempering, which is why every panel is fabricated to the measurements taken in your bathroom.',
+  },
+  {
+    q: 'Does frameless leak?',
+    a: 'A correctly built frameless enclosure manages water rather than sealing it in — the door gap is deliberate, and the slope of the floor, the position of the shower head and the door swing do the work. Some water at the threshold is normal on any hinged door. Persistent leaking usually means a missing or worn seal, a door hung out of alignment, or a pan that drains toward the opening.',
+  },
+  {
+    q: 'What is the difference between 3/8" and 1/2" glass?',
+    a: 'Both are structurally sound for a residential shower. 1/2" glass is heavier and more rigid, so a tall or wide door has less flex and feels more substantial, but it needs hardware and wall fixings rated for the extra weight. 3/8" is the most common residential choice and suits the great majority of bathrooms. We will tell you which your opening actually needs.',
+  },
+  {
+    q: 'Do you replace just the glass, or the whole enclosure?',
+    a: 'Either. If the hardware is sound and a panel is damaged, replacing the glass alone is often possible. If the hinges are worn or the layout is changing, a full replacement usually costs less than doing both jobs separately. We also repair enclosures we did not install.',
+  },
+];
+
+const title = 'Frameless Shower Doors in West Palm Beach, FL';
+const description =
+  'Custom frameless glass shower doors and enclosures in West Palm Beach. Heavy tempered glass, measured and installed by New Shower Doors Unlimited.';
+---
+
+<ServiceLayout
+  title={title}
+  description={description}
+  h1="Frameless shower doors in West Palm Beach"
+  intro="Heavy tempered glass, no metal frame around the panels, cut to the walls you actually have. Measured, fabricated and installed by the people who will be accountable for how it hangs."
+  serviceName="Frameless shower doors"
+  photo="frameless-hero.jpg"
+  photoAlt={altFor('frameless-hero.jpg')}
+  faqs={faqs}
+  ctaHeading="Find out what will fit your bathroom"
+  ctaBody="Send a photo of the opening, or book a measure. We will tell you what can be built, what it involves and what it costs — before you commit to anything."
+>
+  <h2>What frameless actually means</h2>
+  <p>
+    A frameless shower enclosure is made from panels of heavy tempered glass
+    held by hinges and clamps fixed into the wall. There is no metal channel
+    running around the edges of the glass, and no header bar across the top. The
+    only metal is the hardware itself and, on most layouts, a slim channel
+    holding the bottom of the fixed panel.
+  </p>
+  <p>
+    That is a structural difference, not a cosmetic one. Because nothing
+    surrounds the glass, the glass has to be thick enough to be rigid on its
+    own — which is why frameless enclosures use{' '}
+    <strong>3/8&Prime; or 1/2&Prime;</strong> glass where a framed door might use 1/4&Prime; or thinner. It is also why the
+    measuring matters so much: there is no frame to absorb a wall that runs out
+    of plumb.
+  </p>
+
+  <SpecTable
+    caption="How the three common enclosure types differ"
+    head={['Type', 'Glass', 'Metal around the glass', 'Best suited to']}
+    rows={[
+      [
+        'Frameless',
+        '3/8" or 1/2" tempered',
+        'Hinges and clamps only',
+        'Opening up a small or mid-size bathroom; walls in reasonable condition',
+      ],
+      [
+        'Semi-frameless',
+        '3/16" to 3/8" tempered',
+        'Frame on the fixed panel, none on the door',
+        'Much of the frameless look at lower cost, or walls that need a channel',
+      ],
+      [
+        'Framed',
+        '3/16" to 1/4" tempered',
+        'Finished frame on all sides',
+        'Tub enclosures, rentals, and the most economical way to enclose a shower',
+      ],
+    ]}
+  />
+
+  <h2>Glass thickness, and what it changes</h2>
+  <p>
+    Two thicknesses cover almost every residential frameless job, and the
+    difference between them is felt rather than seen.
+  </p>
+  <ul>
+    <li>
+      <strong>3/8&Prime;</strong> — the standard residential choice. Rigid enough
+      for typical door widths and heights, lighter on the hardware and on the wall
+      fixings, and the least expensive of the two. Most bathrooms in Palm Beach
+      County get this.
+    </li>
+    <li>
+      <strong>1/2&Prime;</strong> — noticeably heavier and stiffer. Worth it on
+      unusually tall or wide doors, on long unsupported fixed panels, and where you
+      simply want the door to feel more solid in the hand. It needs hinges and
+      anchors rated for the weight, and the wall behind the hinge side has to be
+      able to take it.
+    </li>
+  </ul>
+  <p>
+    Thicker is not automatically better. A 1/2&Prime; door on a narrow opening
+    costs more, loads the wall harder, and behaves no better than 3/8&Prime;
+    would. Part of the measure is telling you which one your opening actually
+    calls for.
+  </p>
+
+  <h2>Glass types</h2>
+  <p>
+    The glass itself is a bigger decision than most people expect, because it
+    sets how the finished enclosure reads in the room.
+  </p>
+  <ul>
+    <li>
+      <strong>Clear</strong> — standard float glass. Has a faint green cast at
+      the polished edge and across a large panel, which is only obvious next to
+      white tile or a light stone.
+    </li>
+    <li>
+      <strong>Low-iron</strong> — the same glass with the iron content reduced,
+      which removes that green tint. Noticeably truer against white and pale
+      finishes, and the usual upgrade on a bathroom where the tile colour matters.
+      Costs more than clear.
+    </li>
+    <li>
+      <strong>Rain</strong> — a textured pattern rolled into one face. Obscures
+      the view without going fully opaque, and hides water spotting well, which is
+      a real advantage in South Florida.
+    </li>
+    <li>
+      <strong>Frosted or acid-etched</strong> — a uniform translucent surface for
+      privacy. Available across the whole panel or as a band.
+    </li>
+    <li>
+      <strong>Tinted</strong> — bronze and grey. Warms or cools the light coming
+      through and pairs with darker hardware finishes.
+    </li>
+  </ul>
+
+  <h2>Hardware finishes</h2>
+  <p>
+    Hinges, clamps, handles and any wall channel should match the fixtures
+    already in the room — the shower valve, the towel bars, the vanity taps.
+    Common finishes are polished chrome, brushed nickel, matte black, oil-rubbed
+    bronze, satin brass and champagne bronze. We bring samples to the measure so
+    you are matching against the metal in your bathroom rather than against a
+    photograph on a screen.
+  </p>
+
+  <Photo
+    src="frameless-hardware.jpg"
+    alt={altFor('frameless-hardware.jpg')}
+    sizes="(min-width: 1000px) 66vw, 100vw"
+    ratio="16 / 9"
+  />
+
+  <h2>From measurement to installation</h2>
+  <p>
+    Frameless glass cannot be adjusted once it is tempered. Everything that
+    makes the finished enclosure fit happens before the glass is cut.
+  </p>
+  <ol>
+    <li>
+      <strong>The measure.</strong> We measure the opening at several heights,
+      check how far the walls run out of plumb, and look at what is behind the
+      tile — hinges need something solid to anchor into. This is also when we
+      confirm which way the door should swing and where the water will run.
+    </li>
+    <li>
+      <strong>Glass, hardware and layout.</strong> You choose thickness, glass
+      type and finish. We confirm the panel layout, the door width and the hinge
+      side, and put the whole thing in writing before anything is ordered.
+    </li>
+    <li>
+      <strong>Fabrication.</strong> The panels are cut, the edges polished, the
+      holes for the hardware drilled, and then the glass is tempered. After
+      tempering nothing can be altered, which is why step one is the job.
+    </li>
+    <li>
+      <strong>Installation.</strong> We set the fixed panels, hang the door, fit
+      the hardware, seal the joints and clean up. Most residential enclosures go
+      in inside a day.
+    </li>
+    <li>
+      <strong>Curing.</strong> Leave the shower unused for about 24 hours so the
+      silicone can set properly before it meets water.
+    </li>
+  </ol>
+
+  <h2>What a frameless enclosure costs</h2>
+  <p>
+    Price is driven by the size of the opening, the glass thickness and type,
+    the hardware finish, and how much work the walls need. A straight
+    door-and-panel in 3/8&Prime; clear glass sits at the bottom of the range; a
+    large low-iron corner enclosure in 1/2&Prime; glass with premium hardware sits
+    at the top.
+  </p>
+  <TodoNote
+    label="Supply the real installed price range for a typical 3/8&quot; frameless door and panel, and for a larger corner enclosure, so this page can quote an honest range. No figures have been published here, because inventing them would misprice your own work and lose you trust on the first phone call."
+  />
+  <p>What moves the number, in roughly the order it matters:</p>
+  <ul>
+    <li>Square footage of glass, and the number of separate panels</li>
+    <li>3/8&Prime; against 1/2&Prime; thickness</li>
+    <li>Clear against low-iron, rain, frosted or tinted glass</li>
+    <li>Hardware finish, and whether hinges are wall-mount or glass-to-glass</li>
+    <li>Notches and cut-outs around a bench, a niche, a kerb or a valve</li>
+    <li>Walls far enough out of plumb to need scribing or a channel</li>
+    <li>Removing and disposing of an existing enclosure</li>
+  </ul>
+
+  <h2>Living with frameless glass in South Florida</h2>
+  <p>
+    South Florida water is hard. Every time a droplet dries on glass it leaves
+    the minerals behind, and over a few years those deposits etch into the
+    surface and stop coming off. This is the single most common reason a
+    frameless enclosure stops looking new, and it is entirely preventable.
+  </p>
+  <ul>
+    <li>
+      <strong>Squeegee the glass after each shower.</strong> Thirty seconds.
+      This matters more than any product you can buy.
+    </li>
+    <li>
+      <strong>Leave the door open afterwards</strong> so the enclosure dries
+      instead of holding humidity.
+    </li>
+    <li>
+      <strong>Clean with a mild non-abrasive cleaner</strong> or a diluted
+      vinegar solution. Skip abrasive pads and anything containing ammonia or
+      bleach near the hardware — it damages the finish long before it damages the
+      glass.
+    </li>
+    <li>
+      <strong>Consider a protective glass coating.</strong> Applied at
+      installation, it makes water bead and sheet off rather than sit. It is not
+      permanent and it is not a substitute for the squeegee, but it buys years.
+    </li>
+    <li>
+      <strong>Check the hardware once a year.</strong> Hinge screws work loose
+      slowly. Tightening one takes a minute; a door that has been hanging out of
+      alignment for a year does not.
+    </li>
+  </ul>
+
+  <h2>Where we work</h2>
+  <p>
+    {business.name} installs frameless enclosures throughout {business.city} and
+    across {business.serviceAreas.join(', ')}. If you are outside those areas,
+    call and ask — {business.owner} will tell you honestly whether the job is one
+    we can take.
+  </p>
+</ServiceLayout>

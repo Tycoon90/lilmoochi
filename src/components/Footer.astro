@@ -1,0 +1,188 @@
+---
+/**
+ * Footer.
+ *
+ * The previous footer read "© 2022 Showers Door Unlimited Inc." — a stale
+ * year on a misspelled name. The year is computed at build time and the name
+ * comes from business.ts, so neither can drift again.
+ *
+ * The dead Twitter link and the purposeless newsletter signup are not carried
+ * over. Instagram is, because the account is active and is better proof of
+ * craftsmanship than any badge.
+ */
+import { business, formattedAddress } from '~/data/business';
+import { services } from '~/data/services';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="shell">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <p class="footer-name">{business.name}</p>
+        <p class="footer-note">
+          Custom glass shower doors and enclosures, installed across Palm Beach,
+          Broward and Miami-Dade counties by a family-owned shop with{' '}
+          {business.yearsExperience}+ years in the trade.
+        </p>
+        <a
+          class="footer-phone"
+          href={`tel:${business.phoneRaw}`}
+          data-track="phone_click_footer">{business.phone}</a
+        >
+      </div>
+
+      <nav class="footer-col" aria-label="Services">
+        <h2 class="footer-heading">Services</h2>
+        <ul>
+          {
+            services
+              .filter((s) => s.page)
+              .map((s) => (
+                <li>
+                  <a href={s.page}>{s.navTitle}</a>
+                </li>
+              ))
+          }
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-label="Company">
+        <h2 class="footer-heading">Company</h2>
+        <ul>
+          <li><a href="/gallery/">Gallery</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">Visit</h2>
+        <address>
+          {business.street}<br />
+          {business.city}, {business.state}
+          {business.zip}
+        </address>
+        <p class="footer-hours">{business.hours}</p>
+        <ul class="footer-social">
+          <li>
+            <a href={business.instagram} rel="noopener">Instagram</a>
+          </li>
+          <li>
+            <a href={business.facebook} rel="noopener">Facebook</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-base">
+      <p>&copy; {year} {business.name}. All rights reserved.</p>
+      <p class="footer-serving">Serving {business.serviceAreas.join(' · ')}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-ink);
+    color: color-mix(in srgb, #fff 82%, transparent);
+    padding-block: clamp(3rem, 6vw, 4.75rem) 2rem;
+    font-size: 0.95rem;
+  }
+  .footer-grid {
+    display: grid;
+    gap: clamp(2rem, 4vw, 3rem);
+    grid-template-columns: 1fr;
+  }
+  .footer-name {
+    font-family: var(--font-display);
+    font-stretch: 118%;
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: #fff;
+    margin: 0 0 0.65rem;
+    letter-spacing: -0.012em;
+  }
+  .footer-note {
+    margin: 0 0 1rem;
+    max-width: 38ch;
+    line-height: 1.6;
+  }
+  .footer-phone {
+    color: var(--color-brass);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.06rem;
+  }
+  .footer-phone:hover {
+    color: #fff;
+  }
+
+  .footer-heading {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 0.9rem;
+    letter-spacing: 0;
+  }
+  .footer-col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .footer-col li {
+    margin-bottom: 0.55rem;
+  }
+  .footer-col a,
+  .footer-social a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .footer-col a:hover {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  address {
+    font-style: normal;
+    line-height: 1.6;
+  }
+  .footer-hours {
+    margin: 0.7rem 0 1rem;
+  }
+  .footer-social {
+    display: flex;
+    gap: 1.1rem;
+  }
+  .footer-social li {
+    margin: 0;
+  }
+
+  .footer-base {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    justify-content: space-between;
+    margin-top: clamp(2.5rem, 5vw, 3.75rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid color-mix(in srgb, #fff 15%, transparent);
+    font-size: 0.86rem;
+    color: color-mix(in srgb, #fff 66%, transparent);
+  }
+  .footer-base p {
+    margin: 0;
+  }
+
+  @media (min-width: 640px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (min-width: 1024px) {
+    .footer-grid {
+      grid-template-columns: 1.5fr 1fr 1fr 1.1fr;
+    }
+  }
+</style>

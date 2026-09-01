@@ -1,0 +1,107 @@
+---
+/**
+ * Photo — the only way images enter a page.
+ *
+ * Real photographs live in src/assets/photos/ and are emitted as AVIF with a
+ * WebP fallback, responsive srcset, and explicit width/height so nothing
+ * shifts during load. Below-the-fold images lazy-load; anything marked
+ * `priority` is eager and fetch-priority high (used once, for the LCP image).
+ *
+ * The legacy photographs could not be downloaded in this environment (the old
+ * host is blocked by egress policy), so when a file is absent this renders a
+ * clearly-labelled placeholder instead of a broken image. Run
+ * `npm run migrate:images` on a machine that can reach the old site and every
+ * placeholder below becomes a real, optimised photograph with no code change.
+ */
+import { Picture } from 'astro:assets';
+
+interface Props {
+  /** Filename inside src/assets/photos/, e.g. "frameless-hero.jpg". */
+  src: string;
+  /** Required. Describes the product and, where identifiable, the setting. */
+  alt: string;
+  width?: number;
+  height?: number;
+  sizes?: string;
+  priority?: boolean;
+  class?: string;
+  /** Aspect ratio for the placeholder box, e.g. "4/3". */
+  ratio?: string;
+}
+
+const {
+  src,
+  alt,
+  width = 1600,
+  height = 1200,
+  sizes = '(min-width: 1024px) 50vw, 100vw',
+  priority = false,
+  class: className = '',
+  ratio = '4 / 3',
+} = Astro.props;
+
+const photos = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/photos/*.{jpg,jpeg,png,avif,webp}',
+  { eager: true },
+);
+const match = photos[`/src/assets/photos/${src}`];
+---
+
+{
+  match ? (
+    <Picture
+      src={match.default}
+      formats={['avif', 'webp']}
+      alt={alt}
+      widths={[480, 800, 1200, 1800]}
+      sizes={sizes}
+      loading={priority ? 'eager' : 'lazy'}
+      fetchpriority={priority ? 'high' : 'auto'}
+      decoding={priority ? 'sync' : 'async'}
+      class={className}
+    />
+  ) : (
+    <div
+      class:list={['photo-missing', className]}
+      style={`aspect-ratio:${ratio}`}
+      role="img"
+      aria-label={alt}
+    >
+      <span class="photo-missing__text">{alt}</span>
+      <span class="photo-missing__file">{src}</span>
+    </div>
+  )
+}
+
+<style>
+  /* Reads as a designed empty state, not a broken asset. */
+  .photo-missing {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.4rem;
+    width: 100%;
+    padding: clamp(1rem, 2.5vw, 1.75rem);
+    background:
+      linear-gradient(
+        118deg,
+        color-mix(in srgb, var(--color-edge) 13%, transparent) 0%,
+        color-mix(in srgb, var(--color-edge) 4%, transparent) 42%,
+        color-mix(in srgb, var(--color-nickel) 16%, transparent) 100%
+      ),
+      var(--color-glass-deep);
+    border: 1px solid color-mix(in srgb, var(--color-nickel) 45%, transparent);
+    color: var(--color-slate);
+    overflow: hidden;
+  }
+  .photo-missing__text {
+    font-size: 0.875rem;
+    line-height: 1.45;
+    max-width: 44ch;
+  }
+  .photo-missing__file {
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    color: var(--color-edge-deep);
+  }
+</style>

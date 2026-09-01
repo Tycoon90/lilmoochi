@@ -1,0 +1,453 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Photo from '~/components/Photo.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import Reviews from '~/components/Reviews.astro';
+import { business, tagline, serviceAreaSentence } from '~/data/business';
+import { services } from '~/data/services';
+import { altFor } from '~/data/photos';
+
+const title = 'Shower Doors West Palm Beach | New Shower Doors Unlimited';
+const description =
+  'Custom frameless, sliding and framed shower doors measured and installed across Palm Beach, Broward and Miami-Dade. Family-owned, 15+ years.';
+
+// The install sequence genuinely is a sequence, which is why it is numbered.
+const steps = [
+  {
+    title: 'We look at the opening',
+    body: 'Alberto comes out, measures the opening and looks at what is behind the tile. Wall condition, stud locations and how far out of plumb the walls sit all decide what can be built.',
+  },
+  {
+    title: 'You choose glass and hardware',
+    body: 'Glass thickness, clear or low-iron, and a hardware finish that matches the fixtures already in the room. We bring samples so you are not choosing from a screen.',
+  },
+  {
+    title: 'The glass is cut to your opening',
+    body: 'Every panel is fabricated to the measurements taken in your bathroom. Tempered glass cannot be trimmed once it leaves the shop, so the measuring is the job.',
+  },
+  {
+    title: 'We install and seal it',
+    body: 'Most residential enclosures go in inside a day. We set the panels, fit the hardware, seal the joints and clean up. Silicone needs about 24 hours before the shower is used.',
+  },
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <!-- Hero. The photograph is the argument: this is a product chosen on how
+       it looks, so the page opens with the work rather than with a slogan. -->
+  <section class="hero">
+    <div class="hero__media">
+      <Photo
+        src="home-hero.jpg"
+        alt={altFor('home-hero.jpg')}
+        priority
+        sizes="(min-width: 1100px) 52vw, 100vw"
+        ratio="3 / 4"
+        class="hero__img"
+      />
+    </div>
+
+    <div class="hero__body">
+      <h1>Shower doors cut&nbsp;to your bathroom, not to a catalogue</h1>
+      <p class="hero__lead">
+        Custom glass shower doors and enclosures, measured and installed
+        in {business.city} and across {serviceAreaSentence} by a family-owned
+        shop with {business.yearsExperience}+ years in the trade.
+      </p>
+      <div class="hero__actions">
+        <a
+          class="btn btn-primary"
+          href={`tel:${business.phoneRaw}`}
+          data-track="phone_click_hero"
+        >
+          Call {business.phone}
+        </a>
+        <a class="btn btn-outline" href="/contact/" data-track="form_open_hero">
+          Request an estimate
+        </a>
+      </div>
+      <p class="hero__tagline">{tagline}</p>
+    </div>
+  </section>
+
+  <!-- Positioning. The client's own description of the business, rewritten
+       for search but with the substance and the voice kept. -->
+  <section class="section shell about-strip">
+    <div class="measure">
+      <h2>A small shop that does its own installs</h2>
+      <p>
+        {business.name} is family-owned and operated, with over{' '}
+        {business.yearsExperience} years fitting glass in South Florida bathrooms. {business.owner} runs the
+        work himself alongside a team of skilled technicians, so the person who
+        measures your opening is the person accountable for how the finished
+        door hangs.
+      </p>
+      <p>
+        We fit framed, frameless and sliding doors, which means we can tell you
+        honestly which one suits your bathroom and your budget rather than
+        selling you the only thing we stock. We also repair and maintain
+        enclosures — including ones we did not install. Fully licensed and
+        insured, using quality glass and hardware, and every glass design
+        project is customised to what you actually want.
+      </p>
+    </div>
+
+    <dl class="facts">
+      <div>
+        <dt>In business</dt>
+        <dd>{business.yearsExperience}+ years</dd>
+      </div>
+      <div>
+        <dt>Ownership</dt>
+        <dd>Family-owned and operated</dd>
+      </div>
+      <div>
+        <dt>Credentials</dt>
+        <dd>Licensed and insured</dd>
+      </div>
+      <div>
+        <dt>Service area</dt>
+        <dd>{business.serviceAreas.join(', ')}</dd>
+      </div>
+    </dl>
+  </section>
+
+  <!-- Services as an index, not a card grid: six rows of large type, the way
+       a directory reads, so the eye can scan names rather than boxes. -->
+  <section class="section-tight shell">
+    <h2 class="section-head">What we build</h2>
+    <ul class="service-index">
+      {
+        services.map((s) => (
+          <li>
+            <a href={s.page}>
+              <span class="service-index__title">{s.title}</span>
+              <span class="service-index__blurb">{s.blurb}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- Frameless gets a feature block of its own: it is the work most people
+       are searching for and the most valuable page on the site. -->
+  <section class="feature">
+    <div class="shell feature__inner">
+      <div class="feature__media">
+        <Photo
+          src="frameless-corner.jpg"
+          alt={altFor('frameless-corner.jpg')}
+          sizes="(min-width: 900px) 48vw, 100vw"
+          ratio="4 / 5"
+        />
+      </div>
+      <div class="feature__body reveal-line">
+        <h2>Frameless glass, done properly</h2>
+        <p>
+          A frameless enclosure is heavy tempered glass — usually 3/8&Prime; or
+          1/2&Prime; — carried on hinges and clamps fixed into the wall, with no
+          metal channel around the panels. It is the reason a small bathroom
+          reads as one room instead of two, and it is unforgiving of walls that
+          are out of plumb. That is a measuring and installation problem, which
+          is the part we do ourselves.
+        </p>
+        <p>
+          <a class="link" href="/frameless-shower-doors/"
+            >Read how frameless doors are measured, priced and maintained</a
+          >
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Numbered because this is an actual sequence, not decoration. -->
+  <section class="section shell">
+    <h2 class="section-head">How an installation goes</h2>
+    <p class="measure section-intro">
+      As you prepare for new glass shower doors or a tub enclosure, a{' '}
+      {business.name} specialist guides you through the process to make sure the installation fits
+      well and looks right.
+    </p>
+    <ol class="steps">
+      {
+        steps.map((step, i) => (
+          <li>
+            <span class="steps__num" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <Reviews />
+
+  <!-- Proof of craftsmanship: the active Instagram account, not a badge. -->
+  <section class="section-tight shell proof">
+    <div class="measure-tight">
+      <h2>See recent installs</h2>
+      <p>
+        The work goes up on Instagram as it is finished — finished enclosures,
+        mirrors and glass details from jobs around South Florida.
+      </p>
+    </div>
+    <div class="proof__links">
+      <a class="btn btn-outline" href={business.instagram} rel="noopener">
+        Instagram
+      </a>
+      <a class="btn btn-outline" href="/gallery/">Gallery</a>
+    </div>
+  </section>
+
+  <CtaBand track="home" />
+</BaseLayout>
+
+<style>
+  /* ---- Hero ------------------------------------------------------------ */
+  .hero {
+    display: grid;
+    gap: clamp(1.75rem, 4vw, 3rem);
+    padding-block: clamp(2rem, 5vw, 4.5rem) clamp(3rem, 6vw, 5.5rem);
+    width: 100%;
+    max-width: 78rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 5vw, 3.5rem);
+    align-items: center;
+  }
+  .hero__body h1 {
+    margin: 0 0 1.1rem;
+  }
+  .hero__lead {
+    font-size: var(--text-lead);
+    line-height: 1.55;
+    color: var(--color-slate);
+    max-width: 46ch;
+    margin: 0 0 1.9rem;
+  }
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .hero__tagline {
+    margin: 1.75rem 0 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid color-mix(in srgb, var(--color-nickel) 45%, transparent);
+    color: var(--color-slate);
+    font-size: 0.95rem;
+    max-width: 34ch;
+  }
+  .hero__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .hero__media :global(.photo-missing) {
+    min-height: 22rem;
+  }
+
+  @media (min-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr 0.92fr;
+      gap: clamp(2.5rem, 5vw, 4.5rem);
+    }
+    /* Photograph second in the source, first on screen: the heading is what a
+       screen reader and a crawler should reach first. */
+    .hero__media {
+      order: 2;
+    }
+  }
+
+  /* ---- About strip ----------------------------------------------------- */
+  .about-strip {
+    display: grid;
+    gap: clamp(2rem, 4vw, 3.5rem);
+  }
+  .about-strip h2 {
+    margin: 0 0 1.1rem;
+  }
+  .about-strip p {
+    margin: 0 0 1.05em;
+    color: var(--color-slate);
+  }
+  .facts {
+    display: grid;
+    gap: 1.4rem;
+    margin: 0;
+    align-content: start;
+  }
+  .facts div {
+    border-top: 1px solid color-mix(in srgb, var(--color-nickel) 50%, transparent);
+    padding-top: 0.7rem;
+  }
+  .facts dt {
+    font-size: 0.82rem;
+    color: var(--color-slate);
+    margin-bottom: 0.15rem;
+  }
+  .facts dd {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.02rem;
+  }
+  @media (min-width: 900px) {
+    .about-strip {
+      grid-template-columns: 1.45fr 0.85fr;
+    }
+    .facts {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem 2rem;
+    }
+  }
+
+  /* ---- Section headings ------------------------------------------------ */
+  .section-head {
+    margin: 0 0 1.6rem;
+  }
+  .section-intro {
+    color: var(--color-slate);
+    margin: 0 0 2.5rem;
+  }
+
+  /* ---- Service index --------------------------------------------------- */
+  .service-index {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid color-mix(in srgb, var(--color-nickel) 50%, transparent);
+  }
+  .service-index li {
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--color-nickel) 50%, transparent);
+  }
+  .service-index a {
+    display: grid;
+    gap: 0.3rem 2.5rem;
+    padding: 1.35rem 0;
+    text-decoration: none;
+    color: var(--color-ink);
+    transition: color 0.16s ease;
+  }
+  .service-index a:hover {
+    color: var(--color-edge-deep);
+  }
+  .service-index__title {
+    font-family: var(--font-display);
+    font-stretch: 118%;
+    font-weight: 600;
+    font-size: clamp(1.25rem, 2.4vw, 1.85rem);
+    letter-spacing: -0.012em;
+    line-height: 1.15;
+  }
+  .service-index__blurb {
+    color: var(--color-slate);
+    font-size: 0.98rem;
+    max-width: 52ch;
+  }
+  @media (min-width: 850px) {
+    .service-index a {
+      grid-template-columns: 1fr 1fr;
+      align-items: baseline;
+    }
+  }
+
+  /* ---- Frameless feature ----------------------------------------------- */
+  .feature {
+    background: var(--color-glass-deep);
+    padding-block: clamp(3rem, 7vw, 6rem);
+    margin-block: clamp(1rem, 3vw, 2.5rem);
+  }
+  .feature__inner {
+    display: grid;
+    gap: clamp(1.75rem, 4vw, 3.5rem);
+    align-items: center;
+  }
+  .feature__body h2 {
+    margin: 0 0 1rem;
+  }
+  .feature__body p {
+    color: var(--color-slate);
+    margin: 0 0 1.05em;
+    max-width: 54ch;
+  }
+  .feature__media :global(img) {
+    width: 100%;
+    display: block;
+  }
+  @media (min-width: 900px) {
+    .feature__inner {
+      grid-template-columns: 0.9fr 1.1fr;
+    }
+  }
+
+  /* ---- Steps ------------------------------------------------------------ */
+  .steps {
+    list-style: none;
+    display: grid;
+    gap: 2.25rem;
+    margin: 0;
+    padding: 0;
+    counter-reset: step;
+  }
+  .steps li {
+    border-top: 1px solid color-mix(in srgb, var(--color-edge) 45%, transparent);
+    padding-top: 1rem;
+  }
+  .steps__num {
+    display: block;
+    font-family: var(--font-display);
+    font-stretch: 118%;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-edge-deep);
+    margin-bottom: 0.55rem;
+  }
+  .steps h3 {
+    margin: 0 0 0.5rem;
+  }
+  .steps p {
+    margin: 0;
+    color: var(--color-slate);
+    font-size: 0.98rem;
+  }
+  @media (min-width: 720px) {
+    .steps {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.5rem 3rem;
+    }
+  }
+  @media (min-width: 1100px) {
+    .steps {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /* ---- Proof ------------------------------------------------------------ */
+  .proof {
+    display: grid;
+    gap: 1.5rem;
+    align-items: end;
+  }
+  .proof h2 {
+    margin: 0 0 0.7rem;
+  }
+  .proof p {
+    margin: 0;
+    color: var(--color-slate);
+  }
+  .proof__links {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  @media (min-width: 800px) {
+    .proof {
+      grid-template-columns: 1fr auto;
+    }
+  }
+</style>
