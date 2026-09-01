@@ -1,0 +1,36 @@
+# Netlify deployment for New Shower Doors Unlimited.
+#
+# Static build, no server runtime, no plugins to patch. The previous site
+# failed partly because it needed WordPress security maintenance that nobody
+# performed; there is nothing here that can go unpatched.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Fingerprinted assets (Astro hashes filenames) can be cached indefinitely.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# HTML must revalidate so content edits go live on the next request.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), interest-cohort=()"
+
+# Form submissions are handled by Netlify Forms. Notification email and any
+# SMS integration are configured in the Netlify UI — see README.

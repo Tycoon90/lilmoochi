@@ -1,0 +1,150 @@
+---
+import ServiceLayout from '~/layouts/ServiceLayout.astro';
+import SpecTable from '~/components/SpecTable.astro';
+import TodoNote from '~/components/TodoNote.astro';
+import { business } from '~/data/business';
+import { altFor } from '~/data/photos';
+import type { Faq } from '~/lib/schema';
+
+const faqs: Faq[] = [
+  {
+    q: 'Is a framed shower door lower quality than frameless?',
+    a: 'No — it is a different build for a different job. A framed door uses thinner glass supported by a finished frame on all sides, which is a perfectly sound way to enclose a shower and has been for decades. It costs less, tolerates walls that are out of plumb better than frameless does, and seals more completely. What you give up is the open look and the ease of cleaning the frame channels.',
+  },
+  {
+    q: 'Can you fit glass to my existing bathtub?',
+    a: 'In most cases yes. A tub enclosure mounts to the tub deck and the surrounding walls, so what matters is the condition of the tub rim, the tile above it and the walls at each end. We check all three at the measure. If the tub itself is loose or the tile is failing, we will tell you before glass is ordered rather than after.',
+  },
+  {
+    q: 'Why do framed doors leak less?',
+    a: 'Because the frame gives every edge of the glass somewhere to seal against, and the bottom rail carries water back into the tub or shower instead of letting it run to the threshold. A frameless enclosure manages water by geometry; a framed one contains it. If keeping water off the bathroom floor is the priority, framed is the more reliable build.',
+  },
+  {
+    q: 'What finishes are available on the frame?',
+    a: 'The common ones are polished chrome, brushed nickel, matte black, oil-rubbed bronze and white. We bring samples to the measure so the frame can be matched against the tap, the shower valve and the towel bars already in the room, rather than chosen from a photograph.',
+  },
+  {
+    q: 'How do I clean the frame channels?',
+    a: 'The bottom track is what needs attention — it collects soap residue and mineral deposits, and the weep holes that let water drain out can block. A brush and a mild cleaner once a week keeps it clear. Avoid abrasive pads on the frame itself, which will dull the finish long before they affect the glass.',
+  },
+];
+---
+
+<ServiceLayout
+  title="Framed Shower Doors & Tub Enclosures | West Palm Beach"
+  description="Framed shower doors and glass tub enclosures installed in West Palm Beach. The most economical way to enclose a shower or a bathtub."
+  h1="Framed shower doors and tub enclosures in West Palm Beach"
+  intro="Tempered glass in a finished metal surround — the most economical way to enclose a shower or a bathtub, and the most forgiving of walls that are not perfectly plumb."
+  serviceName="Framed shower doors & tub enclosures"
+  photo="framed-enclosure.jpg"
+  photoAlt={altFor('framed-enclosure.jpg')}
+  faqs={faqs}
+  ctaHeading="Enclosing a tub or a shower?"
+  ctaBody="Tell us the width of the opening and whether it is a tub or a shower base, and we will tell you what fits and what it costs."
+>
+  <h2>What a framed enclosure is</h2>
+  <p>
+    A framed shower door carries tempered glass inside a finished metal frame
+    that runs around every edge — the header across the top, the jambs at each
+    side, and the bottom rail. Because the frame does the structural work, the
+    glass itself can be thinner than a frameless build needs, usually{' '}
+    <strong>3/16&Prime; to 1/4&Prime;</strong>. That is the single reason a
+    framed enclosure costs less.
+  </p>
+  <p>
+    It is worth being clear about what that trade actually is. A framed door is
+    not a compromised frameless door. It seals better, it costs less, and it
+    handles an out-of-plumb wall without any of the scribing a frameless panel
+    would need. What you give up is the open look, and the frame channels are
+    another surface to keep clean.
+  </p>
+
+  <SpecTable
+    caption="Where a framed enclosure is the better answer"
+    head={['Situation', 'Why framed suits it']}
+    rows={[
+      [
+        'Walls noticeably out of plumb',
+        'The frame absorbs the discrepancy — no scribing, no visible taper',
+      ],
+      [
+        'Keeping water off the floor matters',
+        'Every glass edge seals against the frame; the bottom rail returns water inward',
+      ],
+      [
+        'Rental or investment property',
+        'Lowest installed cost, robust, and parts are straightforward to replace',
+      ],
+      [
+        'Enclosing an existing bathtub',
+        'Mounts to the tub deck and walls without altering the tub',
+      ],
+      [
+        'A tight renovation budget',
+        'Thinner glass and simpler hardware bring the whole job down',
+      ],
+    ]}
+  />
+
+  <h2>Tub enclosures</h2>
+  <p>
+    A tub enclosure replaces a shower curtain with glass over an existing
+    bathtub. It mounts to the tub rim and to the walls at each end, so no
+    plumbing moves and the tub stays where it is. Most are built as sliding
+    bypass panels, because a hinged door over a tub needs clearance that few
+    bathrooms have.
+  </p>
+  <p>
+    What we check at the measure is the tub rim, the tile above it, and the
+    walls at both ends. The enclosure is only ever as solid as what it fastens
+    to. If the tub moves or the tile is failing, that has to be dealt with first
+    — and it is much cheaper to find out before the glass is cut.
+  </p>
+
+  <h2>Glass and finish options</h2>
+  <ul>
+    <li>
+      <strong>Clear glass</strong> — makes the bathroom feel larger and shows
+      the tile behind it. Shows water spotting most readily.
+    </li>
+    <li>
+      <strong>Rain or patterned glass</strong> — obscures the view without going
+      fully opaque, and hides water marks well. A practical choice in hard-water
+      areas.
+    </li>
+    <li>
+      <strong>Frosted glass</strong> — full privacy, uniform surface.
+    </li>
+    <li>
+      <strong>Frame finishes</strong> — polished chrome, brushed nickel, matte
+      black, oil-rubbed bronze and white. Match it to the shower valve and the
+      taps, not to the tile.
+    </li>
+  </ul>
+
+  <h2>What it costs</h2>
+  <p>
+    Framed enclosures are the least expensive of the builds we fit. The width of
+    the opening, the glass type, the frame finish and whether an old enclosure
+    or a curtain rail needs removing all affect the figure.
+  </p>
+  <TodoNote
+    label="Supply the real installed price range for a framed tub enclosure and for a framed shower door, so this page can quote an honest range."
+  />
+
+  <h2>Framed, semi-frameless or frameless?</h2>
+  <p>
+    If budget is the deciding factor, framed. If you want the open look and the
+    walls will take it, see <a href="/frameless-shower-doors/">frameless shower
+    doors</a>. If the bathroom is tight and the panels need to slide, see{' '}
+    <a href="/sliding-shower-doors/">sliding and bypass doors</a>. We fit all
+    three, which means the recommendation you get at the measure is based on
+    your bathroom rather than on what we happen to stock.
+  </p>
+
+  <h2>Where we work</h2>
+  <p>
+    {business.name} installs framed shower doors and tub enclosures throughout{' '}
+    {business.city} and across {business.serviceAreas.join(', ')}.
+  </p>
+</ServiceLayout>

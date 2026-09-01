@@ -10,7 +10,8 @@
     "preview": "astro preview",
     "check": "astro check",
     "check:output": "node scripts/check-output.mjs",
-    "migrate:images": "node scripts/fetch-legacy-images.mjs"
+    "migrate:images": "node scripts/fetch-legacy-images.mjs",
+    "fonts:build": "node scripts/build-fonts.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
@@ -20,6 +21,9 @@
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
+    "@fontsource-variable/archivo": "^5.3.0",
+    "@fontsource/ibm-plex-sans": "^5.3.0",
+    "lighthouse": "^13.4.1",
     "playwright": "^1.62.1"
   }
 }

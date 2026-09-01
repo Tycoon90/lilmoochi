@@ -1,0 +1,95 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { business } from '~/data/business';
+import { services } from '~/data/services';
+---
+
+<BaseLayout
+  title="Page Not Found | New Shower Doors Unlimited"
+  description="That page does not exist. Find shower doors, mirrors, repairs and contact details for New Shower Doors Unlimited in West Palm Beach."
+  noindex
+>
+  <div class="shell nf">
+    <p class="nf__code">404</p>
+    <h1>That page is not here</h1>
+    <p class="nf__lead measure">
+      The link may be out of date — this site was rebuilt, and a few old
+      addresses changed. Everything below still exists.
+    </p>
+
+    <ul class="nf__links">
+      <li><a href="/">Home</a></li>
+      {
+        services
+          .filter((s) => s.page)
+          .map((s) => (
+            <li>
+              <a href={s.page}>{s.title}</a>
+            </li>
+          ))
+      }
+      <li><a href="/gallery/">Gallery</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+    </ul>
+
+    <p class="nf__call">
+      Or call {business.owner} on{' '}
+      <a href={`tel:${business.phoneRaw}`} data-track="phone_click_404"
+        >{business.phone}</a
+      >.
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  .nf {
+    padding-block: clamp(3rem, 8vw, 6rem) clamp(3.5rem, 8vw, 6rem);
+    min-height: 56vh;
+  }
+  .nf__code {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(3rem, 9vw, 6rem);
+    line-height: 1;
+    color: color-mix(in srgb, var(--color-edge) 45%, transparent);
+    margin: 0 0 0.5rem;
+  }
+  .nf h1 {
+    margin: 0 0 1rem;
+  }
+  .nf__lead {
+    font-size: var(--text-lead);
+    color: var(--color-slate);
+    margin: 0;
+  }
+  .nf__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
+    list-style: none;
+    margin: 2.25rem 0 2rem;
+    padding: 0;
+  }
+  .nf__links a {
+    display: inline-block;
+    padding: 0.45rem 0.9rem;
+    border: 1px solid color-mix(in srgb, var(--color-nickel) 60%, transparent);
+    border-radius: 2px;
+    font-size: 0.92rem;
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+  .nf__links a:hover {
+    border-color: var(--color-edge);
+    color: var(--color-edge-deep);
+  }
+  .nf__call {
+    color: var(--color-slate);
+  }
+  .nf__call a {
+    color: var(--color-edge-deep);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+</style>

@@ -1,0 +1,159 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Photo from '~/components/Photo.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import { business, tagline, formattedAddress } from '~/data/business';
+import { altFor } from '~/data/photos';
+---
+
+<BaseLayout
+  title="About New Shower Doors Unlimited | West Palm Beach"
+  description="Family-owned glass shower door installer in West Palm Beach with 15+ years in the trade, serving Palm Beach, Broward and Miami-Dade counties."
+  crumbs={[{ name: 'About', url: '/about/' }]}
+>
+  <div class="shell about-head">
+    <h1>A family-owned glass shop in West Palm Beach</h1>
+    <p class="lead measure">
+      {business.name} has been fitting shower doors and enclosures in South
+      Florida for over {business.yearsExperience} years. {business.owner} owns
+      and runs it.
+    </p>
+  </div>
+
+  <div class="shell about-grid">
+    <div class="about-copy measure">
+      <p>
+        We are family-owned and operated, with a team of skilled technicians who
+        do our own installations. That matters more than it sounds: the person
+        who measures your opening is the person accountable for how the finished
+        door hangs, rather than a salesperson handing a job to a subcontractor
+        who was not there when the measurements were taken.
+      </p>
+      <p>
+        We fit a wide range of shower door options — framed, frameless and
+        sliding — to suit any style and budget. Because we install all three, we
+        can work closely with you to choose the right door for your bathroom
+        rather than steering you toward the only thing we carry. Sometimes the
+        honest answer is the cheaper one.
+      </p>
+      <p>
+        We also offer repair and maintenance, including on enclosures we did not
+        install. {business.name} is fully licensed and insured, and we use only
+        high-quality products and tools. Every glass design project is
+        customised to the client's vision.
+      </p>
+      <p class="pull">{tagline}</p>
+      <p>
+        We work throughout {business.serviceAreas.join(', ')}. If you are just
+        outside those areas, call and ask — {business.owner} will tell you
+        honestly whether it is a job we can take on properly.
+      </p>
+    </div>
+
+    <aside class="about-side">
+      <Photo
+        src="about-work.jpg"
+        alt={altFor('about-work.jpg')}
+        sizes="(min-width: 900px) 40vw, 100vw"
+        ratio="4 / 5"
+      />
+      <dl class="about-facts">
+        <div>
+          <dt>Owner</dt>
+          <dd>{business.owner}</dd>
+        </div>
+        <div>
+          <dt>Years in the trade</dt>
+          <dd>{business.yearsExperience}+</dd>
+        </div>
+        <div>
+          <dt>Based in</dt>
+          <dd>{formattedAddress}</dd>
+        </div>
+        <div>
+          <dt>Hours</dt>
+          <dd>{business.hours}</dd>
+        </div>
+        <div>
+          <dt>Phone</dt>
+          <dd>
+            <a
+              class="link"
+              href={`tel:${business.phoneRaw}`}
+              data-track="phone_click_about">{business.phone}</a
+            >
+          </dd>
+        </div>
+      </dl>
+    </aside>
+  </div>
+
+  <CtaBand
+    track="about"
+    heading="Talk to Alberto directly"
+    body="No call centre and no sales team. Describe the bathroom and you will get a straight answer about what will work in it."
+  />
+</BaseLayout>
+
+<style>
+  .about-head {
+    padding-block: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 2.5vw, 2rem);
+  }
+  .about-head h1 {
+    margin: 0 0 1rem;
+    max-width: 20ch;
+  }
+  .lead {
+    font-size: var(--text-lead);
+    color: var(--color-slate);
+    margin: 0;
+  }
+  .about-grid {
+    display: grid;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+  .about-copy p {
+    color: var(--color-slate);
+    margin: 0 0 1.05em;
+  }
+  /* The client's own tagline, given the weight of a pull quote rather than
+     being buried in a paragraph. */
+  .pull {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--color-ink) !important;
+    border-left: 2px solid var(--color-edge);
+    padding-left: 1.25rem;
+    margin: 2rem 0 2rem !important;
+    max-width: 24ch;
+  }
+  .about-side :global(img) {
+    width: 100%;
+    display: block;
+  }
+  .about-facts {
+    margin: 1.5rem 0 0;
+  }
+  .about-facts div {
+    border-top: 1px solid color-mix(in srgb, var(--color-nickel) 50%, transparent);
+    padding: 0.7rem 0;
+  }
+  .about-facts dt {
+    font-size: 0.82rem;
+    color: var(--color-slate);
+    margin-bottom: 0.1rem;
+  }
+  .about-facts dd {
+    margin: 0;
+    font-weight: 600;
+  }
+  @media (min-width: 900px) {
+    .about-grid {
+      grid-template-columns: 1.35fr 0.85fr;
+    }
+  }
+</style>

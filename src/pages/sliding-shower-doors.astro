@@ -1,0 +1,173 @@
+---
+import ServiceLayout from '~/layouts/ServiceLayout.astro';
+import SpecTable from '~/components/SpecTable.astro';
+import TodoNote from '~/components/TodoNote.astro';
+import { business } from '~/data/business';
+import { altFor } from '~/data/photos';
+import type { Faq } from '~/lib/schema';
+
+const faqs: Faq[] = [
+  {
+    q: 'What is the difference between a single and a double sliding door?',
+    a: 'A double sliding door — also called a bypass door — has two panels that slide past each other on a track, so half the opening is clear at a time and you can enter from either end. A single sliding door has one moving panel running past one fixed panel, which gives you one wide unobstructed opening. Both save the floor space a hinged door needs to swing into.',
+  },
+  {
+    q: 'Do sliding shower doors need clearance in front?',
+    a: 'No, and that is the main reason to choose one. The panels travel along their own track rather than swinging outward, so nothing needs clear floor space in front of the shower. In a small bathroom where a hinged door would hit the vanity or the toilet, a slider is often the only option that works.',
+  },
+  {
+    q: 'Do the rollers wear out?',
+    a: 'They do, and they are the most commonly replaced part on any sliding enclosure. Rollers are a wear item — they carry the weight of the glass every time the door moves. A door that has started to drag, jump the track or sit crooked usually needs rollers rather than a new enclosure, and that is a repair we do routinely.',
+  },
+  {
+    q: 'Can a sliding door be frameless?',
+    a: 'It can be semi-frameless, and there is also a barn-door style slider where a single heavy panel runs on an exposed top track with no frame around the glass. A fully frameless slider in the strict sense is not possible, because a sliding panel has to be carried by something. If you want the frameless look with sliding operation, the barn-door style is usually the answer.',
+  },
+  {
+    q: 'How do I stop the bottom track getting dirty?',
+    a: 'Wipe it out when you clean the shower and keep the weep holes clear so water drains rather than sits. The bottom track is the part of a slider that collects soap residue and mineral deposits, and most complaints about sliding doors are really complaints about a track nobody has cleaned. A quick pass with a brush once a week does it.',
+  },
+];
+---
+
+<ServiceLayout
+  title="Sliding & Bypass Shower Doors | West Palm Beach"
+  description="Single and double sliding shower doors installed across West Palm Beach and South Florida. Space-saving bypass panels that need no clearance to open."
+  h1="Sliding and bypass shower doors in West Palm Beach"
+  intro="Panels that travel on a track instead of swinging open, so a small bathroom keeps its floor space. Measured to your opening and installed by our own technicians."
+  serviceName="Sliding & bypass shower doors"
+  photo="sliding-doors.jpg"
+  photoAlt={altFor('sliding-doors.jpg')}
+  faqs={faqs}
+  ctaHeading="Not sure a slider is right for your bathroom?"
+  ctaBody="Send a photo of the opening. We will tell you whether a sliding door, a hinged door or a fixed panel suits the space better — including when the answer is not the one we would rather sell."
+>
+  <h2>Why a sliding door</h2>
+  <p>
+    A hinged shower door needs somewhere to go when it opens. In a bathroom
+    where the vanity, the toilet or the doorway sits close to the shower, that
+    clearance simply does not exist. Sliding doors solve it by moving the panels
+    along a track rather than out into the room, which is why they remain the
+    standard answer for small and awkward bathrooms across South Florida.
+  </p>
+  <p>
+    We fit two configurations, and the right one depends on the width of your
+    opening and how you use the shower.
+  </p>
+
+  <h2>Double sliding doors (bypass)</h2>
+  <p>
+    Double sliding doors consist of <strong>two panels that slide past each
+    other on a track</strong>. The advantage is space: they do not swing open,
+    they need no clearance in front, and that makes them well suited to small
+    bathrooms. Because either panel can move, you can enter from whichever end
+    of the opening is easier to reach.
+  </p>
+  <p>
+    The trade-off is that only half the opening is clear at any one time. On a
+    wide tub or a shower where you need to get a bath seat, a child or a
+    wheelchair through, that half-opening can matter. On a standard alcove
+    shower it rarely does.
+  </p>
+
+  <h2>Single sliding doors</h2>
+  <p>
+    A single sliding door gives you <strong>an unobstructed opening with no
+    clearance needed</strong> — one panel moves, one stays fixed. It also suits
+    small bathrooms and limited floor space, and it gives a wider clear entry
+    than a bypass door of the same overall width.
+  </p>
+  <p>
+    This is also the configuration used for barn-door style enclosures, where a
+    single heavy glass panel runs on an exposed top track. Those carry the
+    hardware as a visible design feature and get close to the frameless look
+    while still sliding.
+  </p>
+
+  <SpecTable
+    caption="Choosing between the two"
+    head={['', 'Double sliding (bypass)', 'Single sliding']}
+    rows={[
+      ['Panels', 'Two, both move', 'One moving, one fixed'],
+      ['Clear opening', 'Half the width at a time', 'One wide clear opening'],
+      ['Entry side', 'Either end', 'One side'],
+      [
+        'Best for',
+        'Standard alcove showers and tubs in tight bathrooms',
+        'Wider openings, and anywhere a bigger clear entry matters',
+      ],
+    ]}
+  />
+
+  <h2>Framed, semi-frameless and barn-door sliders</h2>
+  <p>
+    Sliding enclosures come in three broad builds, and the difference shows in
+    both the price and the amount of metal you see.
+  </p>
+  <ul>
+    <li>
+      <strong>Framed</strong> — thinner glass carried in a finished frame on all
+      sides. The most economical build, and the most forgiving of walls that are
+      out of plumb, because the frame absorbs the discrepancy.
+    </li>
+    <li>
+      <strong>Semi-frameless</strong> — heavier glass with the framing reduced
+      to what the track and the panel edges genuinely need. Closer to the
+      frameless look, easier to keep clean, and a middle price.
+    </li>
+    <li>
+      <strong>Barn-door style</strong> — a single thick panel on an exposed top
+      track, with the roller hardware treated as a feature. The most expensive of
+      the three and the closest to frameless in appearance.
+    </li>
+  </ul>
+
+  <h2>What a sliding door costs</h2>
+  <p>
+    Sliding enclosures are generally less expensive than a comparable frameless
+    build, because the glass is thinner and the hardware carries rather than
+    cantilevers it. Width of the opening, glass thickness, the finish on the
+    track and hardware, and whether an old enclosure needs removing all move the
+    figure.
+  </p>
+  <TodoNote
+    label="Supply the real installed price range for a framed bypass door and for a barn-door style slider, so this page can quote an honest range. Nothing has been published here, because inventing a figure would misprice your own work."
+  />
+
+  <h2>Keeping a slider working</h2>
+  <p>
+    Almost every problem with a sliding shower door is mechanical rather than
+    structural, and almost all of it is preventable.
+  </p>
+  <ul>
+    <li>
+      <strong>Keep the bottom track clear.</strong> Soap residue and minerals
+      collect there and block the weep holes, so water sits instead of draining.
+    </li>
+    <li>
+      <strong>Wipe the glass down after a shower.</strong> South Florida water
+      is hard, and dried mineral deposits etch permanently into glass over time.
+    </li>
+    <li>
+      <strong>Deal with a dragging door early.</strong> Rollers are a wear item
+      and cheap to replace. Running a door on failing rollers wears the track,
+      which is not cheap to replace.
+    </li>
+    <li>
+      <strong>Check the seals.</strong> The vinyl sweeps and jamb seals go
+      brittle after several years. Replacing them is a small job and stops most
+      leaks at the threshold.
+    </li>
+  </ul>
+  <p>
+    We repair and maintain sliding enclosures as well as installing them,
+    including ones we did not fit — see <a href="/shower-door-repair/">shower
+    door repair and maintenance</a>.
+  </p>
+
+  <h2>Where we work</h2>
+  <p>
+    {business.name} installs sliding and bypass shower doors throughout{' '}
+    {business.city} and across {business.serviceAreas.join(', ')}.
+  </p>
+</ServiceLayout>

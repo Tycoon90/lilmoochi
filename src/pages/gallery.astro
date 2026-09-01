@@ -1,0 +1,264 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Photo from '~/components/Photo.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import { business } from '~/data/business';
+import { photoSlots } from '~/data/photos';
+import { imageObject } from '~/lib/schema';
+
+// Every gallery item carries ImageObject markup, generated from the same alt
+// text shown on the page so the two can never disagree.
+const schema = photoSlots.map((p) =>
+  imageObject({ url: `/images/${p.file}`, caption: p.alt }),
+);
+---
+
+<BaseLayout
+  title="Shower Door & Glass Gallery | West Palm Beach"
+  description="Photographs of shower doors, enclosures and custom mirrors installed by New Shower Doors Unlimited across West Palm Beach and South Florida."
+  schema={schema}
+  crumbs={[{ name: 'Gallery', url: '/gallery/' }]}
+>
+  <div class="shell gallery-head">
+    <h1>Recent work</h1>
+    <p class="measure">
+      Shower enclosures, tub enclosures and custom mirrors installed across{' '}
+      {business.serviceAreas.join(', ')}. More goes up on{' '}
+      <a class="link" href={business.instagram} rel="noopener">Instagram</a> as
+      jobs are finished.
+    </p>
+  </div>
+
+  <div class="shell">
+    <ul class="grid">
+      {
+        photoSlots.map((p, i) => (
+          <li>
+            <button
+              type="button"
+              class="tile"
+              data-index={i}
+              aria-label={`View larger: ${p.alt}`}
+            >
+              <Photo
+                src={p.file}
+                alt={p.alt}
+                sizes="(min-width: 1100px) 33vw, (min-width: 700px) 50vw, 100vw"
+                ratio="4 / 3"
+              />
+            </button>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <!-- Lightbox. <dialog> gives focus trapping, Escape-to-close and inertness
+       on the rest of the page for free, so the script only has to move
+       between images. -->
+  <dialog id="lightbox" aria-label="Photo viewer">
+    <div class="lb">
+      <div id="lb-figure" class="lb__figure"></div>
+      <p id="lb-cap" class="lb__cap"></p>
+      <div class="lb__controls">
+        <button type="button" id="lb-prev" class="lb__btn">Previous</button>
+        <span id="lb-count" class="lb__count"></span>
+        <button type="button" id="lb-next" class="lb__btn">Next</button>
+      </div>
+      <button type="button" id="lb-close" class="lb__close" aria-label="Close viewer">
+        &times;
+      </button>
+    </div>
+  </dialog>
+
+  <CtaBand
+    track="gallery"
+    heading="Want something like one of these?"
+    body="Send a photo of your bathroom and tell us which of these is closest to what you have in mind."
+  />
+</BaseLayout>
+
+<script>
+  type Item = { src: string; alt: string };
+
+  const dialog = document.getElementById('lightbox') as HTMLDialogElement | null;
+  const figure = document.getElementById('lb-figure');
+  const capEl = document.getElementById('lb-cap');
+  const countEl = document.getElementById('lb-count');
+  const tiles = [...document.querySelectorAll<HTMLButtonElement>('.tile')];
+
+  if (dialog && figure && capEl && countEl && tiles.length) {
+    // Read the rendered <img> out of each tile, so the lightbox uses whatever
+    // the image pipeline produced rather than a second hardcoded path.
+    const items: Item[] = tiles.map((t) => {
+      const img = t.querySelector('img');
+      const placeholder = t.querySelector('.photo-missing');
+      return {
+        src: img?.currentSrc || img?.src || '',
+        alt: img?.alt || placeholder?.getAttribute('aria-label') || '',
+      };
+    });
+
+    let current = 0;
+    let opener: HTMLElement | null = null;
+
+    const show = (i: number) => {
+      current = (i + items.length) % items.length;
+      const item = items[current];
+      // The <img> is created here rather than shipped empty in the HTML, so
+      // the document never contains an image without alt text.
+      figure.replaceChildren();
+      if (item.src) {
+        const img = document.createElement('img');
+        img.src = item.src;
+        img.alt = item.alt;
+        figure.append(img);
+      }
+      capEl.textContent = item.alt;
+      countEl.textContent = `${current + 1} of ${items.length}`;
+    };
+
+    tiles.forEach((tile, i) =>
+      tile.addEventListener('click', () => {
+        opener = tile;
+        show(i);
+        dialog.showModal();
+      }),
+    );
+
+    document.getElementById('lb-prev')?.addEventListener('click', () => show(current - 1));
+    document.getElementById('lb-next')?.addEventListener('click', () => show(current + 1));
+    document.getElementById('lb-close')?.addEventListener('click', () => dialog.close());
+
+    dialog.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); show(current + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+    });
+
+    // Click the backdrop to dismiss.
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+
+    // Return focus to the tile that opened it.
+    dialog.addEventListener('close', () => opener?.focus());
+  }
+</script>
+
+<style>
+  .gallery-head {
+    padding-block: clamp(2rem, 5vw, 3.5rem) clamp(1.5rem, 3vw, 2.5rem);
+  }
+  .gallery-head h1 {
+    margin: 0 0 0.9rem;
+  }
+  .gallery-head p {
+    color: var(--color-slate);
+    margin: 0;
+  }
+
+  .grid {
+    display: grid;
+    gap: clamp(0.75rem, 1.6vw, 1.25rem);
+    grid-template-columns: 1fr;
+    list-style: none;
+    margin: 0 0 clamp(2.5rem, 5vw, 4rem);
+    padding: 0;
+  }
+  .tile {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .tile :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .tile:hover :global(img) {
+    transform: scale(1.03);
+  }
+  @media (min-width: 700px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1100px) {
+    .grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* ---- Lightbox -------------------------------------------------------- */
+  dialog {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    max-width: min(94vw, 68rem);
+    max-height: 94vh;
+  }
+  dialog::backdrop {
+    background: rgba(16, 30, 28, 0.92);
+  }
+  .lb {
+    position: relative;
+    background: var(--color-ink);
+    padding: clamp(1rem, 2.5vw, 1.75rem);
+    color: #fff;
+  }
+  .lb__figure img {
+    display: block;
+    width: 100%;
+    max-height: 74vh;
+    object-fit: contain;
+    margin-inline: auto;
+  }
+  .lb__cap {
+    margin: 1rem 0 0;
+    font-size: 0.92rem;
+    color: color-mix(in srgb, #fff 82%, transparent);
+    max-width: 62ch;
+  }
+  .lb__controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .lb__btn {
+    background: transparent;
+    color: #fff;
+    border: 1px solid color-mix(in srgb, #fff 45%, transparent);
+    border-radius: 2px;
+    padding: 0.55rem 1.1rem;
+    font: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  .lb__btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .lb__count {
+    font-size: 0.85rem;
+    color: color-mix(in srgb, #fff 70%, transparent);
+  }
+  .lb__close {
+    position: absolute;
+    top: 0.4rem;
+    right: 0.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: transparent;
+    border: 0;
+    color: #fff;
+    font-size: 1.9rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+</style>

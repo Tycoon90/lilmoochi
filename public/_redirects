@@ -1,0 +1,44 @@
+# 301 redirects preserving what link equity the old WordPress site has.
+#
+# INCOMPLETE BY NECESSITY: the old site could not be crawled from the build
+# environment, so this covers the URLs that are documented or that follow
+# standard WordPress and Elementor conventions. Before launch, export the full
+# URL list from Google Search Console (Coverage) or crawl the live site, and
+# add anything missing. See MIGRATION.md.
+#
+# Format: <old path>  <new path>  <status>
+
+# Documented: the old site was already redirecting /homepage/ to the root.
+/homepage/                       /                                      301!
+/homepage                        /                                      301!
+/home/                           /                                      301!
+
+# The two service pages the old site actually published. Both were sliding
+# doors, and both now land on the single expanded sliding doors page.
+/single-sliding-doors/           /sliding-shower-doors/                 301
+/double-sliding-doors/           /sliding-shower-doors/                 301
+/single-sliding-shower-doors/    /sliding-shower-doors/                 301
+/double-sliding-shower-doors/    /sliding-shower-doors/                 301
+/sliding-doors/                  /sliding-shower-doors/                 301
+/shower-doors/                   /                                      301
+/services/                       /                                      301
+
+# Standard WordPress page slugs.
+/about-us/                       /about/                                301
+/contact-us/                     /contact/                              301
+/our-work/                       /gallery/                              301
+/portfolio/                      /gallery/                              301
+/projects/                       /gallery/                              301
+
+# WordPress cruft that should not resolve on a static site. 410 tells search
+# engines these are permanently gone rather than temporarily missing.
+/feed/                           /                                      301
+/comments/feed/                  /                                      301
+/wp-json/*                       /                                      410
+/xmlrpc.php                      /                                      410
+/wp-login.php                    /                                      410
+/wp-admin/*                      /                                      410
+
+# Old media paths. The photographs are re-encoded into the Astro pipeline and
+# served from hashed URLs, so the originals no longer exist at these paths.
+/wp-content/*                    /                                      410

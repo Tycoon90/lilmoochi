@@ -1,0 +1,128 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { business } from '~/data/business';
+import { services } from '~/data/services';
+
+// This page exists so form submissions have a distinct URL to convert on.
+// An inline success message cannot be tracked as a conversion in GA4 without
+// custom events, and cannot be used as a conversion destination at all.
+// It is noindex: useful to the customer, useless in search results.
+---
+
+<BaseLayout
+  title="Thank You | New Shower Doors Unlimited"
+  description="Your estimate request has been received by New Shower Doors Unlimited. We reply within one business day."
+  noindex
+>
+  <div class="shell ty">
+    <p class="ty__mark" aria-hidden="true">
+      <svg
+        width="34"
+        height="34"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M20 6L9 17l-5-5"></path>
+      </svg>
+    </p>
+
+    <h1>Request received</h1>
+    <p class="ty__lead measure">
+      Thank you — your request has reached {business.name}. We reply to estimate
+      requests within one business day, and usually the same day if it came in
+      before mid-afternoon.
+    </p>
+
+    <p class="measure">
+      If it is urgent, calling is faster than waiting for a reply:
+      <a
+        class="ty__phone"
+        href={`tel:${business.phoneRaw}`}
+        data-track="phone_click_thankyou">{business.phone}</a
+      >
+    </p>
+
+    <h2>While you wait</h2>
+    <p class="measure">
+      Two things make the first conversation much shorter: a photograph of the
+      opening taken straight on, and a rough width measured at the top and at
+      the bottom. Bathroom walls are rarely parallel, and the difference between
+      those two numbers tells us most of what we need to know.
+    </p>
+
+    <ul class="ty__links">
+      {
+        services
+          .filter((s) => s.page)
+          .slice(0, 4)
+          .map((s) => (
+            <li>
+              <a href={s.page}>{s.title}</a>
+            </li>
+          ))
+      }
+      <li><a href="/gallery/">Recent work</a></li>
+    </ul>
+  </div>
+</BaseLayout>
+
+<style>
+  .ty {
+    padding-block: clamp(3rem, 8vw, 6rem) clamp(3.5rem, 8vw, 6rem);
+    min-height: 52vh;
+  }
+  .ty__mark {
+    color: var(--color-edge-deep);
+    margin: 0 0 1.25rem;
+    line-height: 0;
+  }
+  .ty h1 {
+    margin: 0 0 1rem;
+  }
+  .ty__lead {
+    font-size: var(--text-lead);
+    color: var(--color-slate);
+    margin: 0 0 1.5rem;
+  }
+  .ty p {
+    color: var(--color-slate);
+  }
+  .ty h2 {
+    margin: 2.75rem 0 0.85rem;
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+  }
+  .ty__phone {
+    font-weight: 600;
+    color: var(--color-edge-deep);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .ty__phone:hover {
+    text-decoration: underline;
+  }
+  .ty__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
+    list-style: none;
+    margin: 2rem 0 0;
+    padding: 0;
+  }
+  .ty__links a {
+    display: inline-block;
+    padding: 0.45rem 0.9rem;
+    border: 1px solid color-mix(in srgb, var(--color-nickel) 60%, transparent);
+    border-radius: 2px;
+    font-size: 0.92rem;
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+  .ty__links a:hover {
+    border-color: var(--color-edge);
+    color: var(--color-edge-deep);
+  }
+</style>

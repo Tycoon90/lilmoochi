@@ -1,0 +1,11 @@
+# New Shower Doors Unlimited — showersdoorunlimited.com
+# The domain keeps its legacy spelling; the business name is
+# "New Shower Doors Unlimited".
+
+User-agent: *
+Allow: /
+
+# Form confirmation page. Useful to a customer, useless in search results.
+Disallow: /thank-you/
+
+Sitemap: https://showersdoorunlimited.com/sitemap-index.xml

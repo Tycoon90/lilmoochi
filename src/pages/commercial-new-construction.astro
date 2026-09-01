@@ -1,0 +1,186 @@
+---
+import ServiceLayout from '~/layouts/ServiceLayout.astro';
+import TodoNote from '~/components/TodoNote.astro';
+import { business } from '~/data/business';
+import { altFor } from '~/data/photos';
+import { commercialSections } from '~/data/services';
+import type { Faq } from '~/lib/schema';
+
+const faqs: Faq[] = [
+  {
+    q: 'Do you work with builders and general contractors?',
+    a: 'Yes. New construction and builder work is a regular part of what we do. On a new build the glass is one of the last trades in, which means our schedule depends on the tile and the plumbing being finished and the openings being ready. We would rather be told the real date than the optimistic one — a template taken against unfinished walls is a panel that will not fit.',
+  },
+  {
+    q: 'Can you handle more than one unit at a time?',
+    a: 'Yes. Multiple units of the same specification are more straightforward than one-off residential work, because the panels repeat. What matters is that each opening is templated individually — even identical units move enough in construction that assuming they match will produce glass that does not fit.',
+  },
+  {
+    q: 'What is privacy glass?',
+    a: 'Glass treated so it obscures the view through it while still passing light. In a commercial washroom that means a toilet compartment can be enclosed in glass without being on display — you get the light and the sense of space, without the exposure. It is achieved with frosting, acid etching, applied film or patterned glass, depending on how much obscuring is needed.',
+  },
+  {
+    q: 'What is a splash panel?',
+    a: 'A fixed panel of glass, with no door, that stops water leaving a wet area. Common beside a walk-in shower, at the end of a bath, or next to a urinal or basin in a commercial washroom. It is the simplest thing we install, and often the right answer where a full enclosure would be excessive.',
+  },
+  {
+    q: 'Do you install glass for wine cellars?',
+    a: 'Yes. A wine display or cellar enclosure is glass chosen to show the bottles while keeping the conditioned space separate. Specification matters more here than on a shower — the glazing has to suit the temperature difference the cabinet or room is maintaining, so tell us what the space is designed to hold before the glass is chosen.',
+  },
+];
+---
+
+<ServiceLayout
+  title="Commercial & New Construction Glass | West Palm Beach"
+  description="Commercial and new construction glass in West Palm Beach: interior glass entry doors, privacy glass, splash panels, wine cellar glass and builder work."
+  h1="Commercial and new construction glass in West Palm Beach"
+  intro="Interior glass entry doors, privacy glass, splash panels, wine cellar glass and builder work — the glass that is not a shower door, and the shower doors that go into buildings before anyone lives in them."
+  serviceName="Commercial & new construction glass"
+  photo="gallery-01.jpg"
+  photoAlt={altFor('gallery-01.jpg')}
+  faqs={faqs}
+  ctaHeading="Working to a construction schedule?"
+  ctaBody="Send drawings or unit counts and the date the openings will be ready. We will tell you what we need on site to template, and when we can be there."
+>
+  <h2>Beyond the bathroom</h2>
+  <p>
+    Most of our work is residential shower enclosures, but glass does more than
+    close a shower. The sections below are the other things we fabricate and
+    install, for businesses, for builders and for homeowners whose project has
+    outgrown a single door.
+  </p>
+  <nav class="jump" aria-label="On this page">
+    <ul>
+      {
+        commercialSections.map((s) => (
+          <li>
+            <a href={`#${s.id}`}>{s.title}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  <h2 id="interior-glass-entry-doors">Interior glass entry doors</h2>
+  <p>
+    A glass entry door carries light between rooms that a solid door blocks
+    entirely. Inside a house that usually means an office, a study or a pantry
+    that would otherwise be dark. In a commercial space it means a meeting room
+    or an office off a corridor that stays connected to the floor rather than
+    sealed off from it.
+  </p>
+  <p>
+    These are heavier and more demanding than a shower door. The panel is larger,
+    it is used far more often, and the hardware — pivots or floor closers, locks,
+    pulls — has to be specified for that duty. Privacy, where it is wanted, comes
+    from the glass rather than from the door: frosted, etched, reeded or filmed.
+  </p>
+
+  <h2 id="privacy-glass">Privacy glass for toilet enclosures</h2>
+  <p>
+    Enclosing a toilet compartment in glass sounds contradictory until you have
+    seen it done. Privacy glass obscures the view through it while still passing
+    light, so a windowless compartment borrows daylight from the room it sits in
+    instead of becoming a dark box.
+  </p>
+  <p>
+    How much obscuring you need is the whole decision, and it runs from lightly
+    textured through to fully opaque. We will show you samples held against the
+    actual light in the space, because obscurity that looks sufficient on a
+    sample card can look very different at full height with a light behind it.
+  </p>
+
+  <h2 id="splash-panels">Splash panels</h2>
+  <p>
+    A splash panel is a single fixed panel of glass with no door — the simplest
+    thing we install. It stops water leaving a wet area while leaving the
+    opening completely clear, which means nothing to open, nothing to slide and
+    nothing mechanical to wear out.
+  </p>
+  <p>
+    They suit walk-in showers designed to be entered without a door, the open
+    end of a bath, and washrooms where a panel between a basin and a urinal does
+    the job a full cubicle would over-solve. In a small bathroom a splash panel
+    is often a better answer than an enclosure, and a cheaper one.
+  </p>
+
+  <h2 id="wine-cellar-glass">Wine cellar glass</h2>
+  <p>
+    Glass turns a wine store into a display. A glazed cellar wall or cabinet
+    front shows the bottles while keeping the conditioned space separate from
+    the room around it.
+  </p>
+  <p>
+    Specification matters more here than anywhere else we work, because the
+    glass is holding a temperature difference rather than just water. Tell us
+    what the space is designed to maintain before any glass is chosen — that
+    decides the glazing, not the appearance.
+  </p>
+
+  <h2 id="new-construction">New construction and builder work</h2>
+  <p>
+    On a new build or a full renovation, glass is one of the last trades on
+    site. That position has a consequence worth stating plainly: we can only
+    template against finished walls. Tile, plumbing fixtures and thresholds all
+    have to be complete, because a panel measured against unfinished
+    construction is a panel that will not fit when the tile goes on.
+  </p>
+  <p>
+    What we need from a builder is the date the openings will genuinely be
+    ready, the specification for each unit, and access to template every opening
+    individually. Identical units move enough during construction that assuming
+    they match will produce glass that does not fit — and tempered glass cannot
+    be trimmed on site.
+  </p>
+  <p>
+    {business.name} has been fitting glass in South Florida for over{' '}
+    {business.yearsExperience} years, and takes multi-unit and repeat builder
+    work alongside its residential installations.
+  </p>
+
+  <h2>Pricing commercial work</h2>
+  <p>
+    Commercial and new construction glass is quoted per project rather than from
+    a price list — unit counts, specification, access and schedule all change
+    the figure enough that a single range would be misleading.
+  </p>
+  <TodoNote
+    label="Confirm how commercial work should be presented: whether to publish a minimum project size, whether trade or builder pricing differs from residential, and whether there are licence or insurance details you want stated for commercial clients (do not publish a licence number until you have supplied it)."
+  />
+
+  <h2>Where we work</h2>
+  <p>
+    {business.name} takes commercial and new construction glass work throughout{' '}
+    {business.city} and across {business.serviceAreas.join(', ')}.
+  </p>
+</ServiceLayout>
+
+<style>
+  .jump {
+    margin: 1.75rem 0 2.5rem;
+  }
+  .jump ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .jump li::before {
+    display: none;
+  }
+  .jump a {
+    display: inline-block;
+    padding: 0.4rem 0.85rem;
+    border: 1px solid color-mix(in srgb, var(--color-nickel) 60%, transparent);
+    border-radius: 2px;
+    font-size: 0.9rem;
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+  .jump a:hover {
+    border-color: var(--color-edge);
+    color: var(--color-edge-deep);
+  }
+</style>

@@ -1,0 +1,140 @@
+---
+import ServiceLayout from '~/layouts/ServiceLayout.astro';
+import TodoNote from '~/components/TodoNote.astro';
+import { business } from '~/data/business';
+import { altFor } from '~/data/photos';
+import type { Faq } from '~/lib/schema';
+
+const faqs: Faq[] = [
+  {
+    q: 'Can you remove and dispose of my old mirror?',
+    a: 'Yes. Removing an old wall mirror is part of the job, and it is the part homeowners most often underestimate. Builder-grade mirrors are usually glued directly to the drywall with mastic, so taking one down cleanly without tearing the wall apart takes patience and the right tools. We remove it, take it away, and make the wall good enough to receive the new mirror.',
+  },
+  {
+    q: 'What size can a single mirror be?',
+    a: 'Large, but the practical limits are the doorway, the stairwell and the corridor between the truck and the wall, not the glass. A mirror that cannot be carried into the room has to be made in sections. We check the access route at the measure, which occasionally changes the design — better to find that out with a tape measure than on delivery day.',
+  },
+  {
+    q: 'What is a polished edge, and do I need one?',
+    a: 'A polished edge is a cut edge ground smooth and clear, and it is what makes a frameless mirror look finished rather than raw. A bevel goes further, grinding a shallow angled border around the face that catches light at the perimeter. Polished suits a clean contemporary look; a bevel suits a more traditional room. Any mirror without a frame needs one or the other.',
+  },
+  {
+    q: 'Can a mirror be cut around outlets and light fixtures?',
+    a: 'Yes. Cut-outs for sconces, switches and outlets are made to the measurements taken at your wall before the glass is toughened or the mirror backed. This is another reason the measure matters: a mirror cannot be adjusted on site once the cut-outs are in it.',
+  },
+  {
+    q: 'Are bathroom mirrors different from other mirrors?',
+    a: 'They should be. A mirror in a wet room needs backing and edge sealing suited to constant humidity, otherwise the silvering deteriorates from the edges inward and produces the black creeping spots you see on old bathroom mirrors. We use mirror specified for the location rather than whatever is cheapest per square foot.',
+  },
+];
+---
+
+<ServiceLayout
+  title="Custom Mirrors in West Palm Beach | Cut & Installed"
+  description="Custom mirrors cut to your wall and installed in West Palm Beach, including removal and disposal of the old mirror. Polished or bevelled edges."
+  h1="Custom mirrors in West Palm Beach"
+  intro="Mirrors measured and cut to your wall rather than bought to the nearest standard size, installed properly — and the old one taken away."
+  serviceName="Custom mirrors"
+  photo="custom-mirror.jpg"
+  photoAlt={altFor('custom-mirror.jpg')}
+  faqs={faqs}
+  ctaHeading="Replacing a mirror?"
+  ctaBody="Send the wall dimensions and a photo of what is there now. We will tell you what it takes to remove the old one and what the new one costs."
+>
+  <h2>Cut to the wall, not to the catalogue</h2>
+  <p>
+    A stock mirror is made to a standard size and then the room has to live with
+    it — a gap at one end, an awkward margin above the backsplash, a width that
+    does not relate to the vanity underneath. A custom mirror is measured to the
+    wall it is going on, which means it can run the full width of a vanity,
+    stop exactly at a backsplash, or fill an alcove edge to edge.
+  </p>
+  <p>
+    We cut mirrors for bathrooms and vanities, hallways and entryways, closets
+    and dressing areas, gyms and studios, and above furniture in living and
+    dining rooms.
+  </p>
+
+  <h2>Edges and finishes</h2>
+  <ul>
+    <li>
+      <strong>Polished edge</strong> — the cut edge ground smooth and clear. The
+      standard finish for a frameless mirror and the cleanest contemporary look.
+    </li>
+    <li>
+      <strong>Bevelled edge</strong> — a shallow angled border ground around the
+      face, typically half an inch to an inch wide. Catches light at the
+      perimeter and suits a more traditional room.
+    </li>
+    <li>
+      <strong>Cut-outs and notches</strong> — for sconces, outlets, switches and
+      medicine cabinets, made to the measurements taken at your wall.
+    </li>
+    <li>
+      <strong>Antique and tinted mirror</strong> — bronze and grey tints, and
+      antiqued finishes for a decorative wall rather than a mirror you use to
+      shave in.
+    </li>
+    <li>
+      <strong>Safety backing</strong> — a film applied to the back so the mirror
+      holds together if it is ever broken. Worth specifying in a gym, a child's
+      room or anywhere above a hard floor.
+    </li>
+  </ul>
+
+  <h2>Removing the old mirror</h2>
+  <p>
+    This is the part people underestimate. Builder-grade mirrors are usually
+    glued straight onto the drywall with construction mastic, sometimes with a
+    few clips holding the bottom edge. Prising one off takes the paper face of
+    the drywall with it if it is done impatiently, and a large sheet of unbacked
+    mirror breaks into pieces that are genuinely dangerous to handle.
+  </p>
+  <p>
+    We remove the old mirror, take it away and dispose of it, and leave the wall
+    in a state that will properly receive the new one. If the drywall has been
+    damaged behind the old mirror, we will tell you what it needs before the new
+    glass arrives.
+  </p>
+
+  <h2>How a custom mirror is installed</h2>
+  <ol>
+    <li>
+      <strong>Measure.</strong> The wall is measured at several points — walls
+      are rarely square, and a mirror shows a taper far more obviously than a
+      panel of tile does. We confirm cut-out positions against the fixtures
+      actually on the wall.
+    </li>
+    <li>
+      <strong>Check access.</strong> A large mirror has to physically reach the
+      room. Doorways, turns and stairwells all get checked before a size is
+      confirmed.
+    </li>
+    <li>
+      <strong>Fabricate.</strong> The mirror is cut, the edges polished or
+      bevelled, and any cut-outs made.
+    </li>
+    <li>
+      <strong>Install.</strong> Fixed with the appropriate combination of
+      adhesive and mechanical support for the size and the wall behind it. A
+      large mirror is never held on adhesive alone.
+    </li>
+  </ol>
+
+  <h2>What it costs</h2>
+  <p>
+    Mirror is priced by area, with the edge treatment, any cut-outs, the
+    thickness and the difficulty of removing the existing mirror all adding to
+    it. A plain polished-edge vanity mirror is the least expensive; a large
+    bevelled mirror with cut-outs and an awkward removal is the most.
+  </p>
+  <TodoNote
+    label="Supply a real price range for custom mirrors — per square foot, or a typical installed vanity mirror figure — plus whether old-mirror removal is charged separately."
+  />
+
+  <h2>Where we work</h2>
+  <p>
+    {business.name} cuts and installs custom mirrors throughout {business.city}{' '}
+    and across {business.serviceAreas.join(', ')}.
+  </p>
+</ServiceLayout>

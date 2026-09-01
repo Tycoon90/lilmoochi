@@ -81,20 +81,37 @@ const isCurrent = (href: string) =>
   <nav class="nav-mobile" id="nav-mobile" aria-label="Primary, mobile" hidden>
     <ul>
       {
-        primaryNav.flatMap((item) => [
-          <li>
-            <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
-              {item.label}
-            </a>
-          </li>,
-          ...item.children.map((child) => (
-            <li class="nav-mobile__child">
-              <a href={child.href} aria-current={path === child.href ? 'page' : undefined}>
-                {child.label}
-              </a>
-            </li>
-          )),
-        ])
+        primaryNav.flatMap((item) =>
+          item.children.length
+            ? [
+                // With every service listed directly beneath it, a "Services"
+                // link would only duplicate the first child. It is a group
+                // label here instead.
+                <li class="nav-mobile__label" aria-hidden="true">
+                  {item.label}
+                </li>,
+                ...item.children.map((child) => (
+                  <li class="nav-mobile__child">
+                    <a
+                      href={child.href}
+                      aria-current={path === child.href ? 'page' : undefined}
+                    >
+                      {child.label}
+                    </a>
+                  </li>
+                )),
+              ]
+            : [
+                <li>
+                  <a
+                    href={item.href}
+                    aria-current={isCurrent(item.href) ? 'page' : undefined}
+                  >
+                    {item.label}
+                  </a>
+                </li>,
+              ],
+        )
       }
     </ul>
     <a class="btn btn-primary nav-mobile__cta" href="/contact/">Get an estimate</a>
@@ -170,7 +187,6 @@ const isCurrent = (href: string) =>
     text-decoration: none;
     color: var(--color-ink);
     font-family: var(--font-display);
-    font-stretch: 118%;
     font-weight: 600;
     font-size: 1.02rem;
     letter-spacing: -0.012em;
@@ -350,10 +366,16 @@ const isCurrent = (href: string) =>
     border-bottom: 1px solid
       color-mix(in srgb, var(--color-nickel) 26%, transparent);
   }
+  .nav-mobile__label {
+    padding: 0.9rem 0 0.35rem;
+    font-size: 0.78rem;
+    color: var(--color-slate);
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--color-nickel) 26%, transparent);
+  }
   .nav-mobile__child a {
     padding-left: 1rem;
     font-weight: 400;
-    color: var(--color-slate);
   }
   .nav-mobile a[aria-current='page'] {
     color: var(--color-edge-deep);

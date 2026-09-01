@@ -1,0 +1,152 @@
+---
+import ServiceLayout from '~/layouts/ServiceLayout.astro';
+import SpecTable from '~/components/SpecTable.astro';
+import TodoNote from '~/components/TodoNote.astro';
+import { business } from '~/data/business';
+import { altFor } from '~/data/photos';
+import type { Faq } from '~/lib/schema';
+
+const faqs: Faq[] = [
+  {
+    q: 'Do you repair enclosures you did not install?',
+    a: 'Yes, and much of our repair work is exactly that. It helps to know the make if you have it, but most repairs are diagnosed from the hardware itself. A photograph of the hinge, the roller or the handle is usually enough for us to tell you over the phone whether the part is a standard one.',
+  },
+  {
+    q: 'My shower door has started dragging on the floor. Is that serious?',
+    a: 'It is worth dealing with quickly, but it is rarely serious. On a sliding door it almost always means worn rollers. On a hinged frameless door it usually means the hinge screws have worked loose, or the hinge itself has begun to sag under the weight of the glass. Both are inexpensive to fix early. Left alone, a dragging door wears the track or the threshold, and that is a bigger job.',
+  },
+  {
+    q: 'Can a cracked or chipped glass panel be repaired?',
+    a: 'No. Tempered glass cannot be repaired — it cannot be cut, drilled or filled after toughening, and a chip at the edge is a weak point that can eventually cause the whole panel to break. A chipped or cracked panel has to be replaced. The rest of the enclosure usually does not.',
+  },
+  {
+    q: 'Water is getting onto the bathroom floor. What causes that?',
+    a: 'Most often a perished seal or sweep along the bottom or side of the door, which is a small and inexpensive replacement. Other common causes are a door hanging out of alignment so it no longer closes squarely, a blocked bottom track on a slider holding water instead of draining it, or failed silicone at a joint. Occasionally the real cause is the shower floor sloping toward the opening, which is a tiling problem rather than a glass one — we will tell you if that is what we find.',
+  },
+  {
+    q: 'When is it worth replacing rather than repairing?',
+    a: 'Repair when the glass is sound and the problem is a wear item — rollers, seals, a handle, loose hinges. Replace when a panel is cracked or chipped, when the hardware is obsolete and parts are no longer made, when the frame is corroded through, or when you are re-tiling anyway. If two or three things are failing at once on an older enclosure, replacement usually costs less than repairing each in turn.',
+  },
+];
+---
+
+<ServiceLayout
+  title="Shower Door Repair in West Palm Beach | Same Trade"
+  description="Shower door repair and maintenance in West Palm Beach. Rollers, hinges, handles, seals and re-alignment, including enclosures we did not install."
+  h1="Shower door repair and maintenance in West Palm Beach"
+  intro="Rollers, hinges, handles, seals and doors hanging out of true. Most of what goes wrong with a shower enclosure is a wear item, and replacing the whole thing is rarely necessary."
+  serviceName="Shower door repair & maintenance"
+  photo="install-detail.jpg"
+  photoAlt={altFor('install-detail.jpg')}
+  faqs={faqs}
+  ctaHeading="Something not working right?"
+  ctaBody="Send a photo of the hardware and describe what it is doing. We can usually tell you over the phone whether it is a part, an adjustment or a replacement — before anyone comes out."
+>
+  <h2>Most enclosures do not need replacing</h2>
+  <p>
+    A shower enclosure is glass, hardware and seals. The glass rarely fails. The
+    hardware and the seals are wear items that move, get wet and take load every
+    day, and they are the things that go. When a door starts dragging, leaking or
+    sitting crooked, the useful question is which part has worn — not whether the
+    whole enclosure is finished.
+  </p>
+  <p>
+    We repair and maintain shower doors across South Florida, including
+    enclosures we did not install.
+  </p>
+
+  <h2>What we repair</h2>
+  <ul>
+    <li>
+      <strong>Rollers and guides</strong> on sliding and bypass doors — the most
+      commonly replaced part on any slider, and the usual cause of a door that
+      drags, jumps the track or will not run smoothly.
+    </li>
+    <li>
+      <strong>Hinges</strong> on framed and frameless doors — loose fixings,
+      worn pivots, and doors that have begun to sag under the weight of the
+      glass.
+    </li>
+    <li>
+      <strong>Handles, knobs and towel bars</strong> — including through-glass
+      fittings, which need the correct gaskets to avoid stressing the panel.
+    </li>
+    <li>
+      <strong>Seals, sweeps and jamb strips</strong> — the perished vinyl that
+      causes most threshold leaks. Inexpensive, and the first thing to check.
+    </li>
+    <li>
+      <strong>Re-alignment</strong> of doors that no longer close squarely,
+      whether from settlement, loose hardware or a fixing that was never right.
+    </li>
+    <li>
+      <strong>Re-sealing</strong> joints where the silicone has failed, gone
+      mouldy or pulled away from the tile.
+    </li>
+    <li>
+      <strong>Glass replacement</strong> where a panel is cracked or chipped and
+      the rest of the enclosure is sound.
+    </li>
+    <li>
+      <strong>Tracks and bottom rails</strong> that have corroded or been worn
+      by running a door on failed rollers.
+    </li>
+  </ul>
+
+  <SpecTable
+    caption="Repair or replace — how we decide"
+    head={['What is happening', 'Usual answer']}
+    rows={[
+      ['Door drags, jumps or runs roughly', 'Repair — rollers or guides'],
+      ['Door sags or will not close square', 'Repair — hinges, fixings, re-alignment'],
+      ['Water at the threshold', 'Repair — seals and sweeps, or a blocked track'],
+      ['Handle loose or broken', 'Repair — handle and gaskets'],
+      ['Glass cracked or chipped at an edge', 'Replace the panel; the enclosure usually stays'],
+      ['Hardware obsolete, parts unavailable', 'Replace the enclosure'],
+      ['Frame corroded through', 'Replace the enclosure'],
+      ['Re-tiling the bathroom anyway', 'Replace — the enclosure has to come off regardless'],
+    ]}
+  />
+
+  <h2>What it costs</h2>
+  <p>
+    A repair is priced on the visit plus the parts. Most wear items are
+    inexpensive; the variable is whether the part is a standard one or has to be
+    matched to obsolete hardware.
+  </p>
+  <TodoNote
+    label="Supply the service-call fee and a typical parts-and-labour range for a common repair such as a roller replacement, and confirm whether the call fee is credited against the work if the customer proceeds."
+  />
+
+  <h2>Making an enclosure last</h2>
+  <p>
+    South Florida is hard on shower glass — the water is mineral-heavy and the
+    humidity never really lets up. A few habits make the difference between an
+    enclosure that looks new at ten years and one that looks tired at four.
+  </p>
+  <ul>
+    <li>Squeegee the glass after each shower, and leave the door open to dry.</li>
+    <li>Keep the bottom track and its weep holes clear so water drains.</li>
+    <li>
+      Clean with a mild non-abrasive product. Ammonia, bleach and abrasive pads
+      attack hardware finishes and seals long before they affect glass.
+    </li>
+    <li>
+      Check hinge and handle fixings once a year. A screw tightened in a minute
+      prevents a door that has been sagging for a year.
+    </li>
+    <li>
+      Replace perished seals when you notice them, not when the floor is wet.
+    </li>
+  </ul>
+
+  <h2>Where we work</h2>
+  <p>
+    {business.name} repairs and maintains shower enclosures throughout{' '}
+    {business.city} and across {business.serviceAreas.join(', ')}. If the
+    enclosure turns out to be beyond economical repair, we fit{' '}
+    <a href="/frameless-shower-doors/">frameless</a>,{' '}
+    <a href="/sliding-shower-doors/">sliding</a> and{' '}
+    <a href="/framed-shower-doors-tub-enclosures/">framed</a> replacements.
+  </p>
+</ServiceLayout>

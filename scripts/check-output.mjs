@@ -127,6 +127,15 @@ for (const file of pages) {
     if (/\d[a-z]{4,}/.test(word)) fail(url, `possible missing space: "${tok}"`);
   }
 
+  // --- stray characters --------------------------------------------------
+  // Catches anything outside the Latin/punctuation range that reached the
+  // copy by accident (a mistyped character, a bad paste).
+  const stray = text.match(
+    /[^\u0000-\u024F\u2000-\u206F\u20A0-\u20CF\u2190-\u21FF\u2200-\u22FF\u2600-\u27BF\uFE0F]/g,
+  );
+  if (stray)
+    fail(url, `stray non-Latin character(s) in copy: ${[...new Set(stray)].join(' ')}`);
+
   // --- stale year --------------------------------------------------------
   if (/©\s*20(1\d|2[0-4])\b/.test(text) || /·\s*20(1\d|2[0-4])\s+New Shower/.test(text))
     fail(url, 'stale copyright year in footer');

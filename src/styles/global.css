@@ -6,13 +6,17 @@
    the wide setting is the signature of the page and is deliberately not the
    condensed treatment that reads as default.
 --------------------------------------------------------------------------- */
+/* Archivo, with the width axis permanently instanced to the 118% this design
+   uses and the character set subset to Latin-1 plus punctuation. The full
+   width-axis font is 90KB; this is 26KB, and looks identical, because no page
+   ever varies the width. Weight stays variable (400-700).
+   Regenerate with: npm run fonts:build */
 @font-face {
   font-family: 'Archivo';
   font-style: normal;
-  font-weight: 100 900;
-  font-stretch: 62% 125%;
+  font-weight: 400 700;
   font-display: swap;
-  src: url('/fonts/archivo-latin-wdth.woff2') format('woff2-variations');
+  src: url('/fonts/archivo-expanded.woff2') format('woff2');
 }
 @font-face {
   font-family: 'Plex';
@@ -87,7 +91,6 @@
 
   h1, h2, h3, .display {
     font-family: var(--font-display);
-    font-stretch: 118%;      /* expanded — the page's signature setting */
     font-weight: 600;
     line-height: 1.04;
     letter-spacing: -0.017em;

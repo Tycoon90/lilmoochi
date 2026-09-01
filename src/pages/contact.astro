@@ -1,0 +1,331 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { business, formattedAddress } from '~/data/business';
+import { services } from '~/data/services';
+
+// Netlify picks the form up from the rendered HTML at deploy time. The name
+// here must match the hidden form-name field and the notification settings.
+const FORM_NAME = 'estimate-request';
+
+const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+  `${business.name}, ${formattedAddress}`,
+)}`;
+---
+
+<BaseLayout
+  title="Contact | Shower Door Estimates in West Palm Beach"
+  description="Request a free shower door estimate in West Palm Beach. Call (561) 547-0702 or send a photo of your bathroom and we will tell you what fits."
+  crumbs={[{ name: 'Contact', url: '/contact/' }]}
+>
+  <div class="shell contact-head">
+    <h1>Request an estimate</h1>
+    <p class="lead measure">
+      Tell us about the bathroom. A photo of the opening is worth more than any
+      description, so send one if you can — it is usually enough for us to tell
+      you what will fit before anyone comes out.
+    </p>
+  </div>
+
+  <div class="shell contact-grid">
+    <!-- Form ------------------------------------------------------------- -->
+    <div>
+      <form
+        name={FORM_NAME}
+        method="POST"
+        action="/thank-you/"
+        data-netlify="true"
+        netlify-honeypot="company-website"
+        enctype="multipart/form-data"
+        class="form"
+        data-track="form_submit_estimate"
+      >
+        <input type="hidden" name="form-name" value={FORM_NAME} />
+
+        <!-- Honeypot. Hidden from people, irresistible to bots. Netlify
+             discards any submission that fills it in. No CAPTCHA, because a
+             CAPTCHA costs more real enquiries than it stops bots. -->
+        <p class="hp">
+          <label>
+            Do not fill this in
+            <input type="text" name="company-website" tabindex="-1" autocomplete="off" />
+          </label>
+        </p>
+        <!-- Time trap: a form completed in under three seconds was not
+             completed by a person. Filled in by script on load. -->
+        <input type="hidden" name="loaded-at" id="loaded-at" />
+
+        <div class="field">
+          <label for="name">Your name</label>
+          <input type="text" id="name" name="name" required autocomplete="name" />
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="phone">Phone</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              required
+              autocomplete="tel"
+              inputmode="tel"
+            />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required autocomplete="email" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="address">Project address</label>
+          <input
+            type="text"
+            id="address"
+            name="project-address"
+            autocomplete="street-address"
+          />
+          <p class="hint">Where the work would happen. City is enough to start.</p>
+        </div>
+
+        <div class="field">
+          <label for="service">What do you need?</label>
+          <select id="service" name="service-type">
+            <option value="">Not sure yet</option>
+            {services.map((s) => <option value={s.title}>{s.title}</option>)}
+            <option value="Something else">Something else</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="message">Tell us about it</label>
+          <textarea id="message" name="message" rows="5"></textarea>
+          <p class="hint">
+            Rough dimensions, whether it is a tub or a shower, and anything you
+            already know you want.
+          </p>
+        </div>
+
+        <div class="field">
+          <label for="photo">Photo of the opening <span class="opt">(optional)</span></label>
+          <input type="file" id="photo" name="photo" accept="image/*" multiple />
+          <p class="hint">A phone photo is fine. It usually saves a visit.</p>
+        </div>
+
+        <button type="submit" class="btn btn-primary form__submit">
+          Send request
+        </button>
+
+        <p class="response-time">
+          We reply to estimate requests within one business day, and usually the
+          same day if you send it before mid-afternoon.
+        </p>
+      </form>
+    </div>
+
+    <!-- Direct contact ---------------------------------------------------- -->
+    <aside class="contact-side">
+      <h2>Or call</h2>
+      <p class="contact-phone">
+        <a href={`tel:${business.phoneRaw}`} data-track="phone_click_contact"
+          >{business.phone}</a
+        >
+      </p>
+      <p class="contact-note">
+        Phone is the fastest way to reach us, and it goes to {business.owner}{' '}
+        rather than to a call centre.
+      </p>
+
+      <dl class="contact-facts">
+        <div>
+          <dt>Hours</dt>
+          <dd>{business.hours}</dd>
+        </div>
+        <div>
+          <dt>Email</dt>
+          <dd>
+            <a class="link" href={`mailto:${business.email}`}>{business.email}</a>
+          </dd>
+        </div>
+        <div>
+          <dt>Address</dt>
+          <dd>
+            <address>{formattedAddress}</address>
+            <a class="link" href={mapsUrl} rel="noopener">Get directions</a>
+          </dd>
+        </div>
+        <div>
+          <dt>Service area</dt>
+          <dd>{business.serviceAreas.join(', ')}</dd>
+        </div>
+      </dl>
+
+      <ul class="contact-social">
+        <li><a class="link" href={business.instagram} rel="noopener">Instagram</a></li>
+        <li><a class="link" href={business.facebook} rel="noopener">Facebook</a></li>
+      </ul>
+    </aside>
+  </div>
+</BaseLayout>
+
+<script>
+  // Stamp load time so an instant submission can be identified as automated.
+  const stamp = document.getElementById('loaded-at') as HTMLInputElement | null;
+  if (stamp) stamp.value = String(Date.now());
+</script>
+
+<style>
+  .contact-head {
+    padding-block: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 2.5vw, 2rem);
+  }
+  .contact-head h1 {
+    margin: 0 0 1rem;
+  }
+  .lead {
+    font-size: var(--text-lead);
+    color: var(--color-slate);
+    margin: 0;
+  }
+
+  .contact-grid {
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 4rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+  @media (min-width: 940px) {
+    .contact-grid {
+      grid-template-columns: 1.25fr 0.75fr;
+    }
+  }
+
+  /* ---- Form ------------------------------------------------------------ */
+  .form {
+    max-width: 38rem;
+  }
+  .hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .field {
+    margin-bottom: 1.35rem;
+  }
+  .row {
+    display: grid;
+    gap: 0 1rem;
+  }
+  @media (min-width: 560px) {
+    .row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.94rem;
+    margin-bottom: 0.4rem;
+  }
+  .opt {
+    font-weight: 400;
+    color: var(--color-slate);
+  }
+  input,
+  select,
+  textarea {
+    width: 100%;
+    font: inherit;
+    font-size: 1rem;
+    padding: 0.72rem 0.85rem;
+    background: #fff;
+    color: var(--color-ink);
+    border: 1px solid color-mix(in srgb, var(--color-ink) 26%, transparent);
+    border-radius: 2px;
+  }
+  input[type='file'] {
+    padding: 0.55rem;
+    background: transparent;
+  }
+  textarea {
+    resize: vertical;
+  }
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--color-edge-deep);
+  }
+  .hint {
+    margin: 0.4rem 0 0;
+    font-size: 0.86rem;
+    color: var(--color-slate);
+  }
+  .form__submit {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+  @media (min-width: 560px) {
+    .form__submit {
+      width: auto;
+      min-width: 14rem;
+    }
+  }
+  .response-time {
+    margin: 1rem 0 0;
+    font-size: 0.92rem;
+    color: var(--color-slate);
+    max-width: 46ch;
+  }
+
+  /* ---- Side ------------------------------------------------------------ */
+  .contact-side h2 {
+    margin: 0 0 0.5rem;
+    font-size: clamp(1.3rem, 2vw, 1.6rem);
+  }
+  .contact-phone {
+    margin: 0 0 0.6rem;
+  }
+  .contact-phone a {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--color-edge-deep);
+    text-decoration: none;
+    letter-spacing: -0.015em;
+  }
+  .contact-phone a:hover {
+    color: var(--color-ink);
+  }
+  .contact-note {
+    margin: 0 0 1.75rem;
+    color: var(--color-slate);
+    font-size: 0.95rem;
+    max-width: 34ch;
+  }
+  .contact-facts {
+    margin: 0;
+  }
+  .contact-facts div {
+    border-top: 1px solid color-mix(in srgb, var(--color-nickel) 50%, transparent);
+    padding: 0.8rem 0;
+  }
+  .contact-facts dt {
+    font-size: 0.82rem;
+    color: var(--color-slate);
+    margin-bottom: 0.15rem;
+  }
+  .contact-facts dd {
+    margin: 0;
+  }
+  address {
+    font-style: normal;
+    margin-bottom: 0.3rem;
+  }
+  .contact-social {
+    display: flex;
+    gap: 1.25rem;
+    list-style: none;
+    margin: 1.5rem 0 0;
+    padding: 0;
+  }
+</style>
