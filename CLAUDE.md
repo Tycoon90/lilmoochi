@@ -52,6 +52,23 @@ charged. Never accept a price, name, or discount from the request body, and neve
 duplicate the product list in a page. Checkout also rejects unknown ids, sizes a
 product doesn't offer, and quantities outside 1–`MAX_QUANTITY_PER_ITEM`.
 
+## Mobile — checkout must stay reachable
+
+Most traffic is a phone coming from Instagram. Two rules the store depends on:
+
+- **The cart button exists in the mobile header, not only the desktop nav.**
+  It was `hidden md:flex` at one point, with an empty spacer in its place on
+  mobile: the drawer auto-opens after adding an item, and once closed there
+  was no way to reopen it, so checkout was unreachable on a phone.
+- **The cart drawer outranks the navbar** (`z-[60]` overlay, `z-[70]` panel,
+  against the navbar's `z-50`). Both sat at `z-50` and the navbar renders
+  later in the DOM, so it painted on top — the drawer's close button was
+  covered by the hamburger and tapping it opened the nav menu instead.
+
+Verify changes to either at an iPhone viewport, not just a narrow desktop
+window: add to cart → close the drawer → reopen it from the header → reach the
+checkout button.
+
 ## Brand colors
 
 | Token | Hex | Usage |
