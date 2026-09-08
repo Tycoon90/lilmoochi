@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCart } from '@/lib/cart';
 import { formatPrice, FREE_SHIPPING_THRESHOLD_CENTS } from '@/lib/products';
 
@@ -9,6 +9,21 @@ export default function CartDrawer() {
   const [error, setError] = useState<string | null>(null);
 
   const remainingForFreeShipping = FREE_SHIPPING_THRESHOLD_CENTS - totalPriceCents;
+
+  // Escape closes the drawer, and the page behind it shouldn't scroll while it's open.
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsOpen(false);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isOpen, setIsOpen]);
 
   const handleCheckout = async () => {
     if (items.length === 0 || loading) return;
@@ -40,7 +55,7 @@ export default function CartDrawer() {
       {/* Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/60 z-50"
+          className="fixed inset-0 bg-black/60 z-[60]"
           onClick={() => setIsOpen(false)}
         />
       )}
@@ -48,7 +63,7 @@ export default function CartDrawer() {
       {/* Drawer */}
       <div
         aria-hidden={!isOpen}
-        className={`fixed top-0 right-0 h-full w-full max-w-md bg-[#0d0d0d] border-l border-white/10 z-50 flex flex-col transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`fixed top-0 right-0 h-full w-full max-w-md bg-[#0d0d0d] border-l border-white/10 z-[70] flex flex-col transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
 
         {/* Header */}

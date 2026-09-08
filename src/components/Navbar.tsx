@@ -52,8 +52,19 @@ export default function Navbar() {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-[#080808]/98 backdrop-blur-md shadow-lg shadow-black/20' : 'bg-[#080808]/95 backdrop-blur-md'} border-b border-white/5`}>
       <div className="max-w-6xl mx-auto px-4 py-3 grid grid-cols-[44px_1fr_44px] md:flex md:items-center md:justify-between items-center">
-        {/* Left spacer on mobile */}
-        <div className="md:hidden" />
+        {/* Mobile cart button — the only way to reach checkout on a phone. */}
+        <button
+          onClick={() => openCart(true)}
+          aria-label={`Open cart${totalItems > 0 ? ` (${totalItems} item${totalItems !== 1 ? 's' : ''})` : ''}`}
+          className="md:hidden relative p-2 min-w-[44px] min-h-[44px] flex items-center justify-start hover:text-[#5b9bd5] transition-colors"
+        >
+          <span className="text-xl" aria-hidden="true">🛒</span>
+          {totalItems > 0 && (
+            <span className="absolute top-0 left-4 bg-[#e8132a] text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center">
+              {totalItems}
+            </span>
+          )}
+        </button>
 
         <Link href="/" className="flex items-center justify-center md:justify-start gap-1 md:gap-1.5" aria-label="Lil Moochi Boxing — Home">
           <span className="text-lg md:text-2xl leading-none">🇺🇸</span>
@@ -83,8 +94,12 @@ export default function Navbar() {
           <Link href="/store" className="bg-[#1e3a8a] text-white px-5 py-2.5 hover:bg-blue-700 transition-colors">
             Shop Merch
           </Link>
-          <button onClick={() => openCart(true)} className="relative p-2 hover:text-[#5b9bd5] transition-colors">
-            <span className="text-lg">🛒</span>
+          <button
+            onClick={() => openCart(true)}
+            aria-label={`Open cart${totalItems > 0 ? ` (${totalItems} item${totalItems !== 1 ? 's' : ''})` : ''}`}
+            className="relative p-2 hover:text-[#5b9bd5] transition-colors"
+          >
+            <span className="text-lg" aria-hidden="true">🛒</span>
             {totalItems > 0 && (
               <span className="absolute -top-1 -right-1 bg-[#e8132a] text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center">
                 {totalItems}
