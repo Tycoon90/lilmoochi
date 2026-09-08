@@ -2,22 +2,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { analytics } from '@/lib/analytics';
 import { useCart } from '@/lib/cart';
+import { formatPrice, Product } from '@/lib/products';
 
-interface MerchCardProps {
-  name: string;
-  price: string;
-  tag?: string;
-  emoji: string;
-  category?: string;
-  sizes?: string[];
-  mockupImage?: string;
-}
-
-export default function MerchCard({ name, price, tag, emoji, sizes = [], mockupImage }: MerchCardProps) {
+export default function MerchCard({ product }: { product: Product }) {
+  const { id, name, priceCents, tag, emoji, sizes, mockupImage } = product;
   const ref = useRef<HTMLDivElement>(null);
   const [selectedSize, setSelectedSize] = useState<string>(sizes[0] || '');
   const [added, setAdded] = useState(false);
   const { addItem } = useCart();
+  const price = formatPrice(priceCents);
 
   useEffect(() => {
     const el = ref.current;
@@ -37,7 +30,7 @@ export default function MerchCard({ name, price, tag, emoji, sizes = [], mockupI
 
   const handleAddToCart = () => {
     analytics.addToCart({ name, price });
-    addItem({ name, price, size: selectedSize, emoji, mockupImage });
+    addItem(id, selectedSize);
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };
@@ -58,13 +51,14 @@ export default function MerchCard({ name, price, tag, emoji, sizes = [], mockupI
           <img
             src={mockupImage}
             alt={name}
+            loading="lazy"
             className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-zinc-700 to-zinc-900">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/logo-transparent.png" alt="Moochi Logo" className="w-24 h-24 object-contain drop-shadow-lg mb-2" />
-            <span className="text-4xl mt-2">{emoji}</span>
+            <img src="/images/logo-transparent.png" alt="" loading="lazy" className="w-24 h-24 object-contain drop-shadow-lg mb-2" />
+            <span className="text-4xl mt-2" aria-hidden="true">{emoji}</span>
             <p className="text-white/30 text-[10px] uppercase tracking-[0.3em] mt-2 font-bold">LIL MOOCHI</p>
           </div>
         )}
@@ -76,12 +70,13 @@ export default function MerchCard({ name, price, tag, emoji, sizes = [], mockupI
 
         {sizes.length > 1 && (
           <div className="mb-4">
-            <p className="text-[10px] text-gray-600 uppercase tracking-widest mb-2">Size</p>
-            <div className="flex flex-wrap gap-1">
+            <p className="text-[10px] text-gray-600 uppercase tracking-widest mb-2" id={`size-label-${id}`}>Size</p>
+            <div className="flex flex-wrap gap-1" role="group" aria-labelledby={`size-label-${id}`}>
               {sizes.map((s) => (
                 <button
                   key={s}
                   onClick={() => setSelectedSize(s)}
+                  aria-pressed={selectedSize === s}
                   className={`px-2 py-1 text-[10px] font-bold uppercase border transition-colors ${
                     selectedSize === s
                       ? 'border-[#5b9bd5] text-[#5b9bd5] bg-[#5b9bd5]/10'
@@ -101,6 +96,7 @@ export default function MerchCard({ name, price, tag, emoji, sizes = [], mockupI
           </div>
           <button
             onClick={handleAddToCart}
+            aria-label={`Add ${name} to cart`}
             className={`w-full py-3 font-black text-xs uppercase tracking-widest transition-all ${
               added
                 ? 'bg-green-600 text-white'

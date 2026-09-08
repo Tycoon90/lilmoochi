@@ -11,7 +11,11 @@ npm run lint      # ESLint check
 NODE_OPTIONS=--openssl-legacy-provider npx vercel --prod # Deploy to production (www.lilmoochi.com)
 ```
 
-> **Note:** `next.config.ts` has `ignoreBuildErrors: true` and `ignoreDuringBuilds: true` — TypeScript and ESLint errors will not block builds.
+```bash
+npm run typecheck # tsc --noEmit
+```
+
+> **Note:** TypeScript and ESLint errors block the build. Keep `npm run lint` and `npm run typecheck` clean — do not re-add `ignoreBuildErrors` / `ignoreDuringBuilds` to `next.config.ts`.
 
 ## Video assets
 
@@ -29,12 +33,24 @@ Place all media (images, videos) in `public/images/`. Avoid spaces in filenames 
 
 **Pages:**
 - `src/app/page.tsx` — Homepage. All major sections live here as one file (hero, about, coaches, watch & learn, merch CTA, Instagram section).
-- `src/app/store/page.tsx` — Merch store page.
+- `src/app/store/page.tsx` — Merch store page (server component; `StoreGrid` holds the category filter).
+- `src/app/success/page.tsx` — Post-checkout confirmation; retrieves the Stripe session server-side.
+- `src/app/api/checkout/route.ts` — Creates the Stripe Checkout Session.
 
 **Shared components:**
 - `src/components/Navbar.tsx` — Fixed top nav with mobile hamburger menu. Contains desktop and mobile nav in the same component with `useState` toggle.
 - `src/components/Footer.tsx` — Site footer with nav links and social links.
 - `src/components/MerchCard.tsx` — Single product card used in the store grid.
+- `src/components/CartDrawer.tsx` — Slide-out cart; posts the cart to `/api/checkout`.
+
+## Store catalog — read this before touching prices
+
+`src/lib/products.ts` is the only place product data lives, with prices in cents.
+The cart stores product ids, sizes and quantities only, and `/api/checkout`
+re-reads every price from the catalog, so the client can never influence what is
+charged. Never accept a price, name, or discount from the request body, and never
+duplicate the product list in a page. Checkout also rejects unknown ids, sizes a
+product doesn't offer, and quantities outside 1–`MAX_QUANTITY_PER_ITEM`.
 
 ## Brand colors
 
