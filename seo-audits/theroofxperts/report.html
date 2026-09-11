@@ -1,0 +1,974 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SEO &amp; Website Audit — theroofxperts.com</title>
+<style>
+  @page { size: Letter; margin: 14mm 13mm 16mm 13mm; }
+  @page :first { margin: 0; }
+
+  :root{
+    --ink:#12161c;
+    --ink-2:#3a4553;
+    --slate:#4a5568;
+    --muted:#6b7684;
+    --line:#dfe3e8;
+    --line-2:#eef1f4;
+    --accent:#d9480f;
+    --accent-soft:#fdf0e9;
+    --crit:#c1121f;
+    --crit-soft:#fdeaec;
+    --high:#c05621;
+    --high-soft:#fdf1e5;
+    --med:#8a6d1a;
+    --med-soft:#fbf6e4;
+    --ok:#1f6f43;
+    --ok-soft:#e9f5ee;
+    --navy:#141a22;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body{
+    margin:0; padding:0;
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size:9.4pt; line-height:1.5; color:var(--ink);
+    background:#fff;
+  }
+
+  .page{ page-break-after:always; }
+  .page:last-child{ page-break-after:auto; }
+  .nobreak{ page-break-inside:avoid; }
+
+  /* ---------- COVER ---------- */
+  .cover{
+    height:279.4mm; width:215.9mm;
+    background:var(--navy);
+    color:#fff; position:relative; overflow:hidden;
+    padding:26mm 22mm;
+    display:block;
+  }
+  .cover:after{
+    content:""; position:absolute; right:-60mm; top:-40mm;
+    width:170mm; height:170mm; border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, rgba(217,72,15,.30), rgba(217,72,15,0) 62%);
+  }
+  .cover-inner{ position:relative; z-index:2; }
+  .kicker{
+    font-size:8.2pt; letter-spacing:.28em; text-transform:uppercase;
+    color:#f0a077; font-weight:700; margin-bottom:9mm;
+  }
+  .cover h1{
+    font-size:37pt; line-height:1.04; margin:0 0 6mm 0; font-weight:800; letter-spacing:-.022em;
+  }
+  .cover h1 em{ font-style:normal; color:#f4914f; display:block; }
+  .cover .sub{
+    font-size:12pt; color:#b8c2cf; max-width:130mm; line-height:1.5; font-weight:400;
+  }
+  .rule{ width:34mm; height:3px; background:var(--accent); margin:9mm 0; }
+  .cover-meta{
+    position:absolute; left:22mm; right:22mm; bottom:22mm; z-index:2;
+    border-top:1px solid rgba(255,255,255,.16); padding-top:7mm;
+    display:flex; gap:9mm; flex-wrap:nowrap;
+  }
+  .cover-meta div{ min-width:34mm; }
+  .cover-meta .lbl{
+    font-size:7pt; letter-spacing:.2em; text-transform:uppercase; color:#7d8da0; margin-bottom:2.5mm; font-weight:700;
+  }
+  .cover-meta .val{ font-size:10pt; color:#eef2f6; font-weight:600; }
+
+  .cover-stats{ display:flex; gap:8mm; margin-top:12mm; }
+  .cstat{
+    background:rgba(255,255,255,.055); border:1px solid rgba(255,255,255,.11);
+    border-radius:4px; padding:5mm 6mm; flex:1;
+  }
+  .cstat .n{ font-size:24pt; font-weight:800; color:#f4914f; line-height:1; }
+  .cstat .t{ font-size:7.6pt; color:#aab6c4; margin-top:2.5mm; line-height:1.35; }
+
+  /* ---------- TYPE ---------- */
+  h2.sec{
+    font-size:17pt; font-weight:800; letter-spacing:-.015em; margin:0 0 1.5mm 0; color:var(--ink);
+  }
+  .sec-kicker{
+    font-size:7.4pt; letter-spacing:.24em; text-transform:uppercase; color:var(--accent);
+    font-weight:800; margin-bottom:2mm;
+  }
+  .sec-head{ border-bottom:2px solid var(--ink); padding-bottom:3mm; margin-bottom:6mm; }
+  .sec-head.tight{ padding-bottom:2mm; margin-bottom:4mm; }
+  .sec-head.tight h2.sec{ font-size:15pt; }
+  .sec-head p{ margin:2mm 0 0 0; color:var(--slate); font-size:9.6pt; max-width:165mm; }
+
+  h3{ font-size:11pt; font-weight:800; margin:7mm 0 2.5mm 0; letter-spacing:-.01em; }
+  h4{ font-size:9.4pt; font-weight:800; margin:5mm 0 1.5mm 0; }
+  p{ margin:0 0 3mm 0; }
+  ul,ol{ margin:0 0 3mm 0; padding-left:4.6mm; }
+  li{ margin-bottom:1.4mm; }
+  strong{ font-weight:700; }
+  code, .mono{ font-family:"SFMono-Regular",Consolas,Menlo,monospace; font-size:8.4pt; background:#f2f4f6; padding:.4mm 1.2mm; border-radius:2px; }
+  a{ color:var(--ink); text-decoration:none; }
+
+  /* ---------- COMPONENTS ---------- */
+  .grid2{ display:flex; gap:6mm; }
+  .grid2 > *{ flex:1; }
+
+  table{ width:100%; border-collapse:collapse; margin:0 0 5mm 0; }
+  th{
+    text-align:left; font-size:7.4pt; letter-spacing:.11em; text-transform:uppercase;
+    color:#fff; background:var(--navy); padding:2.6mm 2.6mm; font-weight:700;
+  }
+  td{ padding:2.6mm 2.6mm; border-bottom:1px solid var(--line); vertical-align:top; font-size:8.8pt; }
+  tbody tr:nth-child(even) td{ background:#fafbfc; }
+  td.num{ text-align:right; white-space:nowrap; }
+
+  .pill{
+    display:inline-block; font-size:6.8pt; font-weight:800; letter-spacing:.09em;
+    text-transform:uppercase; padding:1mm 2mm; border-radius:2px; white-space:nowrap;
+  }
+  .p-crit{ background:var(--crit); color:#fff; }
+  .p-high{ background:var(--high); color:#fff; }
+  .p-med{ background:var(--med); color:#fff; }
+  .p-low{ background:#5a6572; color:#fff; }
+  .p-ok{ background:var(--ok); color:#fff; }
+  .p-ver{ background:#e8ebef; color:#4a5568; }
+
+  .finding{
+    border:1px solid var(--line); border-left:4px solid var(--crit);
+    border-radius:3px; padding:4mm 4.5mm; margin-bottom:4mm; page-break-inside:avoid;
+  }
+  .finding.high{ border-left-color:var(--high); }
+  .finding.med{ border-left-color:var(--med); }
+  .finding-head{ display:flex; align-items:baseline; gap:3mm; margin-bottom:2mm; }
+  .finding-id{ font-size:8pt; font-weight:800; color:var(--muted); font-family:monospace; }
+  .finding h4{ margin:0; font-size:10.2pt; flex:1; }
+  .finding .row{ margin-bottom:1.8mm; font-size:8.7pt; }
+  .finding .row b{
+    display:inline-block; min-width:19mm; font-size:6.9pt; letter-spacing:.11em;
+    text-transform:uppercase; color:var(--muted); vertical-align:top; font-weight:800;
+  }
+  .finding .row span{ display:inline-block; width:calc(100% - 20mm); vertical-align:top; }
+  .ev{ font-size:8.2pt; color:var(--slate); }
+  .ev em{ font-style:normal; background:#f4f6f8; padding:.3mm 1mm; border-radius:2px; font-family:monospace; font-size:7.8pt; }
+
+  .callout{
+    background:var(--accent-soft); border:1px solid #f3d5c4; border-radius:3px;
+    padding:4mm 4.5mm; margin:0 0 5mm 0; font-size:8.9pt; page-break-inside:avoid;
+  }
+  .callout.grey{ background:#f6f8fa; border-color:var(--line); }
+  .callout.dark{ background:var(--navy); border-color:var(--navy); color:#dfe6ee; }
+  .callout.dark b{ color:#f4914f; }
+  .callout h4{ margin-top:0; }
+
+  .score-grid{ display:flex; flex-wrap:wrap; gap:3.2mm; margin-bottom:5mm; }
+  .score{
+    width:calc(33.333% - 2.2mm); border:1px solid var(--line); border-radius:3px;
+    padding:3.4mm; page-break-inside:avoid;
+  }
+  .score .cat{ font-size:7.4pt; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); font-weight:800; }
+  .score .g{ font-size:21pt; font-weight:800; line-height:1.1; margin:1mm 0 .6mm; }
+  .score .n{ font-size:7.8pt; color:var(--slate); line-height:1.35; }
+  .g-f{ color:var(--crit); } .g-d{ color:#c05621; } .g-c{ color:#8a6d1a; } .g-b{ color:#2f6f43; }
+
+  .bar{ height:2.4mm; background:var(--line-2); border-radius:2px; overflow:hidden; margin-top:1.6mm; }
+  .bar i{ display:block; height:100%; background:var(--accent); }
+
+  /* ---------- PRICING ---------- */
+  .pk-wrap{ display:flex; gap:3.4mm; align-items:stretch; }
+  .pk{
+    flex:1; border:1px solid var(--line); border-radius:4px; overflow:hidden;
+    display:flex; flex-direction:column; page-break-inside:avoid;
+  }
+  .pk.feature{ border:2px solid var(--accent); }
+  .pk-top{ background:#f6f8fa; padding:3.6mm 3.4mm; border-bottom:1px solid var(--line); }
+  .pk.feature .pk-top{ background:var(--navy); color:#fff; border-bottom-color:var(--navy); }
+  .pk-tag{
+    font-size:6.6pt; letter-spacing:.18em; text-transform:uppercase; font-weight:800;
+    color:var(--accent); margin-bottom:1.6mm;
+  }
+  .pk.feature .pk-tag{ color:#f4914f; }
+  .pk-name{ font-size:12pt; font-weight:800; letter-spacing:-.01em; margin-bottom:1mm; }
+  .pk-for{ font-size:7.3pt; color:var(--muted); line-height:1.36; min-height:8mm; }
+  .pk.feature .pk-for{ color:#a9b5c3; }
+  .pk-price{ margin-top:2.4mm; }
+  .pk-price .big{ font-size:17.5pt; font-weight:800; letter-spacing:-.02em; }
+  .pk-price .per{ font-size:7.6pt; color:var(--muted); }
+  .pk.feature .pk-price .per{ color:#a9b5c3; }
+  .pk-price .mo{ font-size:9pt; font-weight:700; margin-top:1.2mm; }
+  .pk-price .mo span{ font-size:7.6pt; font-weight:400; color:var(--muted); }
+  .pk.feature .pk-price .mo span{ color:#a9b5c3; }
+  .pk-body{ padding:3.4mm; flex:1; }
+  .pk-body h5{
+    font-size:6.9pt; letter-spacing:.14em; text-transform:uppercase; color:var(--muted);
+    margin:0 0 1.2mm 0; font-weight:800;
+  }
+  .pk-body h5:not(:first-child){ margin-top:2.6mm; }
+  .pk-body ul{ list-style:none; padding:0; margin:0; }
+  .pk-body li{ font-size:7.5pt; line-height:1.36; padding-left:3.4mm; position:relative; margin-bottom:0.85mm; }
+  .pk-body li:before{ content:"▸"; position:absolute; left:0; color:var(--accent); font-size:7pt; }
+
+  .foot{
+    position:running(footer);
+  }
+  .small{ font-size:7.8pt; color:var(--muted); }
+  .tick{ color:var(--ok); font-weight:800; }
+  .cross{ color:#b9c0c9; font-weight:800; }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<div class="page">
+  <div class="cover">
+    <div class="cover-inner">
+      <div class="kicker">Search &amp; Website Performance Audit</div>
+      <h1>theroofxperts.com<em>is leaking leads.</em></h1>
+      <div class="rule"></div>
+      <p class="sub">A findings report on the search visibility, technical health, and
+      conversion architecture of The Roof Xperts' web presence — plus three engagement
+      options to rebuild it and run it.</p>
+
+      <div class="cover-stats">
+        <div class="cstat"><div class="n">5</div><div class="t">Critical issues<br>blocking rankings</div></div>
+        <div class="cstat"><div class="n">4+</div><div class="t">Conflicting business<br>addresses online</div></div>
+        <div class="cstat"><div class="n">0</div><div class="t">City pages for 15<br>claimed service areas</div></div>
+        <div class="cstat"><div class="n">2</div><div class="t">Competing websites<br>for one brand</div></div>
+      </div>
+    </div>
+
+    <div class="cover-meta">
+      <div><div class="lbl">Prepared for</div><div class="val">The Roof Xperts LLC<br>Pompano Beach, FL</div></div>
+      <div><div class="lbl">Prepared by</div><div class="val">Pangea United Inc.</div></div>
+      <div><div class="lbl">Date</div><div class="val">September 11, 2026</div></div>
+      <div><div class="lbl">Report type</div><div class="val">SEO Audit &amp;<br>Engagement Proposal</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ EXEC SUMMARY ============ -->
+<div class="page">
+  <div class="sec-head">
+    <div class="sec-kicker">Section 01</div>
+    <h2 class="sec">Executive Summary</h2>
+    <p>What we found, why it matters, and what it is costing you.</p>
+  </div>
+
+  <p><strong>The short version:</strong> The Roof Xperts has the two things that are hardest to
+  build — a licensed, 30-year operating history (CGC1536478 / CCC1331579) and genuinely excellent
+  review scores (4.9 Angi, 4.9 HomeAdvisor, 5.0 Yelp, BBB-accredited since 2019). What it does not
+  have is a web presence capable of converting any of that into search rankings.</p>
+
+  <p>The brand is currently running <strong>two separate websites</strong>, is listed at
+  <strong>at least four different street addresses</strong> across the directories Google uses to
+  validate a local business, and has <strong>no dedicated page</strong> for any of the services it
+  sells or any of the fifteen cities it claims to serve. In a market where competitors rank on
+  purpose-built city and service pages, that is the difference between appearing in the map pack
+  and being invisible.</p>
+
+  <div class="callout">
+    <h4>The single most expensive problem</h4>
+    <p style="margin-bottom:0">A second live website — <code>trx.company</code>, branded "The Roof Xperts Co" —
+    is indexed by Google alongside <code>theroofxperts.com</code>. It carries a different email
+    address, a different page structure, and unfinished WordPress defaults visible in public search
+    results. Every link, review mention, and brand search is being split across two domains, so
+    neither one accumulates enough authority to rank. <strong>Consolidating these is the fastest
+    single win available.</strong></p>
+  </div>
+
+  <h3>Scorecard</h3>
+  <p class="small" style="margin-bottom:3mm">Grades reflect evidence gathered from search-engine
+  indexes, directory listings, and public business records. See Section 02 for methodology and
+  the items that require a direct site crawl to finalize.</p>
+
+  <div class="score-grid">
+    <div class="score">
+      <div class="cat">Local SEO / Map Pack</div>
+      <div class="g g-f">F</div>
+      <div class="n">NAP conflicts across 4+ addresses, duplicate directory profiles, conflicting hours.</div>
+      <div class="bar"><i style="width:15%"></i></div>
+    </div>
+    <div class="score">
+      <div class="cat">Site Architecture</div>
+      <div class="g g-f">F</div>
+      <div class="n">Brand split across two domains. No service or location page layer.</div>
+      <div class="bar"><i style="width:12%"></i></div>
+    </div>
+    <div class="score">
+      <div class="cat">On-Page / Metadata</div>
+      <div class="g g-d">D</div>
+      <div class="n">Duplicate and non-descriptive title tags; no geo or service modifiers.</div>
+      <div class="bar"><i style="width:28%"></i></div>
+    </div>
+    <div class="score">
+      <div class="cat">Content Depth</div>
+      <div class="g g-f">F</div>
+      <div class="n">No blog, no cost guides, no insurance-claim content, no case studies.</div>
+      <div class="bar"><i style="width:10%"></i></div>
+    </div>
+    <div class="score">
+      <div class="cat">Structured Data</div>
+      <div class="g g-f">F</div>
+      <div class="n">No evidence of LocalBusiness, Service, FAQ, or Review schema in results.</div>
+      <div class="bar"><i style="width:8%"></i></div>
+    </div>
+    <div class="score">
+      <div class="cat">Reputation Assets</div>
+      <div class="g g-c">C+</div>
+      <div class="n">Genuinely strong ratings — but fragmented, unconsolidated, and not on-site.</div>
+      <div class="bar"><i style="width:62%"></i></div>
+    </div>
+    <div class="score">
+      <div class="cat">Credentials / E-E-A-T</div>
+      <div class="g g-d">D</div>
+      <div class="n">Real licenses and 30-year history exist but are not surfaced where Google reads them.</div>
+      <div class="bar"><i style="width:30%"></i></div>
+    </div>
+    <div class="score">
+      <div class="cat">Conversion Design</div>
+      <div class="g g-d">D</div>
+      <div class="n">100% financing is a strong differentiator, buried on a secondary page.</div>
+      <div class="bar"><i style="width:32%"></i></div>
+    </div>
+    <div class="score">
+      <div class="cat">Brand / Social Signal</div>
+      <div class="g g-d">D</div>
+      <div class="n">213 Instagram followers, 87 posts. No repurposing loop into the site.</div>
+      <div class="bar"><i style="width:25%"></i></div>
+    </div>
+  </div>
+
+  <div class="callout grey nobreak">
+    <h4>What the market looks like</h4>
+    <p style="margin-bottom:0">Your Broward competitors are not winning on craftsmanship — they are
+    winning on infrastructure. Advanced Roofing leads with GAF Platinum Elite certification and a
+    35-year guarantee program. All Phase Construction runs dedicated URLs like
+    <code>/locations/pompano-beach/best-roofers-pompano-beach</code> and leads with
+    "HVHZ-certified, 2,500+ roofs." Clark Roofing leads with "70 years, 22,000 installations."
+    Every one of those is a page structure and a set of trust signals you can match inside
+    90 days — you already have the licenses and the review scores to back it up.</p>
+  </div>
+</div>
+
+<!-- ============ METHODOLOGY ============ -->
+<div class="page">
+  <div class="sec-head">
+    <div class="sec-kicker">Section 02</div>
+    <h2 class="sec">Methodology &amp; Scope</h2>
+    <p>How this audit was produced, and what it does and does not cover.</p>
+  </div>
+
+  <h3>What was examined</h3>
+  <ul>
+    <li>Search-engine index coverage for <code>theroofxperts.com</code> and <code>trx.company</code> — which URLs are indexed, and the title tags and descriptions Google is displaying for them.</li>
+    <li>Name / Address / Phone (NAP) data across Google-trusted directories: BBB, Yelp, Angi, HomeAdvisor, Yahoo Local, BuildZoom, ZoomInfo, Dun &amp; Bradstreet, city-data business registry.</li>
+    <li>Public business records: entity registration, EIN, and Florida DBPR contractor licensing.</li>
+    <li>Review platform ratings, volume, and profile duplication.</li>
+    <li>Social presence and content cadence.</li>
+    <li>Competitive positioning of the top-ranking roofing contractors in Pompano Beach, Fort Lauderdale, and surrounding Broward markets.</li>
+  </ul>
+
+  <div class="callout nobreak">
+    <h4>Disclosure — crawl access</h4>
+    <p>This audit was produced from a network environment that blocks direct HTTP access to
+    third-party domains. <strong>The site's raw HTML, headers, and page-speed metrics could not be
+    fetched directly.</strong> Every finding in Section 03 is therefore sourced from
+    search-engine index data and public records, and each one cites its evidence.</p>
+    <p style="margin-bottom:0">Items that require a direct crawl to confirm are listed separately in
+    Section 05 rather than asserted as findings. That crawl is the first deliverable of the
+    Discovery phase in any of the three packages, at no additional cost — and in our experience it
+    typically <em>adds</em> issues to this list rather than removing them.</p>
+  </div>
+
+  <h3>Severity definitions</h3>
+  <table>
+    <thead><tr><th style="width:26mm">Level</th><th>Definition</th><th style="width:36mm">Response time</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill p-crit">Critical</span></td><td>Actively prevents ranking or actively misleads Google about the business. Compounds daily.</td><td>Week 1–3</td></tr>
+      <tr><td><span class="pill p-high">High</span></td><td>Directly caps how much traffic the site can earn. No ranking ceiling breaks without fixing these.</td><td>Week 2–8</td></tr>
+      <tr><td><span class="pill p-med">Medium</span></td><td>Meaningful lift to conversion rate or competitive position, but not a blocker.</td><td>Week 6–16</td></tr>
+      <tr><td><span class="pill p-ver">To verify</span></td><td>Strongly suspected based on site age and structure; requires direct crawl to confirm and size.</td><td>Discovery</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Business profile on record</h3>
+  <table>
+    <thead><tr><th style="width:42mm">Field</th><th>Value found</th></tr></thead>
+    <tbody>
+      <tr><td>Legal entity</td><td>The Roof Xperts LLC</td></tr>
+      <tr><td>EIN</td><td>82-3348191</td></tr>
+      <tr><td>Licenses</td><td>CGC1536478 (Certified General Contractor) · CCC1331579 (Certified Roofing Contractor) · NAT-F192684-1</td></tr>
+      <tr><td>Primary phone</td><td>(561) 740-5516</td></tr>
+      <tr><td>Primary email</td><td>Info@TheRoofXperts.com &nbsp;<span class="pill p-med">conflict</span>&nbsp; theroofxpertsco@gmail.com (on trx.company)</td></tr>
+      <tr><td>Stated experience</td><td>30 years</td></tr>
+      <tr><td>Team size</td><td>1–10 employees</td></tr>
+      <tr><td>BBB</td><td>Accredited since 02/05/2019</td></tr>
+      <tr><td>Claimed service area</td><td>Fort Lauderdale, Lighthouse Point, Deerfield Beach, Pompano Beach, Davie, Weston, Boynton Beach, Pembroke Pines, Miami, Coral Springs, Parkland, Sunrise, Margate, Tamarac, Boca Raton</td></tr>
+    </tbody>
+  </table>
+
+  <p class="small">Note the last row. Fifteen cities are being claimed in directory descriptions.
+  Zero of them have a corresponding page on the website. That gap is the core of the opportunity.</p>
+</div>
+
+<!-- ============ CRITICAL FINDINGS ============ -->
+<div class="page">
+  <div class="sec-head">
+    <div class="sec-kicker">Section 03 — Part A</div>
+    <h2 class="sec">Critical Findings</h2>
+    <p>Five issues that are actively preventing the site from ranking. Fix these first.</p>
+  </div>
+
+  <div class="finding">
+    <div class="finding-head">
+      <span class="finding-id">C-01</span>
+      <h4>Two live websites are competing for the same brand</h4>
+      <span class="pill p-crit">Critical</span>
+    </div>
+    <div class="row"><b>Evidence</b><span class="ev">Both <em>theroofxperts.com</em> and <em>trx.company</em> ("The Roof Xperts Co") are indexed by Google. trx.company carries a full page set — <em>/services/</em>, <em>/roof-repair/</em>, <em>/residential-roofing/</em>, <em>/emergency-roofing/</em>, <em>/projects/</em>, <em>/process/</em>, <em>/about-us/</em>, <em>/contact/</em> — and a different contact email (<em>theroofxpertsco@gmail.com</em> vs <em>Info@TheRoofXperts.com</em>).</span></div>
+    <div class="row"><b>Why it hurts</b><span>Google has to pick one domain to associate with "The Roof Xperts." Inbound links, citations, brand searches, and review mentions are split across both, so neither accumulates enough authority to compete. Worse, the two sites cannibalize each other for the same keywords — a self-inflicted duplicate-content problem.</span></div>
+    <div class="row"><b>The fix</b><span>Pick one canonical domain (<code>theroofxperts.com</code> — it matches the brand, the email, and every directory citation). Map every trx.company URL to its best equivalent and 301-redirect it. Migrate any content worth keeping first. This consolidates all accumulated authority into one asset.</span></div>
+    <div class="row"><b>Timeline</b><span>Week 1–2. Ranking response typically visible in 30–60 days.</span></div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-head">
+      <span class="finding-id">C-02</span>
+      <h4>Unfinished WordPress defaults are publicly indexed</h4>
+      <span class="pill p-crit">Critical</span>
+    </div>
+    <div class="row"><b>Evidence</b><span class="ev">Google is displaying the title tag <em>"Contact – My WordPress - The Roof Xperts Co"</em> and <em>"Emergency Roofing Services - My WordPress"</em> for trx.company pages — the WordPress installation's default site title was never changed. The default <em>/sample-page/</em> stub is also live and indexed.</span></div>
+    <div class="row"><b>Why it hurts</b><span>Two problems. To Google, default placeholder content and orphaned stub pages are a quality signal — they indicate an unmaintained site, and unmaintained sites do not get ranked for commercial queries. To a homeowner about to spend $12,000, seeing "My WordPress" in a search result for their roofing contractor is a credibility failure at the worst possible moment.</span></div>
+    <div class="row"><b>The fix</b><span>Resolved by C-01. Once trx.company is redirected, these URLs stop existing. If any part of that site is retained short-term, the site title, all title tags, and the sample page need immediate correction and a re-crawl request.</span></div>
+    <div class="row"><b>Timeline</b><span>Week 1. Same-day fix if trx.company must stay live temporarily.</span></div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-head">
+      <span class="finding-id">C-03</span>
+      <h4>At least four conflicting business addresses across the web</h4>
+      <span class="pill p-crit">Critical</span>
+    </div>
+    <div class="row"><b>Evidence</b><span class="ev">
+      <em>1000 S Dixie Hwy W #8, Pompano Beach FL 33060</em> (own website) ·
+      <em>4699 N Federal Hwy, Pompano Beach FL</em> (Yelp) ·
+      <em>2091 NE 36th St #5208, Lighthouse Point FL</em> (BBB) ·
+      <em>2071 NE 1st Ave, Pompano Beach FL 33060-4901</em> (ZoomInfo / Dun &amp; Bradstreet) ·
+      plus a HomeAdvisor listing showing ZIP <em>33066</em>. Hours also conflict: <em>Mon–Fri 9–5</em> on Yahoo Local and HomeAdvisor vs <em>Mon–Fri 8–5</em> on Yelp.
+    </span></div>
+    <div class="row"><b>Why it hurts</b><span>NAP consistency is one of the strongest ranking factors in Google's local algorithm. When Google finds five versions of a business's address, it lowers confidence in all of them — which directly suppresses map-pack placement. For a home-services business, the map pack <em>is</em> the lead source. This alone can be the difference between three-pack placement and page two.</span></div>
+    <div class="row"><b>The fix</b><span>Establish one canonical NAP record. Audit and correct the top 40–60 citation sources, in priority order: Google Business Profile, Apple Business Connect, Bing Places, BBB, Yelp, Angi, HomeAdvisor, Facebook, Yahoo, then aggregators (Data Axle, Foursquare, Neustar). Publish the canonical NAP on-site in structured data and in the footer of every page.</span></div>
+    <div class="row"><b>Timeline</b><span>Week 2–6. Aggregator propagation runs 60–90 days.</span></div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-head">
+      <span class="finding-id">C-04</span>
+      <h4>Duplicate directory profiles are splitting reviews and confusing Google</h4>
+      <span class="pill p-crit">Critical</span>
+    </div>
+    <div class="row"><b>Evidence</b><span class="ev">Two separate HomeAdvisor profiles exist (<em>ID 73845684</em> and <em>ID 109964797</em>, the latter under ZIP 33066). BBB carries the business under both a <em>Lighthouse Point</em> and a <em>Pompano Beach</em> profile URL. Yelp lists a third address.</span></div>
+    <div class="row"><b>Why it hurts</b><span>Duplicate listings divide review counts, so a business with genuinely strong ratings looks thinner than it is on every platform. Duplicates are also the single most common cause of Google Business Profile suspension — a risk that turns an SEO problem into a total loss of map visibility overnight.</span></div>
+    <div class="row"><b>The fix</b><span>Claim every profile, merge or request removal of duplicates, and consolidate reviews onto the surviving listing where the platform allows it. Then lock the canonical record in.</span></div>
+    <div class="row"><b>Timeline</b><span>Week 2–8. Platform merge requests are the long pole.</span></div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-head">
+      <span class="finding-id">C-05</span>
+      <h4>No service pages and no location pages on the primary domain</h4>
+      <span class="pill p-crit">Critical</span>
+    </div>
+    <div class="row"><b>Evidence</b><span class="ev">Indexed pages found on theroofxperts.com are limited to the homepage, <em>/about-us</em>, <em>/financing</em>, and <em>/project-photo-gallery</em>. There is no page for roof replacement, roof repair, tile roofing, metal roofing, flat/TPO commercial roofing, roof inspections, or storm and insurance-claim work — and no page for any of the fifteen cities in the stated service area. The service pages that do exist are on the wrong domain (trx.company).</span></div>
+    <div class="row"><b>Why it hurts</b><span>Google ranks pages, not businesses. A search for "roof replacement Fort Lauderdale" needs a page about roof replacement in Fort Lauderdale to rank for it. With four thin pages, the site is eligible for essentially one query — its own brand name — which only captures people who already know the company. Every competitor named in this report runs a service × location page matrix. That is the entire game in this vertical.</span></div>
+    <div class="row"><b>The fix</b><span>Build the matrix: 8–10 service pages × 8–15 city pages, each with genuinely local content (permit and HVHZ code specifics, local project photos, neighborhood references, city-specific testimonials), properly interlinked and schema-marked. Not doorway pages — substantive pages that earn the ranking.</span></div>
+    <div class="row"><b>Timeline</b><span>Week 3–16, released in waves. This is the primary traffic driver.</span></div>
+  </div>
+</div>
+
+<!-- ============ HIGH ============ -->
+<div class="page">
+  <div class="sec-head">
+    <div class="sec-kicker">Section 03 — Part B</div>
+    <h2 class="sec">High-Priority Findings</h2>
+    <p>Issues that cap the ceiling on how much traffic the site can earn.</p>
+  </div>
+
+  <div class="finding high">
+    <div class="finding-head">
+      <span class="finding-id">H-01</span>
+      <h4>Title tags are duplicated, non-descriptive, and missing geography</h4>
+      <span class="pill p-high">High</span>
+    </div>
+    <div class="row"><b>Evidence</b><span class="ev">Homepage title is <em>"The Roof Xperts"</em> — brand only, no service, no city. <em>/financing</em> also titles as <em>"THE ROOF XPERTS"</em>, a duplicate carrying no information about the page. <em>/about-us</em> titles as <em>"Best Roofing Company Near Me - THE ROOF XPERTS"</em> — a generic keyword phrase stuffed onto the one page that should be building trust, not chasing traffic. <em>/project-photo-gallery</em> titles as <em>"Project Photo Gallery"</em> with no brand and no geography at all.</span></div>
+    <div class="row"><b>Why it hurts</b><span>The title tag is still the single highest-leverage on-page ranking element and the primary driver of click-through rate from search results. Duplicates force Google to choose between pages. A homepage title with no service and no city cannot rank for a service-and-city query.</span></div>
+    <div class="row"><b>The fix</b><span>A consistent title formula across the site: <code>Primary Service in City | Differentiator | Brand</code>, each unique, each under ~60 characters. Example homepage: <em>"Roof Replacement &amp; Repair in Pompano Beach, FL | Licensed 30+ Yrs | The Roof Xperts"</em>. Same treatment for meta descriptions, written as ad copy with financing and free-estimate offers.</span></div>
+  </div>
+
+  <div class="finding high">
+    <div class="finding-head">
+      <span class="finding-id">H-02</span>
+      <h4>No content engine — zero topical authority</h4>
+      <span class="pill p-high">High</span>
+    </div>
+    <div class="row"><b>Evidence</b><span class="ev">No blog, resource section, cost guide, FAQ hub, or case-study library found on either domain.</span></div>
+    <div class="row"><b>Why it hurts</b><span>Roofing buyers research for weeks before they call. The queries they run — "how much does a roof cost in Broward County," "will insurance cover my roof," "how long does a tile roof last in Florida," "what is HVHZ certification" — are where the relationship starts. Competitors are capturing that entire research phase. You are not in it. Topical content is also how a domain earns the authority to rank its commercial pages.</span></div>
+    <div class="row"><b>The fix</b><span>A South Florida-specific content program: roof cost guides by material and city, the insurance-claim process in Florida, hurricane preparation and post-storm inspection, HVHZ and Florida Building Code explainers, material comparison guides. Each one internally links to the matching service and city page.</span></div>
+  </div>
+
+  <div class="finding high">
+    <div class="finding-head">
+      <span class="finding-id">H-03</span>
+      <h4>Credentials and experience are not surfaced where Google reads them</h4>
+      <span class="pill p-high">High</span>
+    </div>
+    <div class="row"><b>Evidence</b><span class="ev">Licenses CGC1536478 and CCC1331579 and the 30-year operating history appear in third-party directories and on Instagram, but do not appear in any indexed title tag, meta description, or search snippet for the website. No manufacturer certification (GAF, Owens Corning, CertainTeed), workmanship warranty, or insurance verification found in indexed content.</span></div>
+    <div class="row"><b>Why it hurts</b><span>Roofing is a Your-Money-Your-Life category — Google applies elevated experience, expertise, authoritativeness, and trust standards to it. Meanwhile the top-ranking competitors lead with exactly these signals: "GAF Platinum Elite," "HVHZ-certified," "employee-owned since 1983." You hold real credentials and are not getting a single point of credit for them.</span></div>
+    <div class="row"><b>The fix</b><span>Surface licenses in the site footer, on every service page, and in structured data. Build a dedicated credentials/warranty page. Pursue manufacturer certification if not already held — it is a ranking signal, a trust signal, and a margin signal simultaneously.</span></div>
+  </div>
+
+  <div class="finding high">
+    <div class="finding-head">
+      <span class="finding-id">H-04</span>
+      <h4>Excellent reviews, fragmented and stranded off-site</h4>
+      <span class="pill p-high">High</span>
+    </div>
+    <div class="row"><b>Evidence</b><span class="ev">4.9 on Angi · 4.9 on HomeAdvisor · 5.0 on Yelp · BBB-accredited since 2019 — spread across at least seven platforms including two duplicate HomeAdvisor profiles. No consolidated review display or Review schema found on the website. Google review volume could not be confirmed and appears thin relative to competitors.</span></div>
+    <div class="row"><b>Why it hurts</b><span>Google review count and velocity are among the strongest map-pack ranking factors, and they are the first thing a homeowner checks. Reviews scattered across seven platforms with no on-site aggregation means the social proof never reaches the person on your website, and never reaches the algorithm ranking your map listing.</span></div>
+    <div class="row"><b>The fix</b><span>Install an automated review-request system (SMS and email, triggered on job completion) pointed primarily at Google. Aggregate and display reviews on-site with Review and AggregateRating schema. Target a steady, sustainable cadence rather than a burst — velocity matters more than a one-time spike.</span></div>
+  </div>
+
+  <div class="finding high">
+    <div class="finding-head">
+      <span class="finding-id">H-05</span>
+      <h4>No structured data — ineligible for rich results</h4>
+      <span class="pill p-high">High</span>
+    </div>
+    <div class="row"><b>Evidence</b><span class="ev">No schema-driven rich results (star ratings, FAQ expansions, breadcrumbs, business panels) observed in any search result for either domain.</span></div>
+    <div class="row"><b>Why it hurts</b><span>Schema is how you tell Google explicitly what the business is, where it operates, what it charges, and how it is rated — rather than hoping the crawler infers it. It also earns visual real estate in search results that measurably lifts click-through rate against competitors on the same page.</span></div>
+    <div class="row"><b>The fix</b><span>Full implementation: <code>RoofingContractor</code> / <code>LocalBusiness</code> with canonical NAP, geo coordinates, hours, and service area; <code>Service</code> on every service page; <code>FAQPage</code>; <code>Review</code> and <code>AggregateRating</code>; <code>BreadcrumbList</code>; <code>ImageObject</code> on gallery projects.</span></div>
+  </div>
+
+  <div class="finding high">
+    <div class="finding-head">
+      <span class="finding-id">H-06</span>
+      <h4>Thin brand and social signal</h4>
+      <span class="pill p-high">High</span>
+    </div>
+    <div class="row"><b>Evidence</b><span class="ev">Instagram @theroofxperts: 213 followers, 87 posts. No evident content pipeline feeding the website.</span></div>
+    <div class="row"><b>Why it hurts</b><span>Roofing is one of the most visually persuasive trades there is — before/after work sells itself. Low brand search volume and a thin social footprint also weaken the brand-authority signals Google uses as a tiebreaker between similarly optimized local competitors.</span></div>
+    <div class="row"><b>The fix</b><span>Systematize job-site capture (every crew, every job, same shot list), then run one pipeline into Instagram, Google Business Profile photo posts, and on-site project case studies simultaneously. One capture, three placements.</span></div>
+  </div>
+</div>
+
+<!-- ============ MEDIUM ============ -->
+<div class="page">
+  <div class="sec-head">
+    <div class="sec-kicker">Section 04</div>
+    <h2 class="sec">Medium-Priority &amp; Conversion Findings</h2>
+    <p>Not ranking blockers — but each one is money left on the table.</p>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head">
+      <span class="finding-id">M-01</span>
+      <h4>Palm Beach phone number on a Broward-marketed business</h4>
+      <span class="pill p-med">Medium</span>
+    </div>
+    <div class="row"><b>Evidence</b><span class="ev">Listed number is <em>(561) 740-5516</em>. The 561 area code covers Palm Beach County; the business address and the bulk of the claimed service area are Broward County (954).</span></div>
+    <div class="row"><b>Why it hurts</b><span>South Florida homeowners read area codes as a proxy for "are you actually local to me." A Pompano Beach or Fort Lauderdale customer seeing a 561 number reads it as an out-of-area contractor, which costs calls at the exact moment of decision.</span></div>
+    <div class="row"><b>The fix</b><span>Add a 954 tracking number as the primary display number in Broward-targeted content and the Google Business Profile, keeping 561 for Palm Beach targeting. Route both to the same line. This doubles as call-attribution data, so you can finally see which pages and which cities actually produce phone calls.</span></div>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head">
+      <span class="finding-id">M-02</span>
+      <h4>100% financing — your strongest offer — is buried</h4>
+      <span class="pill p-med">Medium</span>
+    </div>
+    <div class="row"><b>Evidence</b><span class="ev">100% roof financing is offered, but appears only on a standalone <em>/financing</em> page whose title tag does not even mention financing.</span></div>
+    <div class="row"><b>Why it hurts</b><span>Cost is the number one objection in a $10,000–$16,000 purchase. "No money down, monthly payments" removes it. An offer that strong belongs in the hero of every page, in every meta description, and in the Google Business Profile — not on a page nobody navigates to.</span></div>
+    <div class="row"><b>The fix</b><span>Elevate financing into the homepage hero, every service-page CTA, and meta descriptions site-wide. Add a payment calculator — high-engagement, highly linkable, and it pre-qualifies leads before your estimator spends a drive on them.</span></div>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head">
+      <span class="finding-id">M-03</span>
+      <h4>Google Business Profile appears unoptimized</h4>
+      <span class="pill p-med">Medium</span>
+    </div>
+    <div class="row"><b>Evidence</b><span class="ev">No GBP-driven rich signals surfaced in search results; NAP conflicts (C-03) and duplicate listings (C-04) indicate the profile is not actively managed.</span></div>
+    <div class="row"><b>Why it hurts</b><span>For a local roofer, the Google Business Profile typically drives more inbound calls than the website itself. An unmanaged profile — no service list, no products, no weekly posts, no Q&amp;A seeding, no geotagged photo cadence, no review responses — forfeits the highest-intent traffic available.</span></div>
+    <div class="row"><b>The fix</b><span>Full optimization pass, then an ongoing cadence: weekly posts, monthly geotagged project photos, complete service and product listings, seeded Q&amp;A, and a response to every review within 48 hours.</span></div>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head">
+      <span class="finding-id">M-04</span>
+      <h4>No storm-damage or insurance-claim content</h4>
+      <span class="pill p-med">Medium</span>
+    </div>
+    <div class="row"><b>Evidence</b><span class="ev">No indexed content addressing hurricane damage, emergency tarping, or the Florida roof insurance-claim process on the primary domain.</span></div>
+    <div class="row"><b>Why it hurts</b><span>In South Florida this is the highest-intent, highest-margin traffic that exists, and it spikes hard and fast after every named storm. Contractors who have the pages already indexed capture it; contractors who start writing after landfall do not. Being unprepared here costs an entire season.</span></div>
+    <div class="row"><b>The fix</b><span>Build an evergreen storm hub now — emergency tarping, post-storm inspection checklists, the claim process step by step, working with adjusters, deductible and Florida statute explainers — so it is aged and indexed before the next event, with pre-built landing pages ready to activate.</span></div>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head">
+      <span class="finding-id">M-05</span>
+      <h4>Photo gallery is not working as an SEO asset</h4>
+      <span class="pill p-med">Medium</span>
+    </div>
+    <div class="row"><b>Evidence</b><span class="ev">A <em>/project-photo-gallery</em> page exists but appears to be a single undifferentiated page rather than individual, indexable project pages.</span></div>
+    <div class="row"><b>Why it hurts</b><span>Completed jobs are the best long-tail ranking asset a contractor owns. "Tile roof replacement in Coral Springs" as its own case study — with the city, the material, the problem, the solution, the timeline, and the customer's own words — ranks for queries no competitor is even targeting, and converts far better than a photo grid.</span></div>
+    <div class="row"><b>The fix</b><span>Convert the gallery into individual project pages, each tagged by city and material, each with ImageObject schema, each internally linked to the matching service and city page. Ten jobs a month becomes 120 new ranking assets a year.</span></div>
+  </div>
+</div>
+
+<!-- ============ TO VERIFY ============ -->
+<div class="page">
+  <div class="sec-head">
+    <div class="sec-kicker">Section 05</div>
+    <h2 class="sec">Requires Direct Crawl to Confirm</h2>
+    <p>Deliberately not asserted as findings. These are verified in Discovery, week one, included in every package.</p>
+  </div>
+
+  <p>As disclosed in Section 02, this audit was produced without direct HTTP access to the site.
+  The items below are the standard technical layer of a full audit. Based on the site's structure
+  and the issues already confirmed, we expect a meaningful number of them to be problems — but they
+  are listed as open questions rather than findings, because asserting them without measurement
+  would be guesswork, and you should not pay for guesswork.</p>
+
+  <table>
+    <thead><tr><th style="width:46mm">Area</th><th>What gets measured</th><th style="width:24mm">Expectation</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Core Web Vitals</strong></td><td>Largest Contentful Paint, Cumulative Layout Shift, Interaction to Next Paint — field and lab data, mobile and desktop</td><td><span class="pill p-high">Likely fail</span></td></tr>
+      <tr><td><strong>Mobile usability</strong></td><td>Viewport config, tap-target sizing, readable font sizes, mobile navigation and click-to-call behavior</td><td><span class="pill p-med">At risk</span></td></tr>
+      <tr><td><strong>HTTPS &amp; redirects</strong></td><td>Certificate validity, HTTP→HTTPS enforcement, www vs non-www canonicalization, redirect chains and loops, trailing-slash consistency</td><td><span class="pill p-med">At risk</span></td></tr>
+      <tr><td><strong>robots.txt &amp; sitemap</strong></td><td>Presence, correctness, accidental blocking of CSS/JS or key directories, XML sitemap completeness and submission status</td><td><span class="pill p-med">At risk</span></td></tr>
+      <tr><td><strong>Canonicalization</strong></td><td>Canonical tag presence and accuracy, duplicate URL parameters, index bloat, orphaned pages</td><td><span class="pill p-med">At risk</span></td></tr>
+      <tr><td><strong>Heading structure</strong></td><td>H1 presence and uniqueness on every page, logical H2/H3 hierarchy, keyword alignment</td><td><span class="pill p-high">Likely fail</span></td></tr>
+      <tr><td><strong>Image optimization</strong></td><td>File weight, next-gen formats (WebP/AVIF), lazy loading, descriptive alt text — critical on a photo-gallery site</td><td><span class="pill p-high">Likely fail</span></td></tr>
+      <tr><td><strong>Internal linking</strong></td><td>Click depth from homepage, anchor-text distribution, orphan detection, link equity flow</td><td><span class="pill p-high">Likely fail</span></td></tr>
+      <tr><td><strong>Broken links / errors</strong></td><td>Full 404, 500, and soft-404 sweep across both domains; broken outbound links</td><td><span class="pill p-med">At risk</span></td></tr>
+      <tr><td><strong>Analytics &amp; tracking</strong></td><td>Google Search Console verification and coverage, GA4 installation, conversion and event tracking, call tracking, form submission tracking</td><td><span class="pill p-high">Likely missing</span></td></tr>
+      <tr><td><strong>Backlink profile</strong></td><td>Referring domain count and quality, anchor-text profile, toxic-link exposure, competitor gap analysis</td><td><span class="pill p-high">Likely thin</span></td></tr>
+      <tr><td><strong>Accessibility</strong></td><td>WCAG 2.1 AA pass — contrast, focus states, form labels, alt text. Also an ADA litigation exposure issue for Florida businesses.</td><td><span class="pill p-med">At risk</span></td></tr>
+      <tr><td><strong>Security &amp; platform</strong></td><td>CMS and plugin versions, known vulnerabilities, malware and spam-injection scan, hosting performance and TTFB</td><td><span class="pill p-med">At risk</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout grey nobreak">
+    <h4>Why "likely fail" on so many rows</h4>
+    <p style="margin-bottom:0">Two signals drive that expectation. First, a site that never had its
+    WordPress default title changed has almost certainly never had an image pipeline, a heading
+    audit, or a Core Web Vitals pass either — these failures cluster. Second, a four-page site with
+    no internal link layer cannot distribute link equity by definition. We will measure rather than
+    assume, and you will get the actual numbers in week one.</p>
+  </div>
+</div>
+
+<!-- ============ ROADMAP ============ -->
+<div class="page">
+  <div class="sec-head">
+    <div class="sec-kicker">Section 06</div>
+    <h2 class="sec">The First 90 Days</h2>
+    <p>Sequenced so the fastest-compounding fixes land first.</p>
+  </div>
+
+  <table>
+    <thead><tr><th style="width:22mm">Phase</th><th>Work</th><th style="width:44mm">Outcome you can see</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Weeks 1–2</strong><br><span class="small">Discovery &amp; triage</span></td>
+        <td>Full technical crawl and Section 05 verification · Google Search Console and GA4 setup with conversion tracking · baseline rank and traffic snapshot · domain consolidation plan · <strong>trx.company 301 redirect map executed (C-01, C-02)</strong> · keyword and competitor gap research</td>
+        <td>Real baseline numbers. Brand no longer split across two domains. Placeholder content out of search results.</td>
+      </tr>
+      <tr>
+        <td><strong>Weeks 2–6</strong><br><span class="small">Foundation</span></td>
+        <td><strong>NAP canonicalization and citation cleanup across 40–60 sources (C-03)</strong> · duplicate listing merges and removals (C-04) · Google Business Profile full optimization · new site build: architecture, design, core service pages · title and meta rewrite site-wide (H-01) · schema implementation (H-05) · Core Web Vitals and mobile pass</td>
+        <td>Map-pack movement typically begins here. Site loads fast, converts, and tells Google exactly what the business is.</td>
+      </tr>
+      <tr>
+        <td><strong>Weeks 6–10</strong><br><span class="small">Expansion</span></td>
+        <td>Service page matrix completed (C-05) · first wave of city pages launched · credentials and warranty pages live (H-03) · review generation system deployed (H-04) · financing elevated site-wide and payment calculator live (M-02) · project pages converted from gallery (M-05)</td>
+        <td>The site becomes eligible for hundreds of queries instead of one. Review velocity starts climbing.</td>
+      </tr>
+      <tr>
+        <td><strong>Weeks 10–16</strong><br><span class="small">Authority</span></td>
+        <td>Content engine running (H-02) · storm and insurance-claim hub built ahead of season (M-04) · remaining city pages · link acquisition begins · 954 tracking number deployed (M-01) · conversion-rate testing on primary landing pages</td>
+        <td>Organic traffic growth becomes measurable and compounding. Attribution finally shows which pages produce calls.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout nobreak">
+    <h4>Setting the expectation honestly</h4>
+    <p>Local SEO is not a 30-day business. Realistic timeline for a domain in this condition:</p>
+    <ul style="margin-bottom:0">
+      <li><strong>Days 1–45:</strong> technical and citation fixes land. Map-pack position and impression volume usually move first — often meaningfully, because C-03 and C-04 are actively suppressing you right now.</li>
+      <li><strong>Days 45–120:</strong> new service and city pages begin ranking and accumulating impressions. First consistent organic lead flow.</li>
+      <li><strong>Days 120–270:</strong> content and links compound. This is where the program starts clearly paying for itself.</li>
+      <li><strong>Day 270+:</strong> defensible position. Competitors have to spend serious money to displace you.</li>
+    </ul>
+    <p style="margin:3mm 0 0 0"><strong>Anyone promising page-one rankings in 30 days is selling you something they cannot deliver.</strong> The compounding is real, but it takes the time it takes.</p>
+  </div>
+</div>
+
+<!-- ============ PRICING ============ -->
+<div class="page">
+  <div class="sec-head tight">
+    <div class="sec-kicker">Section 07</div>
+    <h2 class="sec">Engagement Options</h2>
+    <p>Three ways to do this. Each includes the full website rebuild plus ongoing management.</p>
+  </div>
+
+  <div class="pk-wrap">
+
+    <!-- FOUNDATION -->
+    <div class="pk">
+      <div class="pk-top">
+        <div class="pk-tag">Option 01</div>
+        <div class="pk-name">Foundation</div>
+        <div class="pk-for">Stop the bleeding. Fix what is actively hurting you and own Pompano Beach.</div>
+        <div class="pk-price">
+          <div class="big">$3,750</div>
+          <div class="per">one-time build · 50% to start</div>
+          <div class="mo">+ $895<span>/month management</span></div>
+        </div>
+      </div>
+      <div class="pk-body">
+        <h5>Website rebuild</h5>
+        <ul>
+          <li>8-page custom site, mobile-first</li>
+          <li>4 core service pages</li>
+          <li>Home, About, Financing, Gallery, Contact</li>
+          <li>Core Web Vitals optimized build</li>
+          <li>Quote form + click-to-call</li>
+          <li>Credentials &amp; license display</li>
+        </ul>
+        <h5>Critical fixes</h5>
+        <ul>
+          <li>trx.company consolidation + 301 map</li>
+          <li>NAP cleanup — top 25 citations</li>
+          <li>Duplicate listing merge requests</li>
+          <li>Google Business Profile optimization</li>
+          <li>Title &amp; meta rewrite, all pages</li>
+          <li>LocalBusiness + Service schema</li>
+        </ul>
+        <h5>Monthly management</h5>
+        <ul>
+          <li>1 content piece / month</li>
+          <li>2 Google Business Profile posts / month</li>
+          <li>Review monitoring + response</li>
+          <li>Rank &amp; lead reporting</li>
+          <li>Technical health monitoring</li>
+          <li>Quarterly strategy call</li>
+        </ul>
+        <h5>Not included</h5>
+        <ul style="opacity:.55">
+          <li>City / service-area pages</li>
+          <li>Link acquisition</li>
+          <li>Paid ads management</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- GROWTH -->
+    <div class="pk feature">
+      <div class="pk-top">
+        <div class="pk-tag">Option 02 · Recommended</div>
+        <div class="pk-name">Growth</div>
+        <div class="pk-for">Own Pompano plus the eight highest-value cities around it. The right fit for this business.</div>
+        <div class="pk-price">
+          <div class="big">$6,950</div>
+          <div class="per">one-time build · 50% to start</div>
+          <div class="mo">+ $1,950<span>/month management</span></div>
+        </div>
+      </div>
+      <div class="pk-body">
+        <h5>Website rebuild</h5>
+        <ul>
+          <li>Everything in Foundation, plus:</li>
+          <li>25-page site architecture</li>
+          <li>8 full service pages</li>
+          <li>8 city / service-area pages</li>
+          <li>Insurance &amp; storm-claim hub</li>
+          <li>Financing calculator</li>
+          <li>Individual project case-study template</li>
+          <li>Full schema stack incl. FAQ + Review</li>
+        </ul>
+        <h5>Critical fixes</h5>
+        <ul>
+          <li>NAP cleanup — 60 citation sources</li>
+          <li>Aggregator submissions &amp; monitoring</li>
+          <li>954 call-tracking number deployed</li>
+          <li>Full conversion tracking + call attribution</li>
+        </ul>
+        <h5>Monthly management</h5>
+        <ul>
+          <li>4 content pieces / month</li>
+          <li>2 new city or project pages / month</li>
+          <li>4 Google Business Profile posts / month</li>
+          <li>Automated review generation (SMS + email)</li>
+          <li>4 quality backlinks / month</li>
+          <li>Conversion-rate testing</li>
+          <li>Competitor rank monitoring</li>
+          <li>Monthly strategy call + full report</li>
+        </ul>
+        <h5>Not included</h5>
+        <ul style="opacity:.55">
+          <li>Paid ads management</li>
+          <li>Video production</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- DOMINATION -->
+    <div class="pk">
+      <div class="pk-top">
+        <div class="pk-tag">Option 03</div>
+        <div class="pk-name">Market Leader</div>
+        <div class="pk-for">Take all fifteen cities and defend them. For aggressive crew and revenue growth.</div>
+        <div class="pk-price">
+          <div class="big">$12,500</div>
+          <div class="per">one-time build · 50% to start</div>
+          <div class="mo">+ $3,850<span>/month management</span></div>
+        </div>
+      </div>
+      <div class="pk-body">
+        <h5>Website rebuild</h5>
+        <ul>
+          <li>Everything in Growth, plus:</li>
+          <li>50+ page architecture</li>
+          <li>All 15 service-area pages at launch</li>
+          <li>Neighborhood-level pages, top markets</li>
+          <li>Commercial roofing division section</li>
+          <li>Pre-built storm-response landing pages</li>
+          <li>Custom project photography direction</li>
+          <li>Client portal / job status (optional)</li>
+        </ul>
+        <h5>Critical fixes</h5>
+        <ul>
+          <li>Everything in Growth, plus:</li>
+          <li>Ongoing citation monitoring &amp; defense</li>
+          <li>Manufacturer certification support (GAF etc.)</li>
+          <li>Full accessibility (WCAG 2.1 AA) remediation</li>
+        </ul>
+        <h5>Monthly management</h5>
+        <ul>
+          <li>8 content pieces / month</li>
+          <li>4 new city or project pages / month</li>
+          <li>Weekly Google Business Profile posts</li>
+          <li>8–10 quality backlinks / month</li>
+          <li>Google Ads + Local Services Ads management</li>
+          <li>Quarterly video / photo production day</li>
+          <li>Full CRO program w/ A/B testing</li>
+          <li>Storm-season rapid response on standby</li>
+          <li>Bi-weekly calls + executive dashboard</li>
+        </ul>
+        <h5>Note</h5>
+        <ul style="opacity:.55">
+          <li>Ad spend billed separately, paid direct to Google</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ COMPARISON + ROI ============ -->
+<div class="page">
+  <div class="sec-head">
+    <div class="sec-kicker">Section 08</div>
+    <h2 class="sec">Comparison, ROI &amp; Terms</h2>
+    <p>Side by side, and the math on what it has to produce to be worth it.</p>
+  </div>
+
+  <h3>At a glance</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Deliverable</th>
+        <th style="width:26mm; text-align:center">Foundation</th>
+        <th style="width:26mm; text-align:center">Growth</th>
+        <th style="width:26mm; text-align:center">Market Leader</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Build investment</td><td class="num" style="text-align:center"><strong>$3,750</strong></td><td class="num" style="text-align:center"><strong>$6,950</strong></td><td class="num" style="text-align:center"><strong>$12,500</strong></td></tr>
+      <tr><td>Monthly management</td><td class="num" style="text-align:center"><strong>$895</strong></td><td class="num" style="text-align:center"><strong>$1,950</strong></td><td class="num" style="text-align:center"><strong>$3,850</strong></td></tr>
+      <tr><td>Pages at launch</td><td style="text-align:center">8</td><td style="text-align:center">25</td><td style="text-align:center">50+</td></tr>
+      <tr><td>Service pages</td><td style="text-align:center">4</td><td style="text-align:center">8</td><td style="text-align:center">10+</td></tr>
+      <tr><td>City / service-area pages</td><td style="text-align:center"><span class="cross">—</span></td><td style="text-align:center">8</td><td style="text-align:center">15 + neighborhoods</td></tr>
+      <tr><td>Domain consolidation (C-01)</td><td style="text-align:center"><span class="tick">✓</span></td><td style="text-align:center"><span class="tick">✓</span></td><td style="text-align:center"><span class="tick">✓</span></td></tr>
+      <tr><td>Citation sources cleaned (C-03)</td><td style="text-align:center">25</td><td style="text-align:center">60</td><td style="text-align:center">60 + monitoring</td></tr>
+      <tr><td>Duplicate listing merges (C-04)</td><td style="text-align:center"><span class="tick">✓</span></td><td style="text-align:center"><span class="tick">✓</span></td><td style="text-align:center"><span class="tick">✓</span></td></tr>
+      <tr><td>Schema stack</td><td style="text-align:center">Core</td><td style="text-align:center">Full</td><td style="text-align:center">Full</td></tr>
+      <tr><td>Content per month</td><td style="text-align:center">1</td><td style="text-align:center">4</td><td style="text-align:center">8</td></tr>
+      <tr><td>Backlinks per month</td><td style="text-align:center"><span class="cross">—</span></td><td style="text-align:center">4</td><td style="text-align:center">8–10</td></tr>
+      <tr><td>Automated review generation</td><td style="text-align:center"><span class="cross">—</span></td><td style="text-align:center"><span class="tick">✓</span></td><td style="text-align:center"><span class="tick">✓</span></td></tr>
+      <tr><td>Call tracking &amp; attribution</td><td style="text-align:center"><span class="cross">—</span></td><td style="text-align:center"><span class="tick">✓</span></td><td style="text-align:center"><span class="tick">✓</span></td></tr>
+      <tr><td>Paid ads / LSA management</td><td style="text-align:center"><span class="cross">—</span></td><td style="text-align:center"><span class="cross">—</span></td><td style="text-align:center"><span class="tick">✓</span></td></tr>
+      <tr><td>Strategy cadence</td><td style="text-align:center">Quarterly</td><td style="text-align:center">Monthly</td><td style="text-align:center">Bi-weekly</td></tr>
+      <tr><td>Year-one total</td><td class="num" style="text-align:center">$14,490</td><td class="num" style="text-align:center">$30,350</td><td class="num" style="text-align:center">$58,700</td></tr>
+    </tbody>
+  </table>
+
+  <h3>The break-even math</h3>
+  <p>Fort Lauderdale-area residential roof replacement runs roughly <strong>$8,000–$16,000</strong>.
+  Using a conservative $11,000 average ticket and a 28% gross margin, each additional job returns
+  about <strong>$3,080 in gross profit</strong>. Here is what each package has to produce to pay for
+  itself:</p>
+
+  <table>
+    <thead>
+      <tr><th>Package</th><th class="num">Year-one cost</th><th class="num">Jobs to break even</th><th class="num">Per month</th><th>Assessment</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Foundation</strong></td><td class="num">$14,490</td><td class="num">4.7 jobs</td><td class="num">0.4 / mo</td><td>Break-even at roughly one extra job per quarter. A low bar.</td></tr>
+      <tr><td><strong>Growth</strong></td><td class="num">$30,350</td><td class="num">9.9 jobs</td><td class="num">0.8 / mo</td><td>Break-even at under one extra job per month. Given zero city pages exist today, this is well within reach.</td></tr>
+      <tr><td><strong>Market Leader</strong></td><td class="num">$58,700</td><td class="num">19.1 jobs</td><td class="num">1.6 / mo</td><td>Requires real crew capacity to absorb. Only worth it if you can staff the growth.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout nobreak">
+    <h4>Our recommendation: Growth</h4>
+    <p style="margin-bottom:0">Foundation fixes the damage but leaves the biggest opportunity —
+    fifteen cities with no pages — untouched, so it will plateau. Market Leader is the right
+    long-term shape but it outruns a 1–10 person crew's ability to absorb the lead volume, and
+    paying for leads you can't service is the most common way these programs get cancelled.
+    <strong>Growth resolves every critical finding, builds the service × city matrix that actually
+    drives the traffic, and scales at a rate a team your size can staff.</strong> Market Leader
+    stays available as an upgrade once capacity supports it — and the Growth build is designed so
+    that upgrade is additive, not a rebuild.</p>
+  </div>
+
+  <h3>Terms</h3>
+  <table>
+    <thead><tr><th style="width:44mm">Item</th><th>Terms</th></tr></thead>
+    <tbody>
+      <tr><td>Build payment</td><td>50% to start, 50% on launch. Build timeline 4–8 weeks depending on package and content turnaround.</td></tr>
+      <tr><td>Management term</td><td>6-month initial commitment, then month-to-month with 30 days' notice. SEO cannot be fairly judged in less than six months.</td></tr>
+      <tr><td>Ownership</td><td>You own the domain, the hosting account, the website, all content, and every analytics and Google property. No hostage arrangements — if we part ways, you keep everything.</td></tr>
+      <tr><td>Reporting</td><td>Live dashboard access plus a written monthly report covering rankings, traffic, calls, form fills, and work completed.</td></tr>
+      <tr><td>Ad spend</td><td>Billed separately and paid directly to Google. Never routed through us.</td></tr>
+      <tr><td>What we do not do</td><td>Guarantee rankings, buy links, build doorway pages, or use any tactic that risks a manual action on your domain.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout dark nobreak" style="margin-top:6mm">
+    <h4 style="color:#f4914f">Next step</h4>
+    <p style="margin-bottom:0">A 30-minute call to walk through the findings, confirm which package
+    fits, and schedule the Discovery crawl. The two critical domain issues (C-01, C-02) can be
+    resolved in the first week regardless of which option you choose — and every day they stay
+    live is a day of split authority you do not get back.</p>
+  </div>
+
+  <p class="small" style="margin-top:6mm; border-top:1px solid var(--line); padding-top:3mm">
+    <strong>Evidence sources:</strong> Google search index · Better Business Bureau · Yelp · Angi ·
+    HomeAdvisor · Yahoo Local · BuildZoom · ZoomInfo · Dun &amp; Bradstreet · city-data business
+    registry · Florida DBPR licensing records · Instagram. Audit conducted September 11, 2026.
+    Technical performance items in Section 05 pending direct crawl. Pricing valid 30 days.
+  </p>
+</div>
+
+</body>
+</html>
